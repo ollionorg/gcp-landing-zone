@@ -1,0 +1,4 @@
+# Sample codeowners file. Make change accordingly.
+
+*               @varunchandak
+.github/*       @varunchandak

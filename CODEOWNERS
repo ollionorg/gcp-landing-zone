@@ -1,4 +1,1 @@
-# Sample codeowners file. Make change accordingly.
-
-*               @varunchandak
-.github/*       @varunchandak
+*    @cldcvr/gcf-lz @amansingh14

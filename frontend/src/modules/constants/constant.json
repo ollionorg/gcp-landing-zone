@@ -1,0 +1,505 @@
+{
+  "excelData": [
+    {
+      "Country": "Singapore",
+      "Regulatory Body": "Monetary Authority of Singapore",
+      "Guideline": "Technology Risk Management Guidelines",
+      "Section": "IT Resilience",
+      "Control Section": "System Backup and Recovery",
+      "Statement Id": "8.4.2",
+      "Statement": "To ensure data availability is aligned with the FI's business requirements, the FI should institute a policy to manage the backup data life cycle, which includes the establishment of the frequency of data backup and data retention period, management of data storage mechanisms, and secure destruction of backup data.",
+      "Control Status": "Implemented",
+      "Preventive or Continuous":"Both",
+      "Control Test": "tf_storage_bucket_retention.yaml, gcp_cloudstorage_retention_policy.yaml, gcp_cloudstorage_lifecycle_rule.yaml",
+      "Test Evidence": "The test evidence collected by the terraform validator can be located at the Seed project in the bucket that name is tf-validator.The evidence collected during the UI walkthrough is available at the Seed project in the bucket with the following name pattern bkt-b-tfstate-xxxx.Lastly, the evidence from the continuous compliance monitor is available at the Security Command Center (SCC) board. The URL to the board could be located in the Summary report."
+    },
+    {
+      "Country": "Singapore",
+      "Regulatory Body": "Monetary Authority of Singapore",
+      "Guideline": "Technology Risk Management Guidelines",
+      "Section": "IT Resilience",
+      "Control Section": "System Backup and Recovery",
+      "Statement Id": "8.4.4",
+      "Statement": "To protect data in backup from unauthorised access and modification, the FI should ensure any confidential data stored in the backup media is secured (e.g. encrypted). Backup media should be stored offline or at an offsite location.",
+      "Control Status": "Implemented",
+      "Preventive or Continuous":"Both",
+      "Control Test": "tf_bigquery_cmek_encryption.yaml, tf_storage_denylist_public.yaml, tf_storage_cmek_encryption.yaml, tf_storage_bucket_policy_only.yaml, tf_bigquery_world_readable.yaml, gcp_bigquery_encryption.yaml, gcp_cloudstorage_access_control.yaml",
+      "Test Evidence": ""
+    },
+    {
+      "Country": "Singapore",
+      "Regulatory Body": "Monetary Authority of Singapore",
+      "Guideline": "Technology Risk Management Guidelines",
+      "Section": "Cryptography",
+      "Control Section": "Cryptographic Key Management",
+      "Statement Id": "10.2.3",
+      "Statement": "The FI should determine the appropriate lifespan of each cryptographic key based on factors, such as the sensitivity of the data, the criticality of the system to be protected, and the threats and risks that the data or system may be exposed to. The cryptographic key should be securely replaced, before it expires at the end of its lifespan.",
+      "Control Status": "Implemented",
+      "Preventive or Continuous":"Continious",
+      "Control Test": "gcp_kms_key_rotation.yaml, gcp_kms_key_versioning.yaml",
+      "Test Evidence": ""
+    },
+    {
+      "Country": "Singapore",
+      "Regulatory Body": "Monetary Authority of Singapore",
+      "Guideline": "Technology Risk Management Guidelines",
+      "Section": "Cryptography",
+      "Control Section": "Cryptographic Key Management",
+      "Statement Id": "10.2.10",
+      "Statement": "Cryptographic keys can be corrupted or unintentionally deleted. As such, the FI should maintain backups of cryptographic keys for recovery purposes and accord them a high level of protection.",
+      "Control Status": "Implemented",
+      "Preventive or Continuous":"Both",
+      "Control Test": "tf_cmek_rotation_period.yaml, tf_cmek_settings.yaml, tf_cmek_rotation_period.yaml, gcp_kms_key_rotation.yaml, gcp_kms_key_versioning.yaml",
+      "Test Evidence": ""
+    },
+    {
+      "Country": "Singapore",
+      "Regulatory Body": "Monetary Authority of Singapore",
+      "Guideline": "Technology Risk Management Guidelines",
+      "Section": "Data and Infrastructure Security",
+      "Control Section": "Data Security",
+      "Statement Id": "11.1.2",
+      "Statement": "The FI should implement appropriate measures to prevent and detect data theft, as well as unauthorised modification in systems and endpoint devices. The FI should ensure systems managed by the FI's service providers are accorded the same level of protection and subject to the same security standards.",
+      "Control Status": "Implemented",
+      "Preventive or Continuous":"Continious",
+      "Control Test": "tf_network_enable_firewall_logs.yaml",
+      "Test Evidence": ""
+    },
+    {
+      "Country": "Singapore",
+      "Regulatory Body": "Monetary Authority of Singapore",
+      "Guideline": "Technology Risk Management Guidelines",
+      "Section": "Data and Infrastructure Security",
+      "Control Section": "Data Security",
+      "Statement Id": "11.1.3",
+      "Statement": "Systems and endpoint devices are often targeted by cyber criminals to gain access or exfiltrate confidential data within an organisation. As such, confidential data stored in systems and endpoint devices should be encrypted and protected by strong access controls.",
+      "Control Status": "Implemented",
+      "Preventive or Continuous":"Both",
+      "Control Test": "tf_compute_disk_resource_policies.yaml, tf_world_readable_storage_bucket.yaml, tf_compute_ip_forward.yaml, tf_compute_enable_oslogin_project.yaml, tf_compute_disk_resource_policies.yaml, gcp_cloudsql_encryption.yaml, gcp_bigquery_encryption.yaml, gcp_cloudstorage_encryption.yaml",
+      "Test Evidence": ""
+    },
+    {
+      "Country": "Singapore",
+      "Regulatory Body": "Monetary Authority of Singapore",
+      "Guideline": "Technology Risk Management Guidelines",
+      "Section": "Data and Infrastructure Security",
+      "Control Section": "Data Security",
+      "Statement Id": "11.1.4",
+      "Statement": "The FI should ensure only authorised data storage media, systems and endpoint devices are used to communicate, transfer, or store confidential data.",
+      "Control Status": "Implemented",
+      "Preventive or Continuous":"Both",
+      "Control Test": "tf_network_enable_private_google_access.yaml, gcp_bigquery_encryption.yaml, gcp_bigquery_encryption.yaml, gcp_cloudstorage_encryption.yaml, gcp_pubsub_topic_access_control.yaml",
+      "Test Evidence": ""
+    },
+    {
+      "Country": "Singapore",
+      "Regulatory Body": "Monetary Authority of Singapore",
+      "Guideline": "Technology Risk Management Guidelines",
+      "Section": "Data and Infrastructure Security",
+      "Control Section": "Data Security",
+      "Statement Id": "11.1.5",
+      "Statement": "Security measures should be implemented to prevent and detect the use of unauthorised internet services which allow users to communicate or store confidential data. Examples of such services include social media, cloud storage and file sharing, emails, and messaging applications.",
+      "Control Status": "Implemented",
+      "Preventive or Continuous":"Preventive",
+      "Control Test": "tf_bigquery_cmek_encryption.yaml, tf_serviceusage_allow_basic_apis.yaml, tf_iam_deny_public.yaml, tf_block_vm_external_ip.yaml",
+      "Test Evidence": ""
+    },
+    {
+      "Country": "Singapore",
+      "Regulatory Body": "Monetary Authority of Singapore",
+      "Guideline": "Technology Risk Management Guidelines",
+      "Section": "Data and Infrastructure Security",
+      "Control Section": "Data Security",
+      "Statement Id": "11.1.6",
+      "Statement": "The use of sensitive production data in non-production environments should be restricted. In exceptional situations where such data needs to be used in non-production environments, proper approval has to be obtained from senior management. The FI should ensure appropriate controls are implemented in non-production environments to manage the access and removal of such data to prevent data leakage. Where possible, such data should be masked in the non-production environments.",
+      "Control Status": "Implemented",
+      "Preventive or Continuous":"Preventive",
+      "Control Test": "tf_restrict_fw_rules_ssh_world_open.yaml, tf_restrict_fw_rules_rdp_world_open.yaml, tf_compute_block_ssh.yaml",
+      "Test Evidence": ""
+    },
+    {
+      "Country": "Singapore",
+      "Regulatory Body": "Monetary Authority of Singapore",
+      "Guideline": "Technology Risk Management Guidelines",
+      "Section": "Data and Infrastructure Security",
+      "Control Section": "Network Security",
+      "Statement Id": "11.2.1",
+      "Statement": "The FI should install network security devices such as firewalls to secure the network between the FI and the Internet, as well as connections with third parties.",
+      "Control Status": "Implemented",
+      "Preventive or Continuous":"Preventive",
+      "Control Test": "tf_network_enable_flow_logs.yaml, tf_compute_network_interface.yaml",
+      "Test Evidence": ""
+    },
+    {
+      "Country": "Singapore",
+      "Regulatory Body": "Monetary Authority of Singapore",
+      "Guideline": "Technology Risk Management Guidelines",
+      "Section": "Data and Infrastructure Security",
+      "Control Section": "Network Security",
+      "Statement Id": "11.2.4",
+      "Statement": "The FI should implement network access controls to detect and prevent unauthorised devices from connecting to its network.",
+      "Control Status": "Implemented",
+      "Preventive or Continuous":"Both",
+      "Control Test": "tf_restrict_fw_rules_world_open.yaml, gcp_compute_firewall_unauthorised_devices.yaml, gcp_compute_firewall_logging.yaml",
+      "Test Evidence": ""
+    },
+    {
+      "Country": "Singapore",
+      "Regulatory Body": "Monetary Authority of Singapore",
+      "Guideline": "Technology Risk Management Guidelines",
+      "Section": "Data and Infrastructure Security",
+      "Control Section": "Network Security",
+      "Statement Id": "11.2.6",
+      "Statement": "Internet web browsing provides a conduit for cyber criminals to access the FI's IT systems. In this regard, the FI should consider isolating internet web browsing activities from its endpoint devices through the use of physical or logical controls, or implement equivalent controls, so as to reduce exposure of its IT systems to cyber attacks.",
+      "Control Status": "Implemented",
+      "Preventive or Continuous":"Preventive",
+      "Control Test": "tf_compute_block_ssh.yaml, tf_gke_allow_only_private_cluster.yaml",
+      "Test Evidence": ""
+    }
+  ],
+  "summaryData": [
+    {
+      "head1": "Date",
+      "head2": "05.07.2022",
+      "head3": ""
+    },
+    {
+      "head1": "Executed by",
+      "head2": "Fahad",
+      "head3": ""
+    },
+    {
+      "head1": "Approved By",
+      "head2": "Sachi",
+      "head3": ""
+    },
+    {
+      "head1": "Execution Status",
+      "head2": "",
+      "head3": ""
+    },
+    {
+      "head1": "",
+      "head2": "Errors",
+      "head3": "0"
+    },
+    {
+      "head1": "",
+      "head2": "Warnings",
+      "head3": "0"
+    },
+    {
+      "head1": "",
+      "head2": "Deployment Status",
+      "head3": "Success"
+    },
+    {
+      "head1": "Inventory",
+      "head2": "",
+      "head3": "Number"
+    },
+   
+    {
+      "head1": "Security",
+      "head2": "",
+      "head3": ""
+    },
+    {
+      "head1": "",
+      "head2": "TLS 1.2",
+      "head3": "Implemeted"
+    },
+    {
+      "head1": "",
+      "head2": "Database encryption",
+      "head3": "Implemeted"
+    },
+    {
+      "head1": "",
+      "head2": "Disk encryption",
+      "head3": "Implemeted"
+    },
+    {
+      "head1": "Compliance",
+      "head2": "",
+      "head3": "Fulfilled",
+      "head4": "Uncovered"
+    },
+    {
+      "head1": "",
+      "head2": "MAS TRM",
+      "head3": "15",
+      "head4": "200"
+    }
+  ],
+  "toolTips": {
+    "toolTipsGrpAdmin": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A list for the organisation admins</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsBillAdmin": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A list for the group billing admins</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsBillUser": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A list for the billing data use</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsAudituser": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A list for the audit data users</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsMontrUser": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A list for the monitoring workspace users</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsPrntFld": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>This value should be populated if and only if the Landing zone should be deployed under a folder</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsPrjPrefix": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A prefix for a project. Each project that will be created under the Landing Zone will have this prefix.</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsFldPrefix": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A prefix for a folder. Each folder that will be created under the Landing Zone will have this prefix.</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsBuckPrefix": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A prefix for a bucket. Each bucket that will be created under the Landing Zone will have this prefix.</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsLogPrefix": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A prefix for a log sink. Each log sink that will be created under the Landing Zone will have this prefix.</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsPrjName": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>An initial project that will be created under the Landing Zone</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsPrmyContact": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>That’s the email address of a person who is responsible for the Landing Zone deployment</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsSecContact": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>That’s the email address of a backup person who is responsible for the Landing Zone deployment</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsRepoName": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>The repo name that contains the Landing Zone</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsRepoOwner": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>That’s the owner of the repo</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsMachineType": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>An instance type of worker node that will be running CICD workload</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsNoInst": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A minimum number of instances that will be created in a managed instance group in CICD project</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsArtregName": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A name of the Artefact registry that will be created to store artefacts of terraform plan/apply</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsLzDomain": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A list of domains that allowed in the Landing Zone environment</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsDefltRegn2": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A second region to peer in Hub-and-Spoke network model</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsDefltReg": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>A default location, where your resources will be created</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsDnsName": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>The DNS name of peering managed zone. MUST end with a period.</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsSubnetRange": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>The subnet range created for the runner instances inside CICD project. This should be 192.168.X.0/24.</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsPvtKey": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>The name of the secret inside Secret Manager in CICD project that holds the private key for the public key added as the deploy key to the repository. This value defaults to git-gcplz-ssh-pvt and if changed then it MUST be updated in the workflow files.</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    },
+    "toolTipsCustLabel": {
+      "content": "<span class='fa-dark fs-12 paragraph-1'>The custom labels allow you to add custom tags to your application if needed</span>",
+      "container": "div.flow-layout",
+      "classes": [
+        "black"
+      ]
+    }
+  },
+  "instructions":{
+    "superAdminInstru":[{
+      "instruction":"For execution of wrapper script the user must have the below IAM permissions or he must be added in groups-org-admin group.",
+      "subInstru":"roles/resourcemanager.projectCreator\nroles/resourcemanager.organizationAdmin\nroles/billing.admin\nroles/resourcemanager.folderCreator"
+    },
+    {
+      "instruction":"Create a new branch from the main branch which will be in template form, New branch name should be ${prj-name}-init."
+    },
+    {
+      "instruction":"Create a bot machine user and a GitHub Token with repo read:org and read:discussions."
+    },
+    {
+      "instruction":"Create Slack WebHook Secret in GitHub GCF_SLACK_WEBHOOK, GitHub Token Secret in GitHub as GH_TOKEN."
+    }
+  ],
+  "wrapperinstrucstions":[
+    {
+      "instruction":"Setup GH_TOKEN as $GITHUB_PAT environment variable and execute the wrapper script using below commands (Ensure .terraform directories created locally from previous runs are deleted):"
+    },
+    {
+      "instruction":"Now replace the tfvars file in bootstrap folder with the tfvars file generated by the UI inputs.",
+      "subInstru":"$ cd ./prerequisites/scripts\n$ read -s token <enter_github_token_obtained_earlier>\n$ export GITHUB_PAT=$token\n$ chmod +x wrapper.sh ; ./wrapper.sh"
+    },
+    {
+      "instruction":"After execution of wrapper script, add cloudbuild service account from cicd project as a principal in the billing account with billing.administrator and billing.user"
+    }
+  ],
+  "bootstrapInstru":[
+    {
+      "instruction":"Commit and push changes from .github/workflows, build, 0-bootstrap, README.md to ${prj-name}-init and ensure everything gets successfully applied."
+    },
+    {
+      "instruction":"On GitHub, create a new branch ${prj-name}-main from the main branch."
+    },
+    {
+      "instruction":"Create a pull request from ${prj-name}-main from ${prj-name}-init to merge the changes from wrapper script into ${prj-name}-main branch."
+    }
+  ],
+  "orgSetupInstru":[
+    {
+      "instruction":"Commit and push the backend.tf file into ${prj-name}-init branch."
+    },
+    {
+      "instruction":"Create a pull request from ${prj-name}-main from ${prj-name}-init to merge and deploy the Org Setup Code "
+    }
+  ],
+  "envSetupInstru":[
+    {
+      "instruction":"Commit and push the backend.tf and remote-state.tf file under the development folder into the ${prj-name}-init branch."
+    },
+    {
+      "instruction":"Create a pull request from ${prj-name}-main from ${prj-name}-init to merge and deploy the Environment Setup Code."
+    }
+  ],
+  "networkSetupInstru":[
+    {
+      "instruction":"Commit and push the backend.tf and remote-state.tf file under the shared folder into the ${prj-name}-init branch."
+    },
+    {
+      "instruction":"Create a pull request from ${prj-name}-main from ${prj-name}-init to merge and deploy the Network Setup Code."
+    }
+  ],
+  "buInstru":[
+    {
+      "instruction":"Specify the business unit name and code then click on submit button for creation of BU folders under the 4-project folder."
+    }
+  ],
+  "prjSetupinstru":[
+    {
+      "instruction":"Commit and push the backend.tf and remote-state.tf file under <bu_name>/development folder into the ${prj-name}-init branch."
+    },
+    {
+      "instruction":"Create a pull request from ${prj-name}-main from ${prj-name}-init to merge and deploy the Project Setup Code."
+    }
+  ],
+  "infraSetupinstru":[
+    {
+      "instruction":"Commit and push the backend.tf and remote-state.tf file under <bu_name>/development folder into the ${prj-name}-init branch."
+    },
+    {
+      "instruction":"Create a pull request from ${prj-name}-main from ${prj-name}-init to merge and deploy the Application Setup Code."
+    }
+  ],
+  "kccIntruc":[
+    {
+      "instruction":"Commit and push the backend.tf under 'kcc' folder into the ${prj-name}-init branch."
+    },
+    {
+      "instruction":"Create a pull request from ${prj-name}-init to ${prj-name}-main branch, to merge and deploy the KCC"
+    }
+  ]
+
+  }
+}

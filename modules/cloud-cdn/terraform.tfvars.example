@@ -1,0 +1,5 @@
+create_bucket = true
+bucket_location = "ASIA"
+location      = "asia-southeast1"
+project       = "devops-sandbox-20200519"
+

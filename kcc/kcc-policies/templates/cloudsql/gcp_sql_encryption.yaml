@@ -1,0 +1,34 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpsqlencryptionv1
+  annotations:
+    description: >-
+      Enforce encryption of Cloud SQL Instance
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPSQLEncryptionV1
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package GCPSQLEncryptionV1
+        
+        violation[{"msg": msg}] {
+          asset := input.review.object
+          asset.kind == "SQLInstance"
+
+          msg := checkEncryption(asset)
+
+        }
+
+        # check if encryption is enabled
+        checkEncryption(asset) = msg {
+
+          # find KMS key reference for the instance
+          not asset.spec.encryptionKMSCryptoKeyRef.name
+          instanceName := asset.metadata.name
+
+          msg := sprintf("Encryption is not configured for Cloud SQL instance: %v. Encryption is required.", [instanceName])
+        }

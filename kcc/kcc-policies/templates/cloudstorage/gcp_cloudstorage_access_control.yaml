@@ -1,0 +1,56 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpstorageaccesscontrolv1
+  annotations:
+    description: >-
+      Enforce access control of CloudStorage Buckets to authorized parties indicated in Constraint
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPStorageAccessControlV1
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package GCPStorageAccessControlV1
+        
+        violation[{"msg": msg}] {
+          asset := input.review.object
+          asset.kind == "StorageBucketAccessControl"
+
+          bucketName := asset.spec.bucketRef.name
+          bucketEntity := asset.spec.entity
+          entityRole := asset.spec.role
+          configuredBuckets := input.parameters.bucketRef
+          
+          # check if targetBucket is indicated in constraint
+          targetBucket := configuredBuckets[_]
+          bucketName == targetBucket.name 
+          targetRole := targetBucket.roles[_]
+
+          msg := checkAuthorization(targetBucket, entityRole, bucketEntity)
+        }
+
+        # if role is not authorised in target bucket
+        checkAuthorization(targetBucket, entityRole, bucketEntity) = msg {
+          not targetBucket.roles[entityRole]
+
+          msg := sprintf("Role %v is not authorised for StorageBucket: %v.", [entityRole, targetBucket.name])
+        }
+
+        # if role is authorised in target bucket, check if user indicated is authorised
+        checkAuthorization(targetBucket, entityRole, bucketEntity) = msg {
+
+          authorisedUsers := targetBucket.roles[entityRole]
+
+          not contains(authorisedUsers, bucketEntity)
+
+          msg := sprintf("Entity %v is not authorised as %v for StorageBucket: %v.", [bucketEntity, entityRole, targetBucket.name])
+        }
+
+        # helper function to check if element exists in array
+        contains(array, elem) {
+          array[_] = elem
+        }
+

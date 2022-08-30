@@ -1,0 +1,89 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpbigquerydatasetaccesscontrolv1
+  annotations:
+    description: >-
+      Enforce access control of BigQuery datasets to authorized parties indicated in Constraint
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPBigQueryDatasetAccessControlV1
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package GCPBigQueryDatasetAccessControlV1
+        
+        violation[{"msg": msg}] {
+          asset := input.review.object
+          asset.kind == "BigQueryDataset"
+          params := input.parameters
+
+          datasetName := asset.metadata.name
+
+          # check that dataset is in constraint parameters
+          params.datasetRef[_].name == datasetName
+
+          datasetConstraints := params.datasetRef[_]
+
+          accessEntities := asset.spec.access
+
+          entity := accessEntities[_]
+
+          msg := checkAuthorization(entity, datasetConstraints)
+        }
+
+        # check that role indicated in manifest is authorised in constraint
+        checkAuthorization(entity, datasetConstraints) = msg {
+          entity.role
+          inputRole := entity.role
+          authorisedRoles := [x.role | x := datasetConstraints.access[_]; x.role]
+
+          not contains(authorisedRoles, inputRole)
+
+          msg := sprintf("Role %v is not authorised for BigQuery dataset %v. Authorised Roles are %v", [inputRole, datasetConstraints.name, authorisedRoles])
+
+        }
+
+        # check that entities under role indicated in manifest is authorised in constraint
+        checkAuthorization(entity, datasetConstraints) = msg {
+          entity.role
+          inputRole := entity.role
+          authorisedRoles := [x.role | x := datasetConstraints.access[_]; x.role]
+
+          contains(authorisedRoles, inputRole)
+
+          authorisedRoleObject := [x | x := datasetConstraints.access[_]; x.role == inputRole][0]
+          not entity == authorisedRoleObject
+          
+          msg := sprintf("role %v has unauthorised entities for BigQuery dataset %v.", [inputRole, datasetConstraints.name])
+
+        }
+
+        # check permissions of other datasets to view this bq dataset
+        checkAuthorization(entity, datasetConstraints) = msg {
+          entity.dataset
+          authorisedDatasets := [x | x := datasetConstraints.access[_]; x.dataset]
+          msg := checkDatasetPermission(entity, authorisedDatasets, datasetConstraints)
+        }
+
+        # checks if there are any authorised datasets with read access to this bq dataset
+        checkDatasetPermission(entity, authorisedDatasets, datasetConstraints) = msg {
+          count(authorisedDatasets) == 0
+          msg := sprintf("No datasets have authorised read access to BigQuery dataset %v ", [datasetConstraints.name])
+        }
+
+        # check if dataset indicated in manifest is authorised to view this bq dataset
+        checkDatasetPermission(entity, authorisedDatasets, datasetConstraints) = msg {
+          count(authorisedDatasets) != 0
+          not contains(authorisedDatasets, entity.dataset)
+          msg := sprintf("Dataset %v of project %v does not have authorised read access to BigQuery dataset %v ", [entity.dataset.dataset.datasetId, entity.dataset.dataset.projectId, datasetConstraints.name])
+
+        }
+
+        # helper function to check if element exists in array
+        contains(array, elem) {
+          array[_] = elem
+        }
+

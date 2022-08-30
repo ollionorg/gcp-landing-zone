@@ -1,0 +1,12 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPBigQueryEncryptionV1
+metadata:
+  name: bigquery-dataset-encryption-enabled
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups:
+      - bigquery.cnrm.cloud.google.com
+      kinds:
+      - BigQueryDataset

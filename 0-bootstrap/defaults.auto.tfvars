@@ -1,0 +1,13 @@
+enable_hub_and_spoke              = true
+enable_hub_and_spoke_transitivity = true
+bootstrap_env_code                = "b"
+bootstrap_environment_name        = "bootstrap"
+dev_environment_code              = "d"
+development_folder                = "development"
+prod_environment_code             = "p"
+production_folder                 = "production"
+shared_env                        = "common"
+shared_environment_code           = "c"
+staging_folder                    = "staging"
+staging_environment_code          = "s"
+vpc_prefix                        = "vpc"

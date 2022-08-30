@@ -1,0 +1,1 @@
+export { default as lzRoutes } from "./lz-routes";

@@ -1,0 +1,17 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPComputeFirewallUnauthorisedDevicesV1
+metadata:
+  name: compute-firewall-unauthorised-devices
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups:
+      - compute.cnrm.cloud.google.com
+      kinds:
+      - ComputeFirewall
+  parameters:
+    # input authorised cidr ranges for access to network
+    sourceRanges:
+    - "10.9.0.0/24"
+    - "10.8.0.0/24"

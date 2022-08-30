@@ -1,0 +1,15 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPKMSKeyRotationV1
+metadata:
+  name: key-rotation-enabled
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups:
+      - kms.cnrm.cloud.google.com
+      kinds:
+      - KMSCryptoKey
+  parameters:
+    # <rotation period must be greater than a day - 86400s>
+    rotationPeriod: 86500s

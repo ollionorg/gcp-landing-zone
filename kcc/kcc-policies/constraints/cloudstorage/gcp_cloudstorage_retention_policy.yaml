@@ -1,0 +1,17 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPStorageRetentionPolicyV1
+metadata:
+  name: storage-retention-policy
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups:
+      - storage.cnrm.cloud.google.com
+      kinds:
+      - StorageBucket
+  parameters:
+    # input actual retention policy for bucket
+    retentionPolicy:
+      isLocked: false
+      retentionPeriod: 2678401

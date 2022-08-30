@@ -1,0 +1,49 @@
+{
+  "name": "gcp-lz",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@cldcvr/flow": "6.5.3",
+    "axios": "^0.27.2",
+    "core-js": "^3.6.5",
+    "encrypt-storage": "^2.2.10",
+    "jwt-decode": "^3.1.2",
+    "moment": "^2.29.4",
+    "v-tooltip": "2.1.2",
+    "vue": "^2.6.11",
+    "vue-browser-geolocation": "^1.8.0",
+    "vue-fragment": "^1.5.2",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.4.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "less": "^3.0.4",
+    "less-loader": "^5.0.0",
+    "prettier": "^2.2.1",
+    "svg-inline-loader": "^0.8.2",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "resolutions": {
+    "ejs": "^3.1.7",
+    "json-schema": "0.4.0",
+    "moment": "2.29.4",
+    "node-forge": "1.3.0",
+    "nth-check": "2.0.1",
+    "glob-parent": "5.1.2"
+  }
+}

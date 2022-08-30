@@ -1,0 +1,19 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPStorageLifecycleRuleV1
+metadata:
+  name: storage-lifecycle-rule
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups:
+      - storage.cnrm.cloud.google.com
+      kinds:
+      - StorageBucket
+  parameters:
+    # input actual lifecycle rules for bucket
+    lifecycleRule:
+    - action:
+        type: Delete
+      condition:
+        age: 8

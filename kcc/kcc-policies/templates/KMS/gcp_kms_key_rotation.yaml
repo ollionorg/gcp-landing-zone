@@ -1,0 +1,48 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpkmskeyrotationv1
+  annotations:
+    description: >-
+      Enforce key rotation in KMS and rotation period is greater than specified period 
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPKMSKeyRotationV1
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package GCPKMSKeyRotationV1
+        
+        violation[{"msg": msg}] {
+          asset := input.review.object
+          asset.kind == "KMSCryptoKey"
+
+          params := input.parameters
+
+          msg := checkRotation(asset, params)
+
+        }
+
+        # check if rotation is enabled - not enabled
+        checkRotation(asset, params) = msg {
+
+          not asset.spec.rotationPeriod
+          keyName := asset.metadata.name
+
+          msg := sprintf("Rotation is not enabled in Key: %v. rotation is required.", [keyName])
+        }
+
+        # rotation enabled - check if rotation period is greater than specified period (a day)
+        checkRotation(asset, params) = msg {
+
+          rotationPeriod := trim_right(asset.spec.rotationPeriod, "s")
+          paramsTrimmed := trim_right(params.rotationPeriod, "s")
+
+          not to_number(rotationPeriod) > to_number(paramsTrimmed)
+          
+          keyName := asset.metadata.name
+
+          msg := sprintf("RotationPeriod indicated %vs is less than period indicated in constraint %vs for Key: %v.", [rotationPeriod, paramsTrimmed, keyName])
+        }

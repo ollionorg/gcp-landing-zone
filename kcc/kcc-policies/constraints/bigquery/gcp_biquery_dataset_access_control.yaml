@@ -1,0 +1,26 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPBigQueryDatasetAccessControlV1
+metadata:
+  name: bigquery-dataset-access-control-enabled
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups:
+      - bigquery.cnrm.cloud.google.com
+      kinds:
+      - BigQueryDataset
+  parameters:
+    # replace with actual permissions to allow access
+    datasetRef:
+    - name: bigquerydatasetsample
+      access:
+        - role: OWNER
+          specialGroup: projectOwners
+        - role: READER
+          domain: example.com
+        - dataset: 
+            datasetId: no_access_to_this_dataset
+            projectId: no_dataset_project_id
+          targetTypes:
+            - VIEWS

@@ -1,0 +1,49 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpstorageretentionpolicyv1
+  annotations:
+    description: >-
+      Enforce Retention Policy indicated in constraint on StorageBucket
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPStorageRetentionPolicyV1
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package GCPStorageRetentionPolicyV1
+
+        violation[{"msg": msg}] {
+          asset := input.review.object
+          asset.kind == "StorageBucket"
+
+          params := input.parameters
+
+          msg := checkRetentionPolicy(asset, params)
+
+        }
+
+        # check if any RetentionPolicy is present
+        checkRetentionPolicy(asset, params) = msg {
+
+          not asset.spec.retentionPolicy
+          bucketName := asset.metadata.name
+
+          msg := sprintf("No RetentionPolicy is configured for StorageBucket: %v.", [bucketName])
+        }
+
+        # check if RetentionPolicy indicated matches that in constraint
+        checkRetentionPolicy(asset, params) = msg {
+
+          indicatedRetentionPolicy := asset.spec.retentionPolicy
+          constraintRetentionPolicy := params.retentionPolicy
+
+          not indicatedRetentionPolicy == constraintRetentionPolicy
+
+          bucketName := asset.metadata.name
+
+
+          msg := sprintf("Retention Policy of StorageBucket: %v does not match Retention Policy in constraint", [bucketName])
+        }

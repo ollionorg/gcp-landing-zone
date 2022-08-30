@@ -1,0 +1,34 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpbigqueryencryptionv1
+  annotations:
+    description: >-
+      Enforce encryption of BigQuery dataset
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPBigQueryEncryptionV1
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package GCPBigQueryEncryptionV1
+        
+        violation[{"msg": msg}] {
+          asset := input.review.object
+          asset.kind == "BigQueryDataset"
+
+          msg := checkEncryption(asset)
+
+        }
+
+        # check if encryption is enabled
+        checkEncryption(asset) = msg {
+
+          # find KMS key reference for the dataset
+          not asset.spec.defaultEncryptionConfiguration.kmsKeyRef
+          datasetName := asset.metadata.name
+
+          msg := sprintf("Encryption is not configured for BigQuery dataset: %v. Encryption is required.", [datasetName])
+        }

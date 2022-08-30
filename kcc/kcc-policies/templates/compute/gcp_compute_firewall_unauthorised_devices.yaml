@@ -1,0 +1,48 @@
+apiVersion: templates.gatekeeper.sh/v1beta1 
+kind: ConstraintTemplate 
+metadata:
+  name: gcpcomputefirewallunauthoriseddevicesv1
+  annotations:
+    description: >-
+      Prevent unauthorised devices from connecting to the relevant compute network 
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPComputeFirewallUnauthorisedDevicesV1
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package GCPComputeFirewallUnauthorisedDevicesV1
+
+        
+        # check if allow ingress rules have a source range that is within the cidr range indicated in constraint 
+        violation[{"msg": msg}] {
+          asset := input.review.object
+          asset.kind == "ComputeFirewall"
+          
+          firewallDirection := object.get(asset.spec, "direction", "INGRESS")
+          firewallDirection == "INGRESS"
+
+          asset.spec.allow
+
+          inputRanges := asset.spec.sourceRanges
+          authorisedRanges := input.parameters.sourceRanges
+
+          unauthorisedRanges := [inputRange | inputRange := inputRanges[_]; 
+                                  not contains(authorisedRanges, inputRange)]
+          
+
+          firewall := asset.metadata.name
+          msg := sprintf("Firewall <%v> allows ingress from unauthorised CIDR range(s) <%v> .", [firewall, unauthorisedRanges])
+        }
+
+        # helper function to check if element exists in array
+        contains(array, elem) {
+          array[_] = elem
+        }
+
+
+
+        
+

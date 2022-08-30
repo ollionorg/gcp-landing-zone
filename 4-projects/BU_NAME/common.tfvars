@@ -1,0 +1,12 @@
+base_suffix     = "base"           #use to add suffix to base shared vpc project
+res_suffix      = "restrict"       #use to add suffix to restricted shared vpc project
+peer_suffix     = "peering"        #use to add suffix to peering project
+app             = "application"    #application name
+billing_code    = "1234"           #it consist of billing code
+floating_suffix = "floating"       #use to add suffix to floating project
+base_vpc_type   = "base"           #base shared VPC type
+res_vpc_type    = "restricted"     #restricted shared VPC type
+peer_base       = "peering-base"   #peering base name
+peer_fw_name    = "fw"             #firewall prefix
+infra_suffix    = "infra-pipeline" #prefix used to attach for infra-pipeline project
+stage_name      = "4-projects"     #stage name

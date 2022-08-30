@@ -1,27 +1,53 @@
-# Support and Help
-
-Need help getting started or using a project? Here's how.
-
-## How to get help
-
-Generally, we do not use GitHub as a support forum. For any usage questions that are not specific to the project itself, please ask on [Stack Overflow](https://stackoverflow.com) instead. By doing so, you are more likely to quickly solve your problem, and you will allow anyone else with the same question to find the answer. This also allows maintainers to focus on improving the project for others.
-
-Please seek support in the following ways:
-
-1. :book: **Read the documentation and other guides** for the project to see if you can figure it out on your own. These should be located in a root `docs/` directory. If there is an example project, explore that to learn how it works to see if you can answer your question.
-
-1. :bulb: **Search for answers and ask questions on [Stack Overflow](https://stackoverflow.com).** This is the most appropriate place for debugging issues specific to your use of the project, or figuring out how to use the project in a specific way.
-
-1. :memo: As a **last resort**, you may open an issue on GitHub to ask for help. However, please clearly explain what you are trying to do, and list what you have already attempted to solve the problem. Provide code samples, but **do not** attach your entire project for someone else to debug. Review our [contributing guidelines](https://github.com/cldcvr/cldcvr-repo-template/blob/main/CONTRIBUTING.md).
-
-## What NOT to do 
-
-Please **do not** do any the following:
-
-1. :x: Do not reach out to the author or contributor on Twitter (or other social media) by tweeting or sending a direct message.
-
-1. :x: Do not email the author or contributor.
-
-1. :x: Do not open duplicate issues or litter an existing issue with +1's.
-
-These are not appropriate avenues for seeking help or support with an open-source project. Please follow the guidelines in the previous section. Public questions get public answers, which benefits everyone in the community. ✌️
+# Support
+​
+This article explains where to get help with remark.
+Please read through the following guidelines.
+​
+> �� **Note**: before participating in our community, please read our
+> [code of conduct][coc].
+> By interacting with this repository, organization, or community you agree to
+> abide by its terms.
+​
+## Asking quality questions
+​
+Questions can be e-mailed directly to one of Code Owners.
+​
+Help us help you!
+Spend time framing questions and add links and resources.
+Spending the extra time up front can help save everyone time in the long run.
+Here are some tips:
+​
+*   [Talk to a duck][rubberduck]!
+*   Don’t fall for the [XY problem][xy]
+*   Search to find out if a similar question has been asked
+*   Try to define what you need help with:
+    *   Is there something in particular you want to do?
+    *   What problem are you encountering and what steps have you taken to try
+        and fix it?
+    *   Is there a concept you don’t understand?
+*   Provide sample code, such as a [CodeSandbox][cs] or video, if possible
+*   Screenshots can help, but if there’s important text such as code or error
+    messages in them, please also provide those as text
+*   The more time you put into asking your question, the better we can help you
+​
+## Contributions
+​
+See [`contributing.md`][contributing] on how to contribute.
+​
+## License
+​
+[Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+​
+<!-- Definitions -->
+​
+[license]: https://creativecommons.org/licenses/by/4.0/
+​
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
+​
+[rubberduck]: https://rubberduckdebugging.com
+​
+[xy]: https://meta.stackexchange.com/questions/66377/what-is-the-xy-problem/66378#66378
+​
+[cs]: https://codesandbox.io
+​
+[contributing]: contributing.md

@@ -1,0 +1,70 @@
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeInstance
+metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: gcf-init  
+  labels:
+    component_type: app
+    env: sandbox
+    gcifi_instance_type: g1-small
+    gcifi_name: gcplz-runner  
+    gcifi_region: asia-southeast1
+    gcifi_zone: asia-southeast1-a
+    managed-by-cnrm: "true"
+    namespace: gcifi-sandbox 
+    os_type: linux
+    resource: test
+  name: gcplz-runner 
+spec:
+  bootDisk:
+    autoDelete: true
+    deviceName: gcplz-runner 
+    initializeParams:
+      labels:
+        component_type: app
+        env: sandbox
+        gcifi_name: gcplz-runner 
+        gcifi_pd_attached: "true"
+        gcifi_region: asia-southeast1
+        gcifi_zone: asia-southeast1-a
+        namespace: gcifi-sandbox 
+        os_type: linux
+        resource: test
+      size: 50
+      sourceImageRef:
+        external: https://www.googleapis.com/compute/beta/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20220204
+      type: pd-balanced
+    mode: READ_WRITE
+    sourceDiskRef:
+      external: https://www.googleapis.com/compute/v1/projects/gcf-init/zones/asia-southeast1-a/disks/gcplz-runner
+  confidentialInstanceConfig:
+    enableConfidentialCompute: false
+  machineType: custom-1-2816
+  networkInterface:
+  - name: nic0
+    networkRef:
+      external: https://www.googleapis.com/compute/v1/projects/gcf-init/global/networks/default
+    stackType: IPV4_ONLY
+    subnetworkProject: gcf-init
+    subnetworkRef:
+      external: https://www.googleapis.com/compute/v1/projects/gcf-init/regions/asia-southeast1/subnetworks/default
+  reservationAffinity:
+    type: ANY_RESERVATION
+  resourceID: gcplz-runner
+  scheduling:
+    automaticRestart: true
+    onHostMaintenance: MIGRATE
+    provisioningModel: STANDARD
+  serviceAccount:
+    scopes:
+    - https://www.googleapis.com/auth/cloud-platform
+    serviceAccountRef:
+      external: 94900295513-compute@developer.gserviceaccount.com
+  shieldedInstanceConfig:
+    enableIntegrityMonitoring: true
+    enableVtpm: true
+  tags:
+  - ssh
+  zone: asia-southeast1-a
+...

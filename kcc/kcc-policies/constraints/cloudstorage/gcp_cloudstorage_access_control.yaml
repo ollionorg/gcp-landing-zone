@@ -1,0 +1,21 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPStorageAccessControlV1
+metadata:
+  name: storage-access-control-enabled
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups:
+      - storage.cnrm.cloud.google.com
+      kinds:
+      - StorageBucketAccessControl
+  parameters:
+    # replace with actual bucket names and corresponding permissions
+    bucketRef:
+    - name: testing1-bucketaccesscontrol-dep
+      roles:
+        READER:
+        - example-tom@example.com
+        WRITER:
+        - example-liz@example.com

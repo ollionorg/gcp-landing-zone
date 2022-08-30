@@ -1,0 +1,14 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPKMSKeyVersioningV1
+metadata:
+  name: key-versioning-enabled
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups:
+      - kms.cnrm.cloud.google.com
+      kinds:
+      - KMSCryptoKey
+  parameters:
+    skipInitialVersionCreation: false

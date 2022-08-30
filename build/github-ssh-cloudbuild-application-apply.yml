@@ -1,0 +1,102 @@
+# Access the id_github file from Secret Manager, and setup SSH
+steps:
+
+- name: 'gcr.io/cloud-builders/git'
+  secretEnv: ['SSH_KEY']
+  entrypoint: 'bash'
+  args:
+  - -c
+  - |
+    ssh-keyscan -t rsa github.com > known_hosts.github
+    echo "$$SSH_KEY" >> /root/.ssh/id_rsa
+    chmod 400 /root/.ssh/id_rsa
+    cp known_hosts.github /root/.ssh/known_hosts
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+# Clone the repository
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args:
+    - -c
+    - |
+      git clone --recurse-submodules --branch ${_GIT_HEAD_BRANCH} git@github.com:${_GIT_LZ_REPO}
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+- id: 'tf init'
+  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
+  entrypoint: 'bash'
+  args:
+  - -c
+  - |
+      cd ${_GIT_WORK_DIR}
+      terraform init
+
+- id: 'tf apply on target 1'
+  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
+  entrypoint: 'bash'
+  args:
+  - -c
+  - |
+      cd ${_GIT_WORK_DIR}
+      export TF_VAR_dbps="admin"
+      terraform apply -auto-approve -target="google_project_service.sql_service_1" \
+       -target="google_project_service.sql_service_2" \
+       -target="google_project_service.cloudtrace_api" \
+       -target="google_project_service.containerapi" \
+       -target="google_service_account.compute_engine_service_account" \
+       -target="google_compute_subnetwork_iam_binding.binding" \
+       -target="google_compute_subnetwork_iam_binding.binding2" \
+       -target="google_project_iam_binding.container-engine" \
+       -target="random_id.db_name" \
+       -target="google_sql_database_instance.boa_sql" \
+       -target="google_sql_database.boa_database_1" \
+       -target="google_sql_database.boa_database_2" \
+       -target="google_sql_user.boa_db_admin_user" 
+
+- id: 'tf apply on target 2'
+  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
+  entrypoint: 'bash'
+  args:
+  - -c
+  - |
+      cd ${_GIT_WORK_DIR}
+      export TF_VAR_dbps="admin"
+      terraform apply -auto-approve -target="google_container_cluster.gke" \
+       -target="google_container_node_pool.general" \
+       -target="google_container_cluster.gke2" \
+       -target="google_container_node_pool.general2" 
+
+- id: 'tf apply on target 3'
+  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
+  entrypoint: 'bash'
+  args:
+  - -c
+  - | 
+      sleep 15
+      cd ${_GIT_WORK_DIR}
+      export TF_VAR_dbps="admin"
+      terraform apply -auto-approve -target="null_resource.kubectl_config" \
+       -target="null_resource.kubectl_config2";
+      sleep 5;
+      terraform apply -auto-approve -target="module.wif" \
+       -target="module.wif2" 
+
+
+
+availableSecrets:
+  secretManager:
+  - versionName: projects/${PROJECT_ID}/secrets/${_SECRET_ID}/versions/latest
+    env: 'SSH_KEY'
+substitutions:
+  _SECRET_ID: git-gcplz-ssh-pvt
+  _GIT_LZ_REPO: "cldcvr/gcp-lz.git"
+  _GIT_WORK_DIR: gcp-lz
+  _GIT_HEAD_BRANCH: godmode-main
+options:
+    dynamic_substitutions: true
+
+timeout: 3600s

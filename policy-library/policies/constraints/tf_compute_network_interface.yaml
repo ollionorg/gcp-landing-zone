@@ -1,0 +1,13 @@
+apiVersion: constraints.gatekeeper.sh/v1alpha1
+kind: GCPComputeAllowedNetworksConstraintV2
+metadata:
+  name: allowlist
+  annotations:
+    benchmark: MAS_TRM_11.2.1
+spec:
+  severity: high
+  match:
+    target: ["organizations/**"]
+  parameters:
+      allowed:
+          - https://www.googleapis.com/compute/v1/projects/vpc-sc-pub-sub-billing-alerts/global/networks/default1

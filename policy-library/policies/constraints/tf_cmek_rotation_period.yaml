@@ -1,0 +1,14 @@
+apiVersion: constraints.gatekeeper.sh/v1alpha1
+kind: GCPCMEKRotationConstraintV1
+metadata:
+  name: cmek_rotation_one_hundred_days
+  annotations:
+    bundles.validator.forsetisecurity.org/forseti-security: v2.26.0
+    benchmark: MAS_TRM_10.2.10
+spec:
+  severity: high
+  parameters:
+    # Optionally specify the required key rotation period.  Default is 365 days
+    # Valid time units are  "ns", "us", "ms", "s", "m", "h"
+    # This is 100 days
+    period: 2400h

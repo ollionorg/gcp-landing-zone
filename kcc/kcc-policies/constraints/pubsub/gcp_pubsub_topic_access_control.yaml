@@ -1,0 +1,21 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPPubSubAccessControlV1
+metadata:
+  name: pubsubtopic-access-control-enabled
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups:
+      - iam.cnrm.cloud.google.com
+      kinds:
+      - IAMPolicy
+  parameters:
+    # replace with actual pubsub topic and corresponding permissions
+    topics:
+    - name: iampolicy-dep-pubsubadmin
+      roles:
+        roles/editor:
+        - example-tom@example.com
+        roles/viewer:
+        - example-liz@example.com

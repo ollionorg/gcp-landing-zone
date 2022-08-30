@@ -1,0 +1,52 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpstoragelifecyclerulev1
+  annotations:
+    description: >-
+      Enforce Lifecycle Rule indicated in constraint on StorageBucket
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPStorageLifecycleRuleV1
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package GCPStorageLifecycleRuleV1
+        
+        violation[{"msg": msg}] {
+          asset := input.review.object
+          asset.kind == "StorageBucket"
+
+          params := input.parameters
+
+          msg := checkLifecycleRules(asset, params)
+
+        }
+
+        # check if any LifecycleRule is present
+        checkLifecycleRules(asset, params) = msg {
+
+          not asset.spec.lifecycleRule
+          bucketName := asset.metadata.name
+
+          msg := sprintf("No Lifecycle Rules are configured for StorageBucket: %v.", [bucketName])
+        }
+
+        # check if LifecycleRule(s) indicated matches those in constraint
+        checkLifecycleRules(asset, params) = msg {
+
+          indicatedRules := asset.spec.lifecycleRule
+          constraintRules := params.lifecycleRule
+
+          indicatedRule := indicatedRules[_]
+          constraintRule := constraintRules[_]
+
+          not indicatedRule == constraintRule
+
+          bucketName := asset.metadata.name
+
+
+          msg := sprintf("Lifecycle Rule(s) of StorageBucket: %v does not match Lifecycle Rule(s) in constraint", [bucketName])
+        }

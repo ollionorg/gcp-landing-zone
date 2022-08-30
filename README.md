@@ -1,252 +1,129 @@
-> Replace the contents accordingly
+changequote(,)
+# Landing zone using Google Cloud Foundation
+
+## Status Checks
+| Stage Name                          | Plan Status                                                                                                                                                                                                                                              | Deployment Status                                                                                                                                                                                                                                                           |
+|-------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0-bootstrap                         | [![0-bootstrap](https://github.com/cldcvr/REPO_NAME/actions/workflows/0-bootstrap.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/0-bootstrap.yml)                                                       | [![0-bootstrap - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/0-bootstrap-main.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/0-bootstrap-main.yml)                                                       |
+| 1-org                               | [![1-org](https://github.com/cldcvr/REPO_NAME/actions/workflows/1-org.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/1-org.yml)                                                                         | [![1-org - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/1-org-main.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/1-org-main.yml)                                                                         |
+| 2-env (development)                 | [![2-env - development](https://github.com/cldcvr/REPO_NAME/actions/workflows/2-env-development.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/2-env-development.yml)                                   | [![2-env - development - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/2-env-development-main.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/2-env-development-main.yml)                                   |
+| 2-env (staging)                     | [![2-env - staging](https://github.com/cldcvr/REPO_NAME/actions/workflows/2-env-staging.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/2-env-staging.yml)                                               | [![2-env - staging - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/2-env-staging-main.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/2-env-staging-main.yml)                                               |
+| 2-env (production)                  | [![2-env - production](https://github.com/cldcvr/REPO_NAME/actions/workflows/2-env-production.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/2-env-production.yml)                                      | [![2-env - production - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/2-env-production-main.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/2-env-production-main.yml)                                      |
+| 3-networks (shared)                 | [![3-networks - shared](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-shared.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-shared.yml)                                   | [![3-networks - shared - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-shared-main.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-shared-main.yml)                                   |
+| 3-networks (development)            | [![3-networks - development](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-development.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-development.yml)                    | [![3-networks - development - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-development-main.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-development-main.yml)                    |
+| 3-networks (staging)                | [![3-networks - staging](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-staging.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-staging.yml)                                | [![3-networks - staging - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-staging-main.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-staging-main.yml)                                |
+| 3-networks (production)             | [![3-networks - production](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-production.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-production.yml)                       | [![3-networks - production - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-production-main.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/3-networks-production-main.yml)                       |
+| 4-projects - BU_NAME (shared)       | [![4-projects - shared](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-shared-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-shared-BU_NAME.yml)                   | [![4-projects - shared - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-shared-main-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-shared-main-BU_NAME.yml)                   |
+| 4-projects - BU_NAME (development)  | [![4-projects - development](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-development-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-development-BU_NAME.yml)    | [![4-projects - development - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-development-main-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-development-main-BU_NAME.yml)    |
+| 4-projects - BU_NAME (staging)      | [![4-projects - staging](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-staging-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-development-BU_NAME.yml)            | [![4-projects - development - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-staging-main-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-staging-main-BU_NAME.yml)            |
+| 4-projects - BU_NAME (production)   | [![4-projects - production](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-production-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-production-BU_NAME.yml)       | [![4-projects - production - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-production-main-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/4-projects-production-main-BU_NAME.yml)       |
+| 5-app-infra - BU_NAME (development) | [![5-app-infra - development](https://github.com/cldcvr/REPO_NAME/actions/workflows/5-app-infra-development-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/5-app-infra-development-BU_NAME.yml) | [![5-app-infra - development - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/5-app-infra-development-main-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/5-app-infra-development-main-BU_NAME.yml) |
+| 5-app-infra - BU_NAME (staging)     | [![5-app-infra - staging](https://github.com/cldcvr/REPO_NAME/actions/workflows/5-app-infra-staging-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/5-app-infra-staging-BU_NAME.yml)             | [![5-app-infra - staging - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/5-app-infra-staging-main-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/5-app-infra-staging-main-BU_NAME.yml)             |
+| 5-app-infra - BU_NAME (production)  | [![5-app-infra - production](https://github.com/cldcvr/REPO_NAME/actions/workflows/5-app-infra-production-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/5-app-infra-production-BU_NAME.yml)    | [![5-app-infra - production - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/5-app-infra-production-main-BU_NAME.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/5-app-infra-production-main-BU_NAME.yml)    |
+| KCC (Add-On)                        | [![KCC](https://github.com/cldcvr/REPO_NAME/actions/workflows/kcc-configure.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/kcc-configure.yml)                                                           | [![KCC - deploy](https://github.com/cldcvr/REPO_NAME/actions/workflows/kcc-configure.yml/badge.svg?branch=INSERT_MAIN_BRANCH)](https://github.com/cldcvr/REPO_NAME/actions/workflows/kcc-configure.yml)                                                                     |
+
+# Resources
+https://cloud.google.com/architecture/security-foundations/using-example-terraform
+
+
+# Repo directory structure
+
+Please follow the below directory structure
+
+```
+repo:
+|- 0-bootstrap
+   |- <terraform_code>
+|- 1-org
+   |- <terraform_code>
+|- 2-env
+   |- <terraform_code>
+|- 3-networks
+   |- <terraform_code>
+|- 4-projects
+   |- <terraform_code>
+|- 5-app-infra
+   |- <terraform_code>
+|- 6-anthos
+   |- <application_manifests>   
+|- kcc
+   |- <terraform_code>
+   |- <resource_manifests>
+|- modules
+   |- <terraform_module_folder_1>
+   |- <terraform_module_folder_2>
+```
 
 ---
 
-# cldcvr-repo-template
-Template for repo creation in CldCvr GitHub Organization
-
-This repo contains the essential files required to create a repo using best practices. The filenames and it's usage is in below table.
-
-# Usage
-
-| File Name | Location | Usage |
-| --- | --- | --- |
-| README.md | `root` | Contains the details of contents present in the repo. For example, it can contain the version of Terraform and it's usage steps |
-| CODEOWNERS | `root` | Contains the ownership of various folders present in the repo. This is useful when raising a PR, so the CODEOWNERS are assigned as reviewers automatically. More details [here](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) |
-| LICENSE | `root` | Contains the license information for the repo depending on the case of OSS. Check with your organizational policies. |
-| CONTRIBUTING.md | `root` | A CONTRIBUTING.md file, in your open source repository or site, provides potential project contributors with a short guide to how they can help with your project. More details [here](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors) |
-| .gitignore | `root` | gitignore file is a text file that tells Git which files or folders to ignore in a project. |
-| SUPPORT.md | `root` | Contains the usage for raising support related to the project. Can vary from organization to organization. |
-| PULL_REQUEST_TEMPLATE.md | `.github/` | This file triggers project contributors to automatically see the template's contents in a new pull request body. The template can customize and standardize the information you'd like included when contributors create pull requests. |
-| `<workflow_name>.yml` | `.github/workflows/` | Contains workflow files for automated CI/CD integrations with GitHub Actions or 3rd party extensions |
-
----
-
-> The below content is referred from [joelparkerhenderson/github-special-files-and-paths](https://github.com/joelparkerhenderson/github-special-files-and-paths)
-# GitHub special files and paths
-
-<img src="README.png" alt="GitHub special files and paths" style="width: 100%;"/>
-
-GitHub uses special files such as `README` and `LICENSE`, and special paths such as `/.github` and `/docs`, to improve repository managment and developer interactions.  This page is a summary. We welcome pull requests.
-
-* [Introduction](#introduction)
-* [README](#readme)
-* [CHANGELOG](#changelog)
-* [LICENSE](#license)
-* [SUPPORT](#support)
-* [SECURITY](#security)
-* [CODE_OF_CONDUCT](#code_of_conduct)
-* [CONTRIBUTING](#contributing)
-* [CONTRIBUTORS](#contributors)
-* [AUTHORS](#authors)
-* [ACKNOWLEDGMENTS](#acknowledgments)
-* [CODEOWNERS](#codeowners)
-* [ISSUE_TEMPLATE](#issue_template)
-* [PULL_REQUEST_TEMPLATE](#pull_request_template)
-* [CITATION.cff](#citation-cff)
-* [FUNDING](#funding)
-* [dependabot.yml](#dependabotyml)
-* [workflows](#workflows)
-* [Jekyll](#jekyll)
-
-
-## Introduction
-
-GitHub special files can typically be written with a variety of formats and file name extensions:
-
-  * Freeform text, such as `README` or `README.txt`.
-
-  * Markup formats, such as `README.markdown` or `README.asciidoc` - see [markups](https://github.com/github/markup/blob/master/README.md#markups)
-
-  * Custom syntaxes, such as the file `CODEOWNERS`.
-
-GitHub special files are typically located at the repository top level or in special paths:
-
-  * `/.github` is a hidden dot file directory.
-
-  * `/docs` is a typical documentation directory.
-
-  * Custom paths, such as the directory `ISSUE_TEMPLATE`.
-
-The special files and paths are sometimes also known as community health files, recommended repository files, well-known configurations, etc.
-
-For a general overview see [building a strong community](https://help.github.com/categories/building-a-strong-community/) and [GitHub's Open Source Guides](https://opensource.guide/).
-
-
-## README
-
-  * File: `README` or `README.txt` or `README.md` etc.
-
-  * Help: <https://help.github.com/articles/about-readmes/>
-
-  * Awesome: list: <https://github.com/matiassingers/awesome-readme>
-
-This file that explains your project, what it does, why it is useful, etc. 
-
-This file is often the first item a visitor will see when visiting your repository, because GitHub automatically shows this file to repository visitors.
-
-
-## CHANGELOG
-
-  * File: `CHANGELOG` or `CHANGELOG.txt` or `CHANGELOG.md` etc. 
-
-This file explains a reposity's notable changes, updates, versions, bug fixes, and the like. This file name convention has been around since the early days of the web.
-
-
-## LICENSE
-
-  * File: `LICENSE` or `LICENSE.txt` or `LICENSE.md` etc. 
-
-  * Help: <https://help.github.com/articles/adding-a-license-to-a-repository/>
-
-This file explains the respostory's legal license, such as any legal rights, any copyright restrictions, etc. If you include a detectable license in your repository, people who visit your repository will see it at the top of the repository page.
-
-If you want help to choose a license, then try https://choosealicense.com
-
-If your project is significant, or contains other peoples' work or intellectual property, then you may want to consult with a lawyer who can help you with your specific goals and needs. If you don't provide a license, then in some locations a default copyright law will apply.
-
-
-## SUPPORT
-
-  * File: `SUPPORT` or `SUPPORT.txt` or `SUPPORT.md` etc. 
-
-This file explains how a reader can get help with the repository and project. Github links this file on the page "New Issue". Unlike the "CONTRIBUTING" file, GitHub does not link this file on the page "New Pull Request".
-
-
-## SECURITY
-
-  * File: `SECURITY` or `SECURITY.txt` or `SECURITY.md` etc.
-
-  * Help: <https://help.github.com/en/articles/adding-a-security-policy-to-your-repository>
-
-This file explains the project's security policies, such as a list of versions that are currently being maintained with security updates. This file also provides instructions on how users can submit a report of a vulnerability. 
-
-GitHub links to this file, under the "Policy" link on the "Security" tab of your repository.
-
-
-## CODE_OF_CONDUCT
-
-  * File: `CODE_OF_CONDUCT` or `CODE_OF_CONDUCT.txt` or `CODE_OF_CONDUCT.md` etc.
-
-  * Help: <https://help.github.com/articles/adding-a-code-of-conduct-to-your-project/>
-
-  * Awesome: list: <https://i-sight.com/resources/18-of-the-best-code-of-conduct-examples/>
-
-This file explains how to engage in a community, and how to inclusive environment that respects all people, and how to address any problems among members of your project's community.
-
-
-## CONTRIBUTING
-
-  * File: `CONTRIBUTING` or `CONTRIBUTING.txt` or `CONTRIBUTING.md` etc.
-
-  * Help: <https://help.github.com/articles/setting-guidelines-for-repository-contributors/>
-
-  * Awesome: list: <https://github.com/mntnr/awesome-contributing>
-
-This file explains how people can contribute to the project. This file can help verify people are submitting well-formed pull requests and opening useful issues. 
-
-GitHub links to this file, on the page "New Issue" and the page "New Pull Request".
-
-
-## CONTRIBUTORS
-
-  * File: `CONTRIBUTORS` or `CONTRIBUTORS.txt` or `CONTRIBUTORS.md` etc. 
-
-This file explains who has contributed to the project. When we use a `CONTRIBUTORS` file in our projects, we ask people how they want to be listed, such as by their name, handle, email address, website link, etc. 
-
-Compare this file to the file `AUTHORS`.
-
-
-## AUTHORS
-
-  * File: `AUTHORS` or `AUTHORS.txt` or `AUTHORS.md` etc. 
-
-This file lists people who are significant authors of the project, such as the people who are legally related to the work. The GNU project states "Only the contributions that are legally significant for copyright purposes (see Legally Significant) need to be listed. Small contributions, bug reports, ideas, etc., can be omitted." 
-
-Compare this file to the file `CONTRIBUTORS`.
-
-
-## ACKNOWLEDGMENTS
-
-  * File: `ACKNOWLEDGMENTS` or `ACKNOWLEDGMENTS.txt` or `ACKNOWLEDGMENTS.md` etc. 
-
-This file explains relevant related work, such as other projects that are dependencies, or libraries, or modules, or have their own copyrights or licenses that you want to include in your project.
-
-
-## CODEOWNERS
-
-  * File: `CODEOWNERS`
-
-  * Help: <https://help.github.com/articles/about-codeowners/>
-
-This file defines individuals or teams that are responsible for code in a repository. 
-
-Code owners are automatically requested for review when someone opens a pull request that modifies code that they own. When someone with admin or owner permissions has enabled required reviews, they also can optionally require approval from a code owner before the author can merge a pull request in the repository.
-
-
-## ISSUE_TEMPLATE
-
-  * File: `ISSUE_TEMPLATE`
-
-  * Help: <https://help.github.com/articles/creating-an-issue-template-for-your-repository/>
-
-  * Awesome: list: <https://github.com/devspace/awesome-github-templates>
-
-When you add an issue template to your repository, project contributors will automatically see the template's contents in the issue body. Templates customize and standardize the information you'd like included when contributors open issues.
-
-See <https://blog.github.com/2018-01-25-multiple-issue-and-pull-request-templates/>
-
-To add multiple issue templates to a repository create an `ISSUE_TEMPLATE/` directory in your project root. Within that `ISSUE_TEMPLATE/` directory you can create as many issue templates as you need, for example `ISSUE_TEMPLATE/bugs.md`.
-
-
-## PULL_REQUEST_TEMPLATE
-
-  * File: `PULL_REQUEST_TEMPLATE` or can be a subdirectory
-
-  * Help: <https://help.github.com/articles/creating-a-pull-request-template-for-your-repository/>
-
-  * Awesome: list: <https://github.com/devspace/awesome-github-templates>
-
-This file triggers project contributors to automatically see the template's contents in a new pull request body. The template can customize and standardize the information you'd like included when contributors create pull requests.
-
-See <https://blog.github.com/2018-01-25-multiple-issue-and-pull-request-templates/>
-
-You can create a `PULL_REQUEST_TEMPLATE/` subdirectory in any of the supported folders to contain multiple pull request templates. Use the template query parameter to specify the template that will automatically fill the pull request body. For more information, see "[About automation for issues and pull requests with query parameters.](https://help.github.com/articles/about-automation-for-issues-and-pull-requests-with-query-parameters/)"
-
-
-## CITATION.cff
-
-  * File: `CITATION.cff`
-
-  * Help: <https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-citation-files>
-
-This file explains how you would like people to cite your work. The citation file format is plain text with human-readable and machine-readable citation information.
-
-When you add this file to the default branch root directory of your repository, then GitHub automatically links to it from the repository landing page.
-
-
-## FUNDING.yml
-
-  * File: `.github/FUNDING.yml`
-
-  * Help: <https://docs.github.com/en/github/administering-a-repository/managing-repository-settings/displaying-a-sponsor-button-in-your-repository>
-
-You can configure your sponsor button by adding a  file in your repository on the default branch. You can configure the button to include sponsored developers in GitHub Sponsors, external funding platforms, or a custom funding URL.
-
-
-## dependabot.yml
-
-  * File: `.github/dependabot.yml`
-
-  * Help: <https://github.com/dependabot>
-
-Dependabot is a GitHub tool that provides automated dependency updates. To enable updates, create a Dependabot configuration file and add it to a repository. The file describes the dependencies to update, where dependency manifests are located, etc. If Dependbot discovers that an update is available, then Dependabot sends you a pull request to update your dependency.
-
-
-## Workflows
-
-  * Directory: `.github/workflows`
-
-  * Help: <https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions>
-
-A workflow is a configurable automated process made up of one or more jobs. You must create a YAML file to define your workflow configuration. Workflow files use YAML syntax, and must have file extension `.yml` or `.yaml`.
+## Prerequisites
+
+To run the commands described in this document, you need to have the following
+installed:
+
+- The [Google Cloud SDK](https://cloud.google.com/sdk/install) version 319.0.0 or later
+- [Terraform](https://www.terraform.io/downloads.html) version 1.0.9.
+- An existing project which the user has access to be used by terraform-validator.
+
+> Make sure that you use the same version of Terraform throughout this series. Otherwise, you might experience Terraform state snapshot lock errors.
+
+1. Set up a Google Cloud [organization](https://cloud.google.com/resource-manager/docs/creating-managing-organization).
+2. Set up a Google Cloud [billing account](https://cloud.google.com/billing/docs/how-to/manage-billing-account).
+   * Make note of the billing ID.
+   * Add it to the tfvars in the 0-bootstrap.
+   * **Ensure the quotas for associating projects with billing account is increased to 50.**
+3. Configure Authentication - Create Cloud Identity or Google Workspace (formerly G Suite) groups for organization and billing admins.
+4. Create a group in gcp which will act as `group_org_admins` and grant that group below permissions
+   * `roles/resourcemanager.projectCreator`
+   * `roles/resourcemanager.organizationAdmin`
+   * `roles/billing.admin`
+   * `roles/resourcemanager.folderCreator`
+5. Ensure the user deploying the initial code should be present in the `group_org_admins` group.
+6. Add the service account associated with GitHub Actions and Cloud Build to the `group_org_admins` group. They must be in this group, or they won't have `roles/resourcemanager.projectCreator` access.
+
+For more information about the permissions that are required, and the resources that are created, see the organization bootstrap module [documentation.](https://github.com/terraform-google-modules/terraform-google-bootstrap)
+
+# Deploying with GitHub Actions/Cloud Build
+
+* `REPO_NAME` code is present on GitHub, with Github Actions enabled.
+* GitHub Actions will plan and on success, will submit builds to Cloud Build, depending on the type of workflow defined.
+* Cloud Build will deploy the terraform code accordingly.
+
+## Deployment Process
+1. Create a new branch from the main branch which will be in template form, New branch name should be `${bu_name}-init`.
+2. Create bot machine user and a GitHub Token with repo `read:org` and `read:discussions`.
+3. Add relevant values to the terraform.tfvars of 0-bootstrap in the new branch. [Understanding user inputs for LZ](https://cldcvr.atlassian.net/wiki/spaces/GCF/pages/18562875393)
+4. Add correct billing ID in the terraform.tfvars file for the initial deployment of the 0-bootstrap stage.
+5. `bu_code` variables must **not be greater than 3 characters**.
+6. Create Slack WebHook Secret in GitHub `GCF_SLACK_WEBHOOK`, GitHub Token Secret in GitHub as `GH_TOKEN`.
+7. Setup `GH_TOKEN` as `$GITHUB_PAT` environment variable and execute the wrapper script using below commands:
+```bash
+$ cd ./prerequisites/scripts
+
+$ read -s GITHUB_PAT
+<enter_github_token_obtained_in_step_9>
+
+$ chmod +x wrapper.sh ; ./wrapper.sh
+```
+8. After execution of wrapper script, add cloudbuild service account from cicd project as a principal in the billing account with `billing.administrator` and `billing.user`
+9. Wrapper script will create following branch protection rules for branch `${prj_name}-main`
+```bash
+Require a pull request before merging.
+Required two number of approvals before merging
+Dismiss stale pull request approvals when new commits are pushed
+Require review from Code Owners
+Require status checks to pass before merging
+Require branches to be up to date before merging
+Require conversation resolution before merging.
+Require signed commits.
+Requires administrator
+Allow auto-merge and allow auto-deletion of branches
+```
+10. Commit and push changes from `.github/workflows`, `build`, `0-bootstrap`, `README.md` to `${prj_name}-init` and ensure everything gets successfully applied.
+11. On GitHub, create a new branch `${prj_name}-main` from the main branch and create a pull request to merge the changes from step 14 into `${prj_name}-main` from `${bu_name}-init`.
+12. Start deployment by raising PRs for subsequent stages by pushing the backend.tf changes made by wrapper script for each stage in `${prj_name}-init`.
+    For more information refer [GCF Landing Zone Prerequisites Checklist](https://cldcvr.atlassian.net/l/c/1pEg9eMn)
+
+## Troubleshooting
+
+Please refer to [troubleshooting](../docs/TROUBLESHOOTING.md) if you run into issues during this step.

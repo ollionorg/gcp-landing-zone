@@ -1,0 +1,12 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPStorageEncryptionV1
+metadata:
+  name: storage-encryption-enabled
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups:
+      - storage.cnrm.cloud.google.com
+      kinds:
+      - StorageBucket

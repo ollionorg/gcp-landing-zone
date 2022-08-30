@@ -1,0 +1,15 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPComputeFirewallLoggingV1
+metadata:
+  name: compute-subnet-flow-logging
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+    - apiGroups:
+      - compute.cnrm.cloud.google.com
+      kinds:
+      - ComputeFirewall
+  parameters:
+    logConfig:
+      metadata: INCLUDE_ALL_METADATA

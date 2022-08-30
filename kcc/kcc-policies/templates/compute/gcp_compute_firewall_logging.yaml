@@ -1,0 +1,58 @@
+apiVersion: templates.gatekeeper.sh/v1beta1 
+kind: ConstraintTemplate 
+metadata:
+  name: gcpcomputefirewallloggingv1
+  annotations:
+    description: >-
+      Enforce logging in firewalls
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPComputeFirewallLoggingV1
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package GCPComputeFirewallLoggingV1
+        
+        # if logConfig field is absent, raise violation
+        violation[{"msg": msg}] {
+          asset := input.review.object
+          asset.kind == "ComputeFirewall"
+          
+          not asset.spec.logConfig
+          
+          firewall := asset.metadata.name
+          msg := sprintf("Firewall %v does not have logging enabled.", [firewall])
+        }
+
+        # if logConfig field is present but metadata field do not match constraint
+        violation[{"msg": msg}] {
+          asset := input.review.object
+          asset.kind == "ComputeFirewall"
+          params := input.parameters.logConfig
+
+          logConfigFields := asset.spec.logConfig
+          
+          metadataOutput := checkMetadata(logConfigFields, params)
+
+          subnetName := asset.metadata.name
+          msg := sprintf("Subnet %v has the following violations: %v", [subnetName, metadataOutput])
+        }
+
+
+        # helper function to check if metadata field exists
+        checkMetadata(logConfigFields, params) = output {
+          not logConfigFields.metadata
+          output = "metadata field is not present in logConfig"
+
+        }
+
+        # helper function to check if value in metadata field matches constraint
+        checkMetadata(logConfigFields, params) = output {
+
+          logConfigFields.metadata != params.metadata
+
+          output = "metadata value in logConfig does not match metadata value in constraint"
+        }
+

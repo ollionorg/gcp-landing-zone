@@ -1,0 +1,61 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcppubsubaccesscontrolv1
+  annotations:
+    description: >-
+      Enforce access control of PubSub Topics to authorized parties indicated in Constraint
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPPubSubAccessControlV1
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package GCPPubSubAccessControlV1
+        
+        violation[{"msg": msg}] {
+          asset := input.review.object
+          asset.kind == "IAMPolicy"
+          asset.spec.resourceRef.kind == "PubSubTopic"
+
+          # check if Topic is listed in Constraint
+          topic := asset.spec.resourceRef.name
+          input.parameters.topics[_].name == topic
+          constraintTopic := input.parameters.topics[_]
+
+          inputRolesAndMembers := asset.spec.bindings
+          authorizedRolesAndMembers := constraintTopic.roles
+
+          # loop through all input roles+members and check if role exists and/or if members are authorised
+          some i 
+          msg := checkAuthorization(topic, inputRolesAndMembers[i], authorizedRolesAndMembers)
+
+        }
+
+        # if role is not authorised in PubSub Topic
+        checkAuthorization(topic, inputRolesAndMembers, authorizedRolesAndMembers) = msg {
+          inputRole := inputRolesAndMembers.role
+          not authorizedRolesAndMembers[inputRole]
+          unAuthorizedRole := inputRolesAndMembers.role
+
+          msg := sprintf("Role %v is not authorised for PubSubTopic: %v.", [unAuthorizedRole, topic])
+        }
+
+        # if role is authorised in PubSub Topic, check if members indicated are authorised
+        checkAuthorization(topic, inputRolesAndMembers, authorizedRolesAndMembers) = msg {
+          inputRole := inputRolesAndMembers.role
+          inputMembers := inputRolesAndMembers.members
+
+          authorizedMembers := authorizedRolesAndMembers[inputRole]            
+          unAuthorizedMembers := [member | member := inputMembers[_]; not contains(authorizedMembers, member)]
+
+          msg := sprintf("Member(s) %v not authorised as %v for PubSubTopic: %v.", [unAuthorizedMembers, inputRole, topic])
+        }
+      
+        # helper function to check if element exists in array
+        contains(array, elem) {
+          array[_] = elem
+        }
+

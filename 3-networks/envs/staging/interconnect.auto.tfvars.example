@@ -1,0 +1,5 @@
+default_region2                   = "us-west1"
+domain                            = "cldcvr.com." 
+enable_partner_interconnect      = true
+preactivate_partner_interconnect = true
+

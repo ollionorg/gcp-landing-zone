@@ -1,0 +1,33 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpstorageencryptionv1
+  annotations:
+    description: >-
+      Enforce encryption of CloudStorage Buckets
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPStorageEncryptionV1
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package GCPStorageEncryptionV1
+        
+        violation[{"msg": msg}] {
+          asset := input.review.object
+          asset.kind == "StorageBucket"
+
+          msg := checkEncryption(asset)
+
+        }
+
+        # check if encryption is enabled
+        checkEncryption(asset) = msg {
+
+          not asset.spec.encryption
+          bucketName := asset.metadata.name
+
+          msg := sprintf("Encryption is not configured in StorageBucket: %v. Encryption is required.", [bucketName])
+        }

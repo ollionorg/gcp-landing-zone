@@ -1,0 +1,47 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpkmskeyversioningv1
+  annotations:
+    description: >-
+      Enforce KMS key versioning
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPKMSKeyVersioningV1
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package GCPKMSKeyVersioningV1
+        
+        violation[{"msg": msg}] {
+          asset := input.review.object
+          asset.kind == "KMSCryptoKey"
+
+          params := input.parameters
+
+          msg := checkVersioningEnabled(asset, params)
+
+        }
+
+        # check if key versioning field is present
+        checkVersioningEnabled(asset, params) = msg {
+
+          not asset.spec.skipInitialVersionCreation
+          keyName := asset.metadata.name
+
+          msg := sprintf("skipInitialVersionCreation field is missing in Key: %v. This attribute is required to enable key versioning.", [keyName])
+        }
+
+        # key versioning field is present - check if value input is true
+        checkVersioningEnabled(asset, params) = msg {
+
+          inputFieldValue = asset.spec.skipInitialVersionCreation
+          
+          not inputFieldValue == params.skipInitialVersionCreation
+          
+          keyName := asset.metadata.name
+
+          msg := sprintf("skipInitialVersionCreation field value for Key: %v is %v. Please set it to false to enable key versioning.", [keyName, inputFieldValue])
+        }

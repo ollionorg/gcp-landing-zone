@@ -1,0 +1,218 @@
+changequote(,)
+name: '3-networks - development'
+
+on:
+  pull_request:
+    branches:
+      - INSERT_MAIN_BRANCH
+    paths:
+      - 3-networks/envs/development/**
+  workflow_call:
+
+env:
+  PROJECT_ID: PRJ_B_CICD_XXXX
+  SECRET_ID: git-gcplz-ssh-pvt
+  MIN_TF_VERSION: 1.0.9
+  MIN_GOOG_VERSION: 3.89.0
+  URL_3_NET_SHARED: https://api.github.com/repos/GITHUB_OWNER/REPO_NAME/actions/workflows/3-networks-shared-main.yml/runs
+  GITHUB_TOKEN: ${{ github.token }}
+
+jobs:
+  previous-stage-check:
+    name: "Check Stage 3-networks-shared"
+    runs-on: INSERT_RUNNER_LABEL
+    outputs:
+      success: ${{ steps.stagecheck.outputs.success }}
+      failure: ${{ steps.stagecheck.outputs.failure }}
+    steps:
+    - name: "Check Stage 3-networks-shared"
+      id: stagecheck
+      run: |
+        STATUS=`curl -s \
+            -H"authorization: Bearer ${{ env.GITHUB_TOKEN }}" \
+            -X GET ${{ env.URL_3_NET_SHARED }} | jq -r '.workflow_runs[0].status'`
+        CONCLUSION=`curl -s \
+            -H"authorization: Bearer ${{ env.GITHUB_TOKEN }}" \
+            -X GET ${{ env.URL_3_NET_SHARED }} | jq -r '.workflow_runs[0].conclusion'`
+        LAST_STAGE=true
+        if [ "$STATUS" == completed ] && [ "$CONCLUSION" == success ] ; then  
+                echo "::set-output name=success::$LAST_STAGE"     
+        else
+               LAST_STAGE=false
+               echo "::set-output name=failure::$LAST_STAGE"          
+        fi
+  terraform:
+    needs: [terraform-versioncheck,tflint,previous-stage-check]
+    name: "terraform plan and IAC scan"
+    if: contains(needs.previous-stage-check.outputs.success, 'true')
+    runs-on: INSERT_RUNNER_LABEL
+    defaults:
+      run:
+        working-directory: 3-networks/envs/development/
+    permissions:
+      pull-requests: 'write'
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2.3.5
+        with:
+          fetch-depth: 0
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          version: '338.0.0'
+
+      - name: Trigger build
+        run: |
+          cd ${{ github.workspace}}/build
+          gcloud builds submit --config=github-ssh-cloudbuild-plan.yml \
+            --project=${{ env.PROJECT_ID }} \
+            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/3-networks/envs/development",_WORKFLOW="3-network-dev",_REPO=${GITHUB_REPOSITORY##*/}
+  terraform-versioncheck:
+    name: 'terraform version check'
+    runs-on: INSERT_RUNNER_LABEL
+    defaults:
+      run:
+        working-directory: 3-networks/envs/development/
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: HashiCorp - Setup Terraform
+      uses: hashicorp/setup-terraform@v1.2.1
+      with:
+        terraform_version: 1.0.9
+        terraform_wrapper: false
+
+    - name: Terraform Init
+      run: terraform init -reconfigure
+
+    # Check Terraform provider version
+    - name: Terraform Version Check
+      id: tf-versioncheck
+      continue-on-error: true
+      run: |
+        export NEWVERSION="$(terraform version | awk '/^Terraform /{print $NF}' | sed 's,[a-zA-Z],,g')"
+        export EXPECTEDVERSION="${{env.MIN_TF_VERSION}}"
+        function version_le() { test "$(echo "$NEWVERSION $EXPECTEDVERSION" | tr " " "\n" | sort -V | head -n 1)" == "$1"; }
+        function version_lt() { test "$(echo "$NEWVERSION $EXPECTEDVERSION" | tr " " "\n" | sort -rV | head -n 1)" != "$1"; }
+
+        if version_lt "$NEWVERSION" "$EXPECTEDVERSION"; then
+          echo "::set-output name=comment::Terraform version check failed"
+          exit 1
+        fi
+
+    - name: Google Provider version check
+      id: goog-versioncheck
+      continue-on-error: true
+      run: |
+        export NEWVERSION="$(terraform version | awk '/^+.*google /{print $NF}' | sed 's,[a-zA-Z],,g')"
+        export EXPECTEDVERSION="${{env.MIN_GOOG_VERSION}}"
+        function version_le() { test "$(echo "$NEWVERSION $EXPECTEDVERSION" | tr " " "\n" | sort -V | head -n 1)" == "$1"; }
+        function version_lt() { test "$(echo "$NEWVERSION $EXPECTEDVERSION" | tr " " "\n" | sort -rV | head -n 1)" != "$1"; }
+
+        if version_lt "$NEWVERSION" "$EXPECTEDVERSION"; then
+          echo "::set-output name=comment::Google Provider version check failed"
+          exit 1
+        fi
+
+    - name: Google Beta Provider version check
+      id: goog-beta-versioncheck
+      continue-on-error: true
+      run: |
+        export NEWVERSION="$(terraform version | awk '/^+.*google-beta /{print $NF}' | sed 's,[a-zA-Z],,g')"
+        export EXPECTEDVERSION="${{env.MIN_GOOG_VERSION}}"
+        function version_le() { test "$(echo "$NEWVERSION $EXPECTEDVERSION" | tr " " "\n" | sort -V | head -n 1)" == "$1"; }
+        function version_lt() { test "$(echo "$NEWVERSION $EXPECTEDVERSION" | tr " " "\n" | sort -rV | head -n 1)" != "$1"; }
+
+        if version_lt "$NEWVERSION" "$EXPECTEDVERSION"; then
+          echo "::set-output name=comment::Google Beta Provider version check failed"
+          exit 1
+        fi
+
+    - name: Comment PR for failed terraform check
+      id: commentpr
+      if: steps.tf-versioncheck.outcome != 'success'
+      uses: actions/github-script@v5
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Terraform version checked failed. Please use v1.0.9'
+          })
+
+    - name: Comment PR for failed Google provider check
+      id: commentpr2
+      if: steps.goog-versioncheck.outcome != 'success'
+      uses: actions/github-script@v5
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Google Provider version checked failed. Please use v3.89.0'
+          })
+
+    - name: Comment PR for failed Google Beta Provider check
+      id: commentpr3
+      if: steps.goog-beta-versioncheck.outcome != 'success'
+      uses: actions/github-script@v5
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Google Beta Provider version check failed. Please use v3.89.0'
+          })
+
+    - name: Fail workflow
+      id: failworkflow
+      if: steps.tf-versioncheck.outcome != 'success' || steps.goog-versioncheck.outcome != 'success' || steps.goog-beta-versioncheck.outcome != 'success'
+      run: exit 1
+  tflint:
+    runs-on: INSERT_RUNNER_LABEL
+    defaults:
+      run:
+        working-directory: 3-networks/
+    steps:
+    - uses: actions/checkout@v2
+      id: tflint
+      name: Checkout source code
+    - uses: terraform-linters/setup-tflint@v1
+      name: Setup TFLint
+      with:
+        tflint_version: v0.29.0
+
+    - name: Show version
+      run: tflint --version
+
+    - name: Init TFLint
+      run: tflint --init
+
+    - name: Run TFLint
+      run: tflint -f compact
+
+  last-stage-failed:
+    needs: [previous-stage-check]
+    runs-on: INSERT_RUNNER_LABEL
+    if: contains(needs.previous-stage-check.outputs.failure, 'false' )
+    steps:
+    - name: Comment PR for failed previous stage
+      id: commentpr
+      uses: actions/github-script@v5
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '3-networks-development plan stage failed. Please run 3-networks-shared before running 3-networks-development.'
+          })

@@ -1,0 +1,53 @@
+name: 'modules - plan'
+
+on:
+  pull_request:
+    branches:
+      - INSERT_MAIN_BRANCH
+    paths:
+      - modules/**
+
+env:
+  PROJECT_ID: PRJ_B_CICD_XXXX
+  SECRET_ID: git-gcplz-ssh-pvt
+
+jobs:
+  
+  tf-0-bootstrap:
+    name: "tf plan for 0-bootstrap"
+    uses: ./.github/workflows/0-bootstrap.yml
+  
+  tf-1-org:
+    needs: tf-0-bootstrap
+    name: "tf plan for 1-org"
+    uses: ./.github/workflows/1-org.yml
+  
+  tf-2-env-dev:
+    needs: tf-1-org
+    name: "tf plan for 2-env development"
+    uses: ./.github/workflows/2-env-development.yml
+
+  tf-3-networks-shared:
+    needs: [tf-2-env-dev]
+    name: "tf plan for 3-networks shared"
+    uses: ./.github/workflows/3-networks-shared.yml
+  
+  tf-3-networks-dev:
+    needs: tf-3-networks-shared
+    name: "tf plan for 3-networks dev"
+    uses: ./.github/workflows/3-networks-development.yml
+
+  tf-4-projects-BU_NAME-shared:
+    needs: [tf-3-networks-dev]
+    name: "tf plan for 4-projects BU_NAME shared"
+    uses: ./.github/workflows/4-projects-shared-BU_NAME.yml
+  
+  tf-4-projects-BU_NAME-dev:
+    needs: tf-4-projects-BU_NAME-shared
+    name: "tf plan for 4-projects BU_NAME development"
+    uses: ./.github/workflows/4-projects-development-BU_NAME.yml
+
+  tf-5-app-infra-BU_NAME-dev:
+    needs: tf-4-projects-BU_NAME-dev
+    name: "tf plan for 5-app-infra BU_NAME development"
+    uses: ./.github/workflows/5-app-infra-development-BU_NAME.yml

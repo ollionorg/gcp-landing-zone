@@ -1,13 +1,29 @@
-### Checklist for raising a PR
-- [ ] Is this step done?
-- [ ] Did you check the contributing doc?
-- [ ] Did you check the existing issues for similar queries?
+### Which stage is this PR for? Tick only 1 option.
+- [ ] `0-bootstrap`
+- [ ] `1-org`
+- [ ] `2-env`
+- [ ] `3-networks`
+- [ ] `4-projects`
+- [ ] `5-app-infra`
+- [ ] `modules`
+- [ ] `Others`
 
+### Which environment is this being deployed for? Tick as applicable based on above question.
+- [ ] `shared`
+- [ ] `development`
+- [ ] `staging`
+- [ ] `production`
+- [ ] `NA`
 
-### Describe your PR
-
-
-### Add additional question here
+### Are the previous stages/environments deployed? Tick as applicable based on above questions.
 - [ ] `Yes`
 - [ ] `No`
 - [ ] `NA`
+
+### Have you checked for any typos and/or spelling mistakes?
+- [ ] `Yes`
+- [ ] `No`
+
+### Is this linked to any existing issues?
+- [ ] `Yes`
+- [ ] `No`

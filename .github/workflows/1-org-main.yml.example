@@ -1,0 +1,51 @@
+name: '1-org - apply'
+
+on:
+  push:
+    branches:
+      - INSERT_MAIN_BRANCH
+    paths:
+      - 1-org/**
+
+env:
+  PROJECT_ID: PRJ_B_CICD_XXXX
+  SECRET_ID: git-gcplz-ssh-pvt
+  BRANCH_NAME: INSERT_MAIN_BRANCH
+
+jobs:
+  terraform:
+    name: "terraform apply"
+    runs-on: INSERT_RUNNER_LABEL
+    defaults:
+      run:
+        working-directory: 1-org/
+    permissions:
+      pull-requests: 'write'
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2.3.5
+        with:
+          fetch-depth: 0
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          version: '338.0.0'
+
+      - name: Trigger build
+        run: |
+          cd ${{ github.workspace}}/build
+          gcloud builds submit --config=github-ssh-cloudbuild-apply.yml \
+            --project=${{ env.PROJECT_ID }} \
+            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ env.BRANCH_NAME }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/1-org/envs/shared",_GIT_AUTHOR=${{ github.actor }}
+      - name: Report Status
+        uses: ravsamhq/notify-slack-action@v1
+        if: always()
+        with:
+          notification_title: '{workflow} has {status_message}'
+          status: ${{ job.status }}
+          notify_when : 'failure'
+          footer: 'Linked to Repo <{repo_url}|{repo}>'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.GCF_SLACK_WEBHOOK }}

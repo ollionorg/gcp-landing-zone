@@ -1,0 +1,6 @@
+sync_branch      = "SYNC_BRANCH"
+sync_repo        = "https://github.com/SYNC_REPO"
+policy_dir       = "gcc/kcc-policies/constraints"
+scc_name         = "securitycenter-admin-sa"
+source_name      = "Gatekeeper"
+findings_sa_name = "securitycenter-findings-sa"

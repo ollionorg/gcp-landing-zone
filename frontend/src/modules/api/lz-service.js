@@ -3,6 +3,10 @@ import reusableContent from "../utils/ReuseableContent";
 // Get resource data using API call
 const resouceUrl = "/resource";
 
+const scriptApi = 'http://127.0.0.1:9000/modifyvariables'
+const reportUrl = 'http://127.0.0.1:9000/summaryreport'
+const evidenceUrl = 'http://127.0.0.1:9000/evidenceData'
+
 // For third party APIs use full URL
 // ex. HTTP.get("https://example.com/user")
 
@@ -26,12 +30,12 @@ export default {
     let body = {
       "budata": data
     }
-    return HTTP.post(process.env.VUE_APP_SCRIPT_URL, body);
+    return HTTP.post(scriptApi, body);
   },
   getReportData() {
-    return HTTP.get(process.env.VUE_APP_REPORT_URL);
+    return HTTP.get(reportUrl);
   },
   getEvidenceData(){
-    return HTTP.get(process.env.VUE_APP_EVIDENCE_URL);
+    return HTTP.get(evidenceUrl);
   }
 };

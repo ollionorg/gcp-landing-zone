@@ -1,7 +1,7 @@
 import axios from "axios";
-
+const  gitStatusApi = 'https://api.github.com/repos'
 const axiosInstance = axios.create({
-  baseURL: process.env.VUE_APP_GIT_STATUS_API,
+  baseURL: gitStatusApi,
   withCredentials: false,
   headers: {
     Accept: "application/json",

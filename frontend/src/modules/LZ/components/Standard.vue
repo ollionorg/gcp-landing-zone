@@ -31,7 +31,7 @@
         </Container>
       </Container>
     </Wrapper>
-
+<!-- commented for current release -->
     <!-- <Container padding="20px 0px 10px 0px" direction="row" :gap="15">
       <Checkbox
         :size="size"

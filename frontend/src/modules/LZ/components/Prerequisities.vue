@@ -447,7 +447,7 @@ roles/resourcemanager.folderCreator"
               >
                 Create a new branch from the main branch which will be in
                 template form, New branch name should be
-                <span class="bg">${bu_name}-init </span>
+                <span class="bg">${prj-name}-init </span>
               </Typography>
             </Container>
           </Container>

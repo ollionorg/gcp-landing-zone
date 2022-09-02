@@ -311,14 +311,14 @@
       ]
     },
     "toolTipsPrmyContact": {
-      "content": "<span class='fa-dark fs-12 paragraph-1'>That’s the email address of a person who is responsible for the Landing Zone deployment</span>",
+      "content": "<span class='fa-dark fs-12 paragraph-1'>That’s the email address of a person who is responsible for the Landing Zone deployment <br> Note: Special charchters are not allowed for this field replace @ with _at_ and . with _</span>",
       "container": "div.flow-layout",
       "classes": [
         "black"
       ]
     },
     "toolTipsSecContact": {
-      "content": "<span class='fa-dark fs-12 paragraph-1'>That’s the email address of a backup person who is responsible for the Landing Zone deployment</span>",
+      "content": "<span class='fa-dark fs-12 paragraph-1'>That’s the email address of a backup person who is responsible for the Landing Zone deployment <br> Note: Special charchters are not allowed for this field replace @ with _at_ and . with _</span>",
       "container": "div.flow-layout",
       "classes": [
         "black"

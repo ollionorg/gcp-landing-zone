@@ -28,7 +28,6 @@
             ? 'visited'
             : 'not-visited'
         "
-        @click="onStandard"
         :disabled="false"
         :loading="false"
       >
@@ -46,7 +45,6 @@
             ? 'visited'
             : 'not-visited'
         "
-        @click="onBestPractices"
         :disabled="false"
         :loading="false"
       >
@@ -64,7 +62,6 @@
             : 'not-visited'
         "
         :state="stepObj.step3 ? 'filled' : 'outlined'"
-        @click="onPredquist"
         :disabled="false"
         :loading="false"
       >
@@ -82,7 +79,6 @@
             : 'not-visited'
         "
         :state="stepObj.step4 ? 'filled' : 'outlined'"
-        @click="onVar"
         :disabled="false"
         :loading="false"
       >
@@ -100,7 +96,6 @@
             : 'not-visited'
         "
         :state="stepObj.step5 ? 'filled' : 'outlined'"
-        @click="onReview"
         :disabled="false"
         :loading="false"
       >
@@ -118,7 +113,6 @@
             : 'not-visited'
         "
         :state="stepObj.step6 ? 'filled' : 'outlined'"
-        @click="onEexecution"
         :disabled="false"
         :loading="false"
       >
@@ -136,7 +130,6 @@
             : 'not-visited'
         "
         :state="stepObj.step7 ? 'filled' : 'outlined'"
-        @click="onDeploy"
         :disabled="false"
         :loading="false"
       >
@@ -323,27 +316,6 @@ export default {
     fetchStepperNo() {
       this.$store.dispatch("getStepper");
       this.$store.dispatch("getStepperPosition");
-    },
-    onStandard() {
-      this.show = 1;
-    },
-    onBestPractices() {
-      this.show = 2;
-    },
-    onPredquist() {
-      this.show = 3;
-    },
-    onVar() {
-      this.show = 4;
-    },
-    onReview() {
-      this.show = 5;
-    },
-    onEexecution() {
-      this.show = 6;
-    },
-    onDeploy() {
-      this.show = 7;
     },
 
     onComplete() {

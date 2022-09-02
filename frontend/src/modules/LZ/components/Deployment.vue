@@ -617,13 +617,13 @@
               class="width-15-per padding-0 margin-tp--24"
               v-if="DeployementData.gitAllowPr"
             >
+              <!-- :disabled="checkSubmit" -->
               <Button
                 size="normal"
                 type="primary"
                 state="outlined"
                 class="margin-tp-20 border-blue fs-12"
                 @click="add('switch6', 'check7')"
-                :disabled="checkSubmit"
                 :loading="false"
                 loadingType="background"
               >
@@ -675,9 +675,11 @@
                 v-for="(item, index) in DeployementData.BUArray"
                 :key="item.id"
                 class="padding-0"
+                type="grid"
+                itemSize="40%"
               >
                 <FormField
-                  class="padding-0 width-60-per"
+                  class="padding-0 width-100-per"
                   v-for="(innerItem, key) in item.ProjectSetup"
                   :key="innerItem.id"
                 >
@@ -1068,9 +1070,10 @@ export default {
             submitFlag: false,
             editFlag: true,
             ProjectSetup: [
-              { id: 1, projectSetupPrUrl: "", type: "dev", gitResp: false },
-              { id: 2, projectSetupPrUrl: "", type: "stage", gitResp: false },
-              { id: 3, projectSetupPrUrl: "", type: "prod", gitResp: false },
+              { id: 1, projectSetupPrUrl: "", type: "shared", gitResp: false },
+              { id: 2, projectSetupPrUrl: "", type: "dev", gitResp: false },
+              { id: 3, projectSetupPrUrl: "", type: "stage", gitResp: false },
+              { id: 4, projectSetupPrUrl: "", type: "prod", gitResp: false },
             ],
             instruSetup: [
               { id: 1, instruSetupPrUrl: "", type: "dev", gitResp: false },
@@ -1392,13 +1395,18 @@ export default {
           this.DeployementChecks[prop] = false;
           this.DeployementChecks.switch10 = false;
         }
-        const buFlag = this.DeployementData.BUArray[index1][arrayName].find(
-          (x) => x[fieldName] == true
-        );
+        if (req === "") {
+          const buFlag = this.DeployementData.BUArray[index1][arrayName].find(
+            (x) => x[fieldName] == true
+          );
 
-        if (buFlag != undefined) {
-          this.DeployementChecks[prop] = true;
-          this.AllowChecks[check] = false;
+          if (buFlag != undefined) {
+            this.DeployementChecks[prop] = true;
+            this.AllowChecks[check] = false;
+          } else {
+            this.DeployementChecks[prop] = false;
+            this.AllowChecks[check] = true;
+          }
         } else {
           this.DeployementChecks[prop] = false;
           this.AllowChecks[check] = true;
@@ -1420,9 +1428,10 @@ export default {
           submitFlag: false,
           editFlag: false,
           ProjectSetup: [
-            { id: 1, projectSetupPrUrl: "", type: "dev", gitResp: false },
-            { id: 2, projectSetupPrUrl: "", type: "stage", gitResp: false },
-            { id: 3, projectSetupPrUrl: "", type: "prod", gitResp: false },
+            { id: 1, projectSetupPrUrl: "", type: "shared", gitResp: false },
+            { id: 2, projectSetupPrUrl: "", type: "dev", gitResp: false },
+            { id: 3, projectSetupPrUrl: "", type: "stage", gitResp: false },
+            { id: 4, projectSetupPrUrl: "", type: "prod", gitResp: false },
           ],
           instruSetup: [
             { id: 1, instruSetupPrUrl: "", type: "dev", gitResp: false },
@@ -1437,7 +1446,7 @@ export default {
     },
 
     // below method is for calling shell script api after every submit click and
-    //  if success enable add more button and enable step and if not disable it
+    //  if success enable add more button and enable next step and if not disable it
     async onSubmit(index, swicthcheck, check) {
       if (
         this.checkValidity(this.DeployementData.BUArray[index].buName) &&

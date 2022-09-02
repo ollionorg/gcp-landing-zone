@@ -37,6 +37,17 @@ steps:
       export gh_token=$(echo "$$GH_TOKEN" | jq -r .GITHUB_TOKEN)
       bash configure.sh $gh_token
 
+- id: 'SCC terraform apply'
+  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
+  entrypoint: 'bash'
+  args:
+  - -c
+  - | 
+      cd ${_GIT_WORK_DIR}/scc
+      chmod +x scc-controller.sh
+      chmod +x scc-gatekeeper.sh
+      terraform init
+      terraform apply -auto-approve
 
 availableSecrets:
   secretManager:
@@ -53,4 +64,4 @@ substitutions:
 options:
     dynamic_substitutions: true
 
-timeout: 3600s
+timeout: 4800s

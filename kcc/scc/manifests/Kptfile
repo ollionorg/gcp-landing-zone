@@ -1,0 +1,22 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: manifests
+  annotations:
+    config.kubernetes.io/local-config: "true"
+upstream:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/gatekeeper-securitycenter
+    directory: /manifests
+    ref: v0.3.0
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/gatekeeper-securitycenter
+    directory: /manifests
+    ref: v0.3.0
+    commit: 2d2d533c760df8f8a593da609eb131091d8b6f16
+info:
+  description: kpt package for gatekeeper-securitycenter

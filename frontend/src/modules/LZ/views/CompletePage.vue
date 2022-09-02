@@ -858,9 +858,9 @@
             </Container>
           </Container>
           <Container
-          class="padding-0"
-          :gap="0"
-          direction="column"
+            class="padding-0"
+            :gap="0"
+            direction="column"
             v-for="(item, index) in variablePageData.customLabel"
             :key="item.id"
           >
@@ -1037,7 +1037,7 @@
                 weight="light"
                 color="dark"
               >
-                {{ prereqChecks.switch4 ? "Completed" :  "Not Completed" }}
+                {{ prereqChecks.switch4 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1061,7 +1061,7 @@
                 weight="light"
                 color="dark"
               >
-                {{ prereqChecks.switch5 ? "Completed" :  "Not Completed" }}
+                {{ prereqChecks.switch5 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1116,7 +1116,7 @@
                 weight="light"
                 color="dark"
               >
-                {{ prereqChecks.switch6 ? "Completed" :  "Not Completed" }}
+                {{ prereqChecks.switch6 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1140,7 +1140,7 @@
                 weight="light"
                 color="dark"
               >
-                {{ prereqChecks.switch7 ? "Completed" :  "Not Completed" }}
+                {{ prereqChecks.switch7 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1164,7 +1164,7 @@
                 weight="light"
                 color="dark"
               >
-                {{ prereqChecks.switch8 ? "Completed" :  "Not Completed" }}
+                {{ prereqChecks.switch8 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1188,7 +1188,7 @@
                 weight="light"
                 color="dark"
               >
-                {{ prereqChecks.switch9 ? "Completed" :  "Not Completed" }}
+                {{ prereqChecks.switch9 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1216,7 +1216,7 @@
                 weight="light"
                 color="dark"
               >
-                {{ prereqChecks.switch10 ? "Completed" :  "Not Completed" }}
+                {{ prereqChecks.switch10 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1396,7 +1396,7 @@
                 weight="light"
                 color="dark"
               >
-                {{ executionSwitch.switch1 ? "Completed" :  "Not Completed" }}
+                {{ executionSwitch.switch1 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1421,7 +1421,7 @@
                 weight="light"
                 color="dark"
               >
-                {{ executionSwitch.switch2 ? "Completed" :  "Not Completed" }}
+                {{ executionSwitch.switch2 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1458,7 +1458,7 @@ $ chmod +x wrapper.sh ; ./wrapper.sh"
                 weight="light"
                 color="dark"
               >
-                {{ executionSwitch.switch3 ? "Completed" :  "Not Completed" }}
+                {{ executionSwitch.switch3 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1483,7 +1483,7 @@ $ chmod +x wrapper.sh ; ./wrapper.sh"
                 weight="light"
                 color="dark"
               >
-                {{ executionSwitch.switch4 ? "Completed" :  "Not Completed" }}
+                {{ executionSwitch.switch4 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1523,7 +1523,7 @@ Allow auto-merge and allow auto-deletion of branches"
                 weight="light"
                 color="dark"
               >
-                {{ executionSwitch.switch5 ? "Completed" :  "Not Completed" }}
+                {{ executionSwitch.switch5 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1548,7 +1548,7 @@ Allow auto-merge and allow auto-deletion of branches"
                 weight="light"
                 color="dark"
               >
-                {{ executionSwitch.switch6 ? "Completed" :  "Not Completed" }}
+                {{ executionSwitch.switch6 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1573,7 +1573,7 @@ Allow auto-merge and allow auto-deletion of branches"
                 weight="light"
                 color="dark"
               >
-                {{ executionSwitch.switch7 ? "Completed" :  "Not Completed" }}
+                {{ executionSwitch.switch7 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1598,7 +1598,7 @@ Allow auto-merge and allow auto-deletion of branches"
                 weight="light"
                 color="dark"
               >
-                {{ executionSwitch.switch8 ? "Completed" :  "Not Completed" }}
+                {{ executionSwitch.switch8 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1750,7 +1750,7 @@ Allow auto-merge and allow auto-deletion of branches"
                 color="dark"
                 v-if="!deployData.gitAllowPr"
               >
-                {{ deployChecks.switch2 ? "Completed" :  "Not Completed" }}
+                {{ deployChecks.switch2 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1783,7 +1783,7 @@ Allow auto-merge and allow auto-deletion of branches"
                 color="dark"
                 v-if="!deployData.gitAllowPr"
               >
-                {{ deployChecks.switch3 ? "Completed" :  "Not Completed" }}
+                {{ deployChecks.switch3 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1805,7 +1805,12 @@ Allow auto-merge and allow auto-deletion of branches"
             </Container>
 
             <Container class="width-50-per" direction="column" align="top left">
-              <Container v-if="deployData.gitAllowPr" direction="column" class="padding-0" :gap="0">
+              <Container
+                v-if="deployData.gitAllowPr"
+                direction="column"
+                class="padding-0"
+                :gap="0"
+              >
                 <Container
                   direction="row"
                   v-for="(item, index) in deployData.EnvSetup"
@@ -1829,7 +1834,7 @@ Allow auto-merge and allow auto-deletion of branches"
                 color="dark"
                 v-if="!deployData.gitAllowPr"
               >
-                {{ deployChecks.switch4 ? "Completed" :  "Not Completed" }}
+                {{ deployChecks.switch4 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1851,7 +1856,12 @@ Allow auto-merge and allow auto-deletion of branches"
             </Container>
 
             <Container class="width-50-per" direction="column">
-              <Container v-if="deployData.gitAllowPr" direction="column" class="padding-0" :gap="0">
+              <Container
+                v-if="deployData.gitAllowPr"
+                direction="column"
+                class="padding-0"
+                :gap="0"
+              >
                 <Container
                   direction="row"
                   v-for="(item, index) in deployData.NetworkSetup"
@@ -1875,7 +1885,7 @@ Allow auto-merge and allow auto-deletion of branches"
                 color="dark"
                 v-if="!deployData.gitAllowPr"
               >
-                {{ deployChecks.switch5 ? "Completed" :  "Not Completed" }}
+                {{ deployChecks.switch5 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1916,7 +1926,7 @@ Allow auto-merge and allow auto-deletion of branches"
                 color="dark"
                 v-if="!deployData.gitAllowPr"
               >
-                {{ deployChecks.switch6 ? "Completed" :  "Not Completed" }}
+                {{ deployChecks.switch6 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1936,14 +1946,17 @@ Allow auto-merge and allow auto-deletion of branches"
                 color="light"
                 v-if="index == 0"
               >
-                
-                  Deployment of Project Setup: Pull Request URL
-                
+                Deployment of Project Setup: Pull Request URL
               </Typography>
             </Container>
 
             <Container class="width-50-per" direction="column">
-              <Container v-if="deployData.gitAllowPr" direction="column" class="padding-0" :gap="0">
+              <Container
+                v-if="deployData.gitAllowPr"
+                direction="column"
+                class="padding-0"
+                :gap="0"
+              >
                 <Container
                   direction="row"
                   v-for="(innerItem, index) in item.ProjectSetup"
@@ -1957,7 +1970,9 @@ Allow auto-merge and allow auto-deletion of branches"
                     color="dark"
                   >
                     {{ item.buName }}:({{ innerItem.type }}):{{
-                      innerItem.projectSetupPrUrl?innerItem.projectSetupPrUrl:'No data found'
+                      innerItem.projectSetupPrUrl
+                        ? innerItem.projectSetupPrUrl
+                        : "No data found"
                     }}
                   </Typography>
                 </Container>
@@ -1969,7 +1984,7 @@ Allow auto-merge and allow auto-deletion of branches"
                 color="dark"
                 v-if="!deployData.gitAllowPr"
               >
-                {{ deployChecks.switch7 ? "Completed" :  "Not Completed" }}
+                {{ deployChecks.switch7 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -1990,14 +2005,17 @@ Allow auto-merge and allow auto-deletion of branches"
                 color="light"
                 v-if="index == 0"
               >
-                  Deployment of Application Infrastructure Setup: Pull Request
-                  URL
-               
+                Deployment of Application Infrastructure Setup: Pull Request URL
               </Typography>
             </Container>
 
             <Container class="width-50-per" direction="column">
-              <Container v-if="deployData.gitAllowPr" direction="column" class="padding-0" :gap="0">
+              <Container
+                v-if="deployData.gitAllowPr"
+                direction="column"
+                class="padding-0"
+                :gap="0"
+              >
                 <Container
                   direction="row"
                   v-for="(innerItem, index) in item.instruSetup"
@@ -2011,7 +2029,9 @@ Allow auto-merge and allow auto-deletion of branches"
                     color="dark"
                   >
                     {{ item.buName }}:({{ innerItem.type }}):{{
-                      innerItem.instruSetupPrUrl?innerItem.instruSetupPrUrl:'No data found'
+                      innerItem.instruSetupPrUrl
+                        ? innerItem.instruSetupPrUrl
+                        : "No data found"
                     }}
                   </Typography>
                 </Container>
@@ -2023,7 +2043,7 @@ Allow auto-merge and allow auto-deletion of branches"
                 color="dark"
                 v-if="!deployData.gitAllowPr"
               >
-                {{ deployChecks.switch8 ? "Completed" :  "Not Completed" }}
+                {{ deployChecks.switch8 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -2108,7 +2128,7 @@ Allow auto-merge and allow auto-deletion of branches"
                 weight="light"
                 color="dark"
               >
-                {{ deployChecks.switch9 ? "Completed" :  "Not Completed" }}
+                {{ deployChecks.switch9 ? "Completed" : "Not Completed" }}
               </Typography>
             </Container>
           </Container>
@@ -2136,8 +2156,7 @@ Allow auto-merge and allow auto-deletion of branches"
                 weight="light"
                 color="dark"
               >
-              {{ deployChecks.switch10 ? "Script Executed" :  "Not Executed" }}
-                
+                {{ deployChecks.switch10 ? "Script Executed" : "Not Executed" }}
               </Typography>
             </Container>
           </Container>
@@ -2230,7 +2249,7 @@ export default {
     onProceed() {
       this.openModalFlag = false;
     },
-    // below method is for  creating summary report making it downlaodable
+    // below method is for  creating summary report and  making it downlaodable
     async downloadSummaryReport() {
       this.loadFlag = true;
       let excelData = ExcelData.summaryData;
@@ -2283,7 +2302,7 @@ export default {
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
-    // below method is for  creating complaince report making it downlaodable
+    // below method is for  creating complaince report and  making it downlaodable
     downloadComplainceReport() {
       let excelData = ExcelData.excelData;
       reusableContent.methods.downloadCsv(excelData, "Complaince Report");
@@ -2335,22 +2354,7 @@ export default {
       } else {
         this.reviewedFiles = [];
       }
-      if (this.DeployChecks) {
-        this.deployChecks = this.DeployChecks;
-      } else {
-        this.deployChecks = {
-          switch1: false,
-          switch2: false,
-          switch3: false,
-          switch4: false,
-          switch5: false,
-          switch6: false,
-          switch7: false,
-          switch8: false,
-          switch9: false,
-          switch10: false,
-        };
-      }
+      
       if (this.ExecutionSwitch) {
         this.executionSwitch = this.ExecutionSwitch;
       } else {
@@ -2365,9 +2369,35 @@ export default {
           switch8: false,
         };
       }
-      if (this.DeployData) {
+      if (
+        this.DeployData !== undefined &&
+        this.DeployData &&
+        this.DeployData.gitAllowPr
+      ) {
         this.deployData = this.DeployData;
-      } else {
+      } else if (
+        this.DeployData !== undefined &&
+        this.DeployChecks !== undefined &&
+        !this.DeployData.gitAllowPr &&
+        this.DeployChecks
+      ) {
+        this.deployData.fileArray = this.DeployData.fileArray;
+        this.deployChecks = this.DeployChecks;
+      } 
+      else {
+        this.deployChecks = {
+          switch1: false,
+          switch2: false,
+          switch3: false,
+          switch4: false,
+          switch5: false,
+          switch6: false,
+          switch7: false,
+          switch8: false,
+          switch9: false,
+          switch10: false,
+        };
+
         this.deployData = {
           gitAllowPr: false,
           wrapperFile: "No data found",
@@ -2475,9 +2505,11 @@ export default {
                   gitResp: false,
                 },
               ],
-            }
+            },
           ],
-        };
+        }
+      }
+    
         if (this.PrerequisticsCheck) {
           this.prereqChecks = this.PrerequisticsCheck;
         } else {
@@ -2539,7 +2571,7 @@ export default {
             ],
           };
         }
-      }
+
     },
   },
 };

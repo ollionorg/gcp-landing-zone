@@ -274,7 +274,7 @@ $ chmod +x wrapper.sh ; ./wrapper.sh"
                 class="fc-light text-align-left fs-16 padding-0"
               >
                 Wrapper script will create following branch protection rules for
-                branch <span class="bg"> ${bu_name}-main</span>
+                branch <span class="bg"> ${prj-name}-main</span>
               </Typography>
               <Wrapper borderRadius="4px" background="element">
                 <Logs
@@ -336,7 +336,7 @@ Requires administrator
                 <span class="bg">build</span> ,
                 <span class="bg">0-bootstrap</span> ,
                 <span class="bg">README.md</span> to
-                <span class="bg">${bu_name}-init</span> and ensure everything
+                <span class="bg">${prj-name}-init</span> and ensure everything
                 gets successfully applied.
               </Typography>
             </Container>
@@ -378,10 +378,10 @@ Requires administrator
                 color="default"
                 class="fc-light text-align-left fs-16 padding-0"
                 >On GitHub, create a new branch
-                <span class="bg">${bu_name}-main</span> from the main branch and
-                create a pull request to merge the changes from step 14 into
-                <span class="bg">${bu_name}-main</span> from
-                <span class="bg">${bu_name}-init</span> .
+                <span class="bg">${prj-name}-main</span> from the main branch and
+                create a pull request to merge the changes from step 3 into
+                <span class="bg">${prj-name}-main</span> from
+                <span class="bg">${prj-name}-init</span> .
               </Typography>
             </Container>
           </Container>
@@ -427,7 +427,7 @@ Requires administrator
                 the
                 <span class="bg">backend.tf</span> changes made by wrapper
                 script for each stage in
-                <span class="bg">${bu_name}-init</span>.
+                <span class="bg">${prj-name}-init</span>.
               </Typography>
             </Container>
           </Container>

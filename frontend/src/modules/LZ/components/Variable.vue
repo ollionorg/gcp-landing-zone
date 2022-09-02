@@ -234,7 +234,7 @@
                     weight="medium"
                     color="light"
                   >
-                    Parent Folder
+                    Parent Folder (Optional)
                   </Typography>
                   <Icon
                     color="gray-300"
@@ -492,14 +492,14 @@
                 @blur="checkError"
                 :value.sync="VariablePageData.PrimaryEmail"
                 class="width-50-per"
-                placeholder="Enter email Ex:- some_text@<domain_name>.com"
+                placeholder="Enter email Ex:- some_text_at_<domain_name>_com"
               />
               <Typography
                 type="p2"
                 weight="medium"
                 color="error"
                 v-if="
-                  emailCheck(VariablePageData.PrimaryEmail, 'PrimaryEmailFlag')
+                  userEmailCheck(VariablePageData.PrimaryEmail, 'PrimaryEmailFlag')
                 "
               >
                 Enter Valid Email
@@ -530,13 +530,13 @@
                 @blur="checkError"
                 :value.sync="VariablePageData.SecEmail"
                 class="width-50-per"
-                placeholder="Enter email Ex:- some_text@<domain_name>.com"
+                placeholder="Enter email Ex:- some_text_at_<domain_name>_com"
               />
               <Typography
                 type="p2"
                 weight="medium"
                 color="error"
-                v-if="emailCheck(VariablePageData.SecEmail, 'SecEmailFlag')"
+                v-if="userEmailCheck(VariablePageData.SecEmail, 'SecEmailFlag')"
               >
                 Enter Valid Email
               </Typography>
@@ -1197,14 +1197,18 @@ export default {
       const val = Object.values(this.VariablePageData);
       const val2 = Object.values(this.VariablePageValidData);
 
-      val.splice(15, 1); //optional are removed
-      val.splice(22, 1); //optional are removed
-      val2.splice(15, 1); //optional are removed
-      val2.splice(22, 1); //optional are removed
+      val.splice(5, 1); //optional are removed
+      val.splice(14, 1); //optional are removed
+      val.splice(21, 1); //optional are removed
+      val2.splice(5, 1); //optional are removed
+      val2.splice(14, 1); //optional are removed
+      val2.splice(21, 1); //optional are removed
 
       const findVal = val.indexOf("");
       const findval2 = val2.indexOf(false);
-      const custval = val[22].findIndex((x) => x.name == "" || x.key == "");
+      const custval = val[val.length - 1].findIndex(
+        (x) => x.name == "" || x.key == ""
+      );
       if (findVal == -1 && custval == -1 && findval2 == -1) {
         return true;
       }
@@ -1296,6 +1300,19 @@ export default {
         return false;
       }
     },
+    userEmailCheck(email, validFlag) {
+      // method for validating emails
+      if (email != "") {
+        const regex =
+          /^\w{1,20}(-?\.\w{1,10}){0,20}_at_\w{2,10}([-]?\w{1,10})*(_\w{2,3})+$/g;
+        const regFlag = regex.test(email);
+        this.VariablePageValidData[validFlag] = regFlag;
+        return !regFlag;
+      } else {
+        this.VariablePageValidData[validFlag] = false;
+        return false;
+      }
+    },
     ipCheck(ip, validFlag) {
       if (ip != "") {
         // Matches max values in 255.255.255.25/32
@@ -1349,7 +1366,6 @@ export default {
     },
     // add custom labels
     add() {
-      debugger;
       this.VariablePageData.customLabel.push({
         id: this.VariablePageData.customLabel.length + 1,
         key: "",

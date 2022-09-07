@@ -71,7 +71,8 @@ For more information about the permissions that are required, and the resources 
 * Cloud Build will deploy the terraform code accordingly.
 
 ## Deployment Process
-1. Create a new branch from the main branch which will be in template form, New branch name should be `${bu_name}-init`.
+0. Fork this repository.
+1. Create a new branch from the main branch which will be in template form, New branch name should be `${prj_name}-init`.
 2. Create bot machine user and a GitHub Token with repo `read:org` and `read:discussions`.
 3. Add relevant values to the terraform.tfvars of 0-bootstrap in the new branch. [Understanding user inputs for LZ](https://cldcvr.atlassian.net/wiki/spaces/GCF/pages/18562875393)
 4. Add correct billing ID in the terraform.tfvars file for the initial deployment of the 0-bootstrap stage.
@@ -101,10 +102,10 @@ Requires administrator
 Allow auto-merge and allow auto-deletion of branches
 ```
 10. Commit and push changes from `.github/workflows`, `build`, `0-bootstrap`, `README.md` to `${prj_name}-init` and ensure everything gets successfully applied.
-11. On GitHub, create a new branch `${prj_name}-main` from the main branch and create a pull request to merge the changes from step 14 into `${prj_name}-main` from `${bu_name}-init`.
+11. On GitHub, create a new branch `${prj_name}-main` from the main branch and create a pull request to merge the changes from step 14 into `${prj_name}-main` from `${prj_name}-init`.
 12. Start deployment by raising PRs for subsequent stages by pushing the backend.tf changes made by wrapper script for each stage in `${prj_name}-init`.
-    For more information refer [GCF Landing Zone Prerequisites Checklist](https://cldcvr.atlassian.net/l/c/1pEg9eMn)
+    For more information refer [GCF Landing Zone Prerequisites Checklist](https://drive.google.com/file/d/1KY_WSmBY3_T5dyMH05WuYZ8siKpDDCZW/view)
 
 ## Troubleshooting
 
-Please refer to [troubleshooting](../docs/TROUBLESHOOTING.md) if you run into issues during this step.
+Please refer to [troubleshooting](https://drive.google.com/file/d/1KY_WSmBY3_T5dyMH05WuYZ8siKpDDCZW/view) if you run into issues.

@@ -1,7 +1,6 @@
 changequote(,)
 # Landing zone using Google Cloud Foundation
 
-                                                                  |
 # Resources
 https://cloud.google.com/architecture/security-foundations/using-example-terraform
 

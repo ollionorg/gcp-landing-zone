@@ -1,5 +1,5 @@
 enable_hub_and_spoke              = true
-enable_hub_and_spoke_transitivity = true
+enable_hub_and_spoke_transitivity = false
 bootstrap_env_code                = "b"
 bootstrap_environment_name        = "bootstrap"
 dev_environment_code              = "d"

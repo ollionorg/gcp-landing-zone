@@ -84,6 +84,10 @@ output "org_id" {
   value = var.org_id
 }
 
+output "parent_folder" {
+  value = var.parent_folder
+}
+
 output "gcp_region" {
   value = var.default_region
 }
@@ -96,8 +100,8 @@ output "project_name" {
   value = var.project_name
 }
 
-output "group_org_admins" {
-  value = var.group_org_admins
+output "org_admins_group" {
+  value = var.org_admins_group
 }
 
 output "primary_contact" {
@@ -129,17 +133,58 @@ output "domains_to_allow" {
   value = var.domains_to_allow
 }
 
-output "billing_data_users" {
-  value = var.billing_data_users
-}
-
-output "audit_data_users" {
-  value = var.audit_data_users
-}
-
 # 2-env
-output "monitoring_workspace_users" {
-  value = var.monitoring_workspace_users
+output "enable_env_log_sink" {
+  value = var.enable_env_log_sink
+}
+
+#User groups
+output "cto_security_operations_group" {
+  value = var.cto_security_operations_group
+}
+
+output "cto_elevated_security_operations_group" {
+  value = var.cto_elevated_security_operations_group
+}
+
+output "cto_operations_group" {
+  value = var.cto_operations_group
+}
+
+output "cfo_group" {
+  value = var.cfo_group
+}
+
+output "bu_app_deploy_group" {
+  value = var.bu_app_deploy_group
+}
+
+output "cto_audit_compliance_operations_group" {
+  value = var.cto_audit_compliance_operations_group
+}
+
+output "cto_core_networking_operations_group" {
+  value = var.cto_core_networking_operations_group
+}
+
+output "cto_build_group" {
+  value = var.cto_build_group
+}
+
+output "cto_security_build_group" {
+  value = var.cto_security_build_group
+}
+
+output "cto_elevated_security_build_group" {
+  value = var.cto_elevated_security_build_group
+}
+
+output "cto_core_networking_build_group" {
+  value = var.cto_core_networking_build_group
+}
+
+output "cto_user_management_operations_group" {
+  value = var.cto_user_management_operations_group
 }
 
 output "bootstrap_folder" {
@@ -165,6 +210,10 @@ output "default_region2" {
 
 output "domain" {
   value = var.domain
+}
+
+output "enable_restricted_network" {
+  value = var.enable_restricted_network
 }
 
 output "enable_hub_and_spoke_transitivity" {
@@ -312,3 +361,238 @@ output "custom_labels" {
 #  value       = module.runner-mig.mig_instance_template
 #}
 
+//enable_interconnect_firewall
+output "enable_interconnect_firewall" {
+  value = var.enable_interconnect_firewall
+}
+
+output "management_sub_ip_cidr_range" {
+  value = var.management_sub_ip_cidr_range
+}
+
+output "untrust_sub_ip_cidr_range" {
+  value = var.untrust_sub_ip_cidr_range
+}
+
+output "trust_sub_ip_cidr_range" {
+  value = var.trust_sub_ip_cidr_range
+}
+
+output "allow_mgmt_source_ranges" {
+  value = var.allow_mgmt_source_ranges
+}
+
+output "allow_inbound_source_ranges" {
+  value = var.allow_inbound_source_ranges
+}
+
+output "allow_outbound_source_ranges" {
+  value = var.allow_outbound_source_ranges
+}
+
+output "trust_dest_range" {
+  value = var.trust_dest_range
+}
+
+output "region_zone" {
+  value = var.region_zone
+}
+
+output "zone" {
+  value = var.zone
+}
+
+output "zone_2" {
+  value = var.zone_2
+}
+
+output "firewall_name" {
+  value = var.firewall_name
+}
+
+output "image_fw" {
+  value = var.image_fw
+}
+
+output "machine_type_fw" {
+  value = var.machine_type_fw
+}
+
+output "machine_cpu_fw" {
+  value = var.machine_cpu_fw
+}
+
+output "bootstrap_bucket_fw" {
+  value = var.bootstrap_bucket_fw
+}
+
+output "interface_0_name" {
+  value = var.interface_0_name
+}
+
+output "interface_1_name" {
+  value = var.interface_1_name
+}
+
+output "interface_2_name" {
+  value = var.interface_2_name
+}
+
+output "scopes_fw" {
+  value = var.scopes_fw
+}
+
+output "web_server_name" {
+  value = var.web_server_name
+}
+
+output "machine_type_web" {
+  value = var.machine_type_web
+}
+
+output "image_web" {
+  value = var.image_web
+}
+
+output "scopes_web" {
+  value = var.scopes_web
+}
+
+output "enable_interconnect_projects" {
+  value = var.enable_interconnect_projects
+}
+
+#dedicated interconnect outputs
+output "d_enable_dedicated_interconnect" {
+  value = var.d_enable_dedicated_interconnect
+}
+
+output "d_region1_interconnect1_candidate_subnets" {
+  value = var.d_region1_interconnect1_candidate_subnets
+}
+
+output "d_region1_interconnect1_vlan_tag8021q" {
+  value = var.d_region1_interconnect1_vlan_tag8021q
+}
+
+output "d_region1_interconnect1_self_link" {
+  value = var.d_region1_interconnect1_self_link
+}
+
+output "d_region1_interconnect1_location" {
+  value = var.d_region1_interconnect1_location
+}
+
+output "d_region1_interconnect2_candidate_subnets" {
+  value = var.d_region1_interconnect2_candidate_subnets
+}
+
+output "d_region1_interconnect2_vlan_tag8021q" {
+  value = var.d_region1_interconnect2_vlan_tag8021q
+}
+
+output "d_region1_interconnect2_self_link" {
+  value = var.d_region1_interconnect2_self_link
+}
+
+output "d_region1_interconnect2_location" {
+  value = var.d_region1_interconnect2_location
+}
+
+output "d_region2_interconnect1_candidate_subnets" {
+  value = var.d_region2_interconnect1_vlan_tag8021q
+}
+
+output "d_region2_interconnect1_vlan_tag8021q" {
+  value = var.d_region2_interconnect1_vlan_tag8021q
+}
+
+output "d_region2_interconnect1_self_link" {
+  value = var.d_region2_interconnect1_self_link
+}
+
+output "d_region2_interconnect1_location" {
+  value = var.d_region2_interconnect1_location
+}
+
+output "d_region2_interconnect2_candidate_subnets" {
+  value = var.d_region2_interconnect2_candidate_subnets
+}
+
+output "d_region2_interconnect2_vlan_tag8021q" {
+  value = var.d_region2_interconnect2_vlan_tag8021q
+}
+
+output "d_region2_interconnect2_self_link" {
+  value = var.d_region2_interconnect2_self_link
+}
+
+output "d_region2_interconnect2_location" {
+  value = var.d_region2_interconnect2_location
+}
+
+output "d_cloud_router_labels" {
+  value = var.d_cloud_router_labels
+}
+
+output "d_peer_asn" {
+  value = var.d_peer_asn
+}
+
+### partner interconnect
+
+output "restricted_enable_partner_interconnect" {
+  value = var.restricted_enable_partner_interconnect
+}
+
+output "shared_enable_partner_interconnect" {
+  value = var.shared_enable_partner_interconnect
+}
+
+output "p_r_region1_interconnect1_location" {
+  value = var.p_r_region1_interconnect1_location
+}
+
+output "p_r_region1_interconnect2_location" {
+  value = var.p_r_region1_interconnect2_location
+}
+
+output "p_r_region2_interconnect1_location" {
+  value = var.p_r_region2_interconnect1_location
+}
+
+output "p_r_region2_interconnect2_location" {
+  value = var.p_r_region2_interconnect2_location
+}
+
+output "p_r_cloud_router_labels" {
+  value = var.p_r_cloud_router_labels
+}
+
+output "p_s_region1_interconnect1_location" {
+  value = var.p_s_region1_interconnect1_location
+}
+
+output "p_s_region1_interconnect2_location" {
+  value = var.p_s_region1_interconnect2_location
+}
+
+output "p_s_region2_interconnect1_location" {
+  value = var.p_s_region2_interconnect1_location
+}
+
+output "p_s_region2_interconnect2_location" {
+  value = var.p_s_region2_interconnect2_location
+}
+
+output "p_s_cloud_router_labels" {
+  value = var.p_s_cloud_router_labels
+}
+
+output "p_r_preactivate_partner_interconnect" {
+  value = var.p_r_preactivate_partner_interconnect
+}
+
+output "p_s_preactivate_partner_interconnect" {
+  value = var.p_s_preactivate_partner_interconnect
+}

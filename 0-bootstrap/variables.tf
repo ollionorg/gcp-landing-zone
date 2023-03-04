@@ -34,13 +34,14 @@ variable "billing_account" {
   type        = string
 }
 
-variable "group_org_admins" {
+variable "org_admins_group" {
   description = "Google Group for GCP Organization Administrators"
   type        = string
 }
 
-variable "group_billing_admins" {
-  description = "Google Group for GCP Billing Administrators"
+
+variable "bu_app_deploy_group" {
+  description = "Google Group for GCP deploy group"
   type        = string
 }
 
@@ -334,27 +335,67 @@ variable "enable_hub_and_spoke" {
   type        = bool
 }
 
-variable "billing_data_users" {
-  description = "Google Workspace or Cloud Identity group that have access to billing data set."
-  type        = string
-}
-
-variable "audit_data_users" {
-  description = "Google Workspace or Cloud Identity group that have access to audit logs."
-  type        = string
-}
-
 variable "domains_to_allow" {
   description = "The list of domains to allow users from in IAM. Used by Domain Restricted Sharing Organization Policy. Must include the domain of the organization you are deploying the foundation. To add other domains you must also grant access to these domains to the terraform service account used in the deploy."
   type        = list(any)
 }
 
-# 2-env
-#
-variable "monitoring_workspace_users" {
-  description = "Google Workspace or Cloud Identity group that have access to Monitoring Workspaces."
+#User groups
+variable "cto_security_operations_group" {
+  description = "Google Workspace or Cloud Identity group responsible for security operations."
   type        = string
 }
+
+variable "cto_elevated_security_operations_group" {
+  description = "Google Workspace or Cloud Identity group responsible for security operations."
+  type        = string
+}
+
+variable "cto_operations_group" {
+  description = "Google Workspace or Cloud Identity group responsible for operations."
+  type        = string
+}
+
+variable "cto_core_networking_operations_group" {
+  description = "Google Workspace or Cloud Identity group responsible for network operations."
+  type        = string
+}
+
+variable "cto_build_group" {
+  description = "Google Workspace or Cloud Identity group of guild users."
+  type        = string
+}
+
+variable "cto_security_build_group" {
+  description = "Google Workspace or Cloud Identity group for security build group."
+  type        = string
+}
+
+variable "cto_elevated_security_build_group" {
+  description = "Google Workspace or Cloud Identity group responsible for elevated security build users."
+  type        = string
+}
+
+variable "cto_core_networking_build_group" {
+  description = "Google Workspace or Cloud Identity group for networking build users."
+  type        = string
+}
+
+variable "cto_audit_compliance_operations_group" {
+  description = "Google Workspace or Cloud Identity group for audit and compliance users."
+  type        = string
+}
+
+variable "cto_user_management_operations_group" {
+  description = "Google Workspace or Cloud Identity group for management operations."
+  type        = string
+}
+
+variable "cfo_group" {
+  description = "Google Workspace or Cloud Identity group billing data users."
+  type        = string
+}
+
 # 3-networks
 variable "default_region2" {
   type        = string
@@ -366,8 +407,20 @@ variable "domain" {
   description = "The DNS name of peering managed zone, for instance 'example.com.'. Must end with a period."
 }
 
+variable "enable_env_log_sink" {
+  description = "Enable environment log sink."
+  type        = bool
+  default     = false
+}
+
 variable "enable_hub_and_spoke_transitivity" {
   description = "Enable transitivity via gateway VMs on Hub-and-Spoke architecture."
+  type        = bool
+  default     = false
+}
+
+variable "enable_restricted_network" {
+  description = "Enable restricted network"
   type        = bool
   default     = false
 }
@@ -584,15 +637,323 @@ variable "custom_labels" {
   type        = map(string)
   default     = {}
 }
-#variable "" {}
-#
-#variable "" {}
-#
-#variable "" {}
-#
-#variable "" {}
-#
-#variable "" {}
-#
-#variable "" {}
+
+variable "enable_interconnect_projects" {
+  description = "Create interconnect projects"
+  type        = bool
+  default     = false
+}
+
+variable "enable_interconnect_firewall" {
+  description = "enable_interconnect_firewall"
+  type        = bool
+  default     = false
+}
+//interconect-firewall variables
+
+// PROJECT Variables
+
+variable "management_sub_ip_cidr_range" {
+  default = "10.0.0.0/24"
+}
+
+variable "untrust_sub_ip_cidr_range" {
+  default = "10.0.1.0/24"
+}
+
+variable "trust_sub_ip_cidr_range" {
+  default = "10.0.2.0/24"
+}
+
+variable "allow_mgmt_source_ranges" {
+  default = ["0.0.0.0/0"]
+}
+
+variable "allow_inbound_source_ranges" {
+  default = ["0.0.0.0/0"]
+}
+
+variable "allow_outbound_source_ranges" {
+  default = ["0.0.0.0/0"]
+}
+
+variable "trust_dest_range" {
+  default = "0.0.0.0/0"
+}
+/*
+variable "region" {
+  default = "us-west1"
+}
+*/
+variable "region_zone" {
+  default = "us-west1-a"
+}
+/*
+variable "project_name" {
+  description = "The ID of the Google Cloud project"
+  default     = "prj-c-interconnect-9791"
+}
+*/
+variable "zone" {
+  default = "us-west1-a"
+}
+
+variable "zone_2" {
+  default = "us-west1-b"
+}
+/*
+variable "public_key" {
+  default = "admin:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDnYnPRM4fJzdYmG8K3zN3wkx2fS+mkT6zfjVkxY7MHDbQ9UlGsw6G0Z3a3S/huAzG1eLC4Oxw56u2vzFBbsT1da0tM4JD1IWCq2alisptZK8YRx9ddm/1kNlES8CbnN8VEzq9Rh+uA2F6i1zH33rNHXu0HuecS18sUAne5uiodH2L8pa/QWJgDrdL9oIrcD0sNkAZPmBoVN4XV4sDmj+qlL4zX6+kAy0Em1G3bGQQ4kTsEqDJB56+dezyAjvEfRTvmavPV5eftefIbX0rHRkNkdA7+IcjWkks64rQJMVra7RpevpuB9XnSQ+Aal41ZKr7tyIV8B9IKQXF5ZeznV31GEIIEseEcXHVdvWIT1UgTEz+/Tpg8zJwFfE/FbjFfkk8cXrKe7huofbsdk2YSBhMZRR27kSe+o9E0JCo13CzIxV2qj3iGx1D8oq4UuqOXmppnyfrbioF5QJeHj2tfpcceseNNZ6bLcIs7M7L2IXsAH1XKQLBCRt1cv8NfrvWMNV8= admin"
+}
+*/
+// FIREWALL Variables
+variable "firewall_name" {
+  default = "firewall"
+}
+
+variable "image_fw" {
+  # default = "Your_VM_Series_Image"
+
+  # /Cloud Launcher API Calls to images/
+  # default = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-byol-810"
+  # default = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-810"
+  default = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle1-810"
+
+}
+
+variable "machine_type_fw" {
+  default = "n1-standard-4"
+}
+
+variable "machine_cpu_fw" {
+  default = "Intel Skylake"
+}
+
+variable "bootstrap_bucket_fw" {
+  default = "bootstrap-alb"
+}
+
+variable "interface_0_name" {
+  default = "management"
+}
+
+variable "interface_1_name" {
+  default = "untrust"
+}
+
+variable "interface_2_name" {
+  default = "trust"
+}
+
+variable "scopes_fw" {
+  default = ["https://www.googleapis.com/auth/cloud.useraccounts.readonly",
+    "https://www.googleapis.com/auth/devstorage.read_only",
+    "https://www.googleapis.com/auth/logging.write",
+    "https://www.googleapis.com/auth/monitoring.write",
+    "https://www.googleapis.com/auth/compute"
+  ]
+}
+
+// WEB-SERVER Vaiables
+variable "web_server_name" {
+  default = "webserver"
+}
+
+variable "machine_type_web" {
+  default = "f1-micro"
+}
+
+variable "image_web" {
+  default = "debian-8"
+}
+
+variable "scopes_web" {
+  default = ["https://www.googleapis.com/auth/cloud.useraccounts.readonly",
+    "https://www.googleapis.com/auth/devstorage.read_only",
+    "https://www.googleapis.com/auth/logging.write",
+    "https://www.googleapis.com/auth/monitoring.write",
+    "https://www.googleapis.com/auth/compute.readonly",
+  ]
+}
+
+#################################
+#     Dedicated Interconnect    #
+#################################
+variable "d_enable_dedicated_interconnect" {
+  type        = bool
+  description = "Set the value to true if you want to create dedicated interconnect. default, false"
+  default     = false
+}
+
+variable "d_region1_interconnect1_candidate_subnets" {
+  type        = list(string)
+  description = "Up to 16 candidate prefixes that can be used to restrict the allocation of cloudRouterIpAddress and customerRouterIpAddress for this attachment. All prefixes must be within link-local address space (169.254.0.0/16) and must be /29 or shorter (/28, /27, etc)."
+  default     = null
+}
+
+variable "d_region1_interconnect1_vlan_tag8021q" {
+  type        = string
+  description = "The IEEE 802.1Q VLAN tag for this attachment, in the range 2-4094."
+  default     = null
+}
+
+variable "d_region1_interconnect1_self_link" {
+  type        = string
+  description = "URL of the underlying Interconnect object that this attachment's traffic will traverse through."
+}
+
+variable "d_region1_interconnect1_location" {
+  type        = string
+  description = "Name of the interconnect location used in the creation of the Interconnect for the first location of region1"
+}
+
+variable "d_region1_interconnect2_candidate_subnets" {
+  type        = list(string)
+  description = "Up to 16 candidate prefixes that can be used to restrict the allocation of cloudRouterIpAddress and customerRouterIpAddress for this attachment. All prefixes must be within link-local address space (169.254.0.0/16) and must be /29 or shorter (/28, /27, etc)."
+  default     = null
+}
+
+variable "d_region1_interconnect2_vlan_tag8021q" {
+  type        = string
+  description = "The IEEE 802.1Q VLAN tag for this attachment, in the range 2-4094."
+  default     = null
+}
+
+variable "d_region1_interconnect2_self_link" {
+  type        = string
+  description = "URL of the underlying Interconnect object that this attachment's traffic will traverse through."
+}
+
+variable "d_region1_interconnect2_location" {
+  type        = string
+  description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region1"
+}
+
+variable "d_region2_interconnect1_candidate_subnets" {
+  type        = list(string)
+  description = "Up to 16 candidate prefixes that can be used to restrict the allocation of cloudRouterIpAddress and customerRouterIpAddress for this attachment. All prefixes must be within link-local address space (169.254.0.0/16) and must be /29 or shorter (/28, /27, etc)."
+  default     = null
+}
+
+variable "d_region2_interconnect1_vlan_tag8021q" {
+  type        = string
+  description = "The IEEE 802.1Q VLAN tag for this attachment, in the range 2-4094."
+  default     = null
+}
+
+variable "d_region2_interconnect1_self_link" {
+  type        = string
+  description = "URL of the underlying Interconnect object that this attachment's traffic will traverse through."
+}
+
+variable "d_region2_interconnect1_location" {
+  type        = string
+  description = "Name of the interconnect location used in the creation of the Interconnect for the first location of region2"
+}
+
+variable "d_region2_interconnect2_candidate_subnets" {
+  type        = list(string)
+  description = "Up to 16 candidate prefixes that can be used to restrict the allocation of cloudRouterIpAddress and customerRouterIpAddress for this attachment. All prefixes must be within link-local address space (169.254.0.0/16) and must be /29 or shorter (/28, /27, etc)."
+  default     = null
+}
+
+variable "d_region2_interconnect2_vlan_tag8021q" {
+  type        = string
+  description = "The IEEE 802.1Q VLAN tag for this attachment, in the range 2-4094."
+  default     = null
+}
+
+variable "d_region2_interconnect2_self_link" {
+  type        = string
+  description = "URL of the underlying Interconnect object that this attachment's traffic will traverse through."
+}
+
+variable "d_region2_interconnect2_location" {
+  type        = string
+  description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region2"
+}
+
+variable "d_cloud_router_labels" {
+  type        = map(string)
+  description = "A map of suffixes for labelling vlans with four entries like \"vlan_1\" => \"suffix1\" with keys from `vlan_1` to `vlan_4`."
+  default     = {}
+}
+
+variable "d_peer_asn" {
+  type = string
+}
+
+###################################
+#     partner interconnect        #
+###################################
+
+variable "restricted_enable_partner_interconnect" {
+  type        = bool
+  description = "Set the value to true if you want to create  restricted partner interconnect. default, false"
+  default     = false
+}
+
+variable "p_r_preactivate_partner_interconnect" {
+  description = "Preactivate Partner Interconnect VLAN attachment in the environment."
+  type        = bool
+  default     = false
+}
+
+variable "shared_enable_partner_interconnect" {
+  type        = bool
+  description = "Set the value to true if you want to create  shared partner interconnect. default, false"
+  default     = false
+}
+
+variable "p_r_region1_interconnect1_location" {
+  type        = string
+  description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region1"
+}
+variable "p_r_region1_interconnect2_location" {
+  type        = string
+  description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region1"
+}
+variable "p_r_region2_interconnect1_location" {
+  type        = string
+  description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region2"
+}
+variable "p_r_region2_interconnect2_location" {
+  type        = string
+  description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region2"
+}
+variable "p_r_cloud_router_labels" {
+  type        = map(string)
+  description = "A map of suffixes for labelling vlans with four entries like \"vlan_1\" => \"suffix1\" with keys from `vlan_1` to `vlan_4`."
+  default     = {}
+
+}
+variable "p_s_region1_interconnect1_location" {
+  type        = string
+  description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region1"
+}
+
+variable "p_s_preactivate_partner_interconnect" {
+  description = "Preactivate Partner Interconnect VLAN attachment in the environment."
+  type        = bool
+  default     = false
+}
+
+variable "p_s_region1_interconnect2_location" {
+  type        = string
+  description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region1"
+}
+variable "p_s_region2_interconnect1_location" {
+  type        = string
+  description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region1"
+}
+variable "p_s_region2_interconnect2_location" {
+  type        = string
+  description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region1"
+}
+variable "p_s_cloud_router_labels" {
+  type        = map(string)
+  description = "A map of suffixes for labelling vlans with four entries like \"vlan_1\" => \"suffix1\" with keys from `vlan_1` to `vlan_4`."
+  default     = {}
+
+}
 

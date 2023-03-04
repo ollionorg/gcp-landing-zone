@@ -24,6 +24,11 @@ output "monitoring_project_id" {
   value       = module.monitoring_project.project_id
 }
 
+output "logging_project_id" {
+  description = "Project for monitoring infra."
+  value       = try(module.logging_project[0].project_id, "disabled")
+}
+
 output "base_shared_vpc_project_id" {
   description = "Project for base shared VPC network."
   value       = module.base_shared_vpc_host_project.project_id
@@ -31,7 +36,7 @@ output "base_shared_vpc_project_id" {
 
 output "restricted_shared_vpc_project_id" {
   description = "Project for restricted shared VPC network."
-  value       = module.restricted_shared_vpc_host_project.project_id
+  value       = try(module.restricted_shared_vpc_host_project[0].project_id, "disabled")
 }
 
 output "env_secrets_project_id" {

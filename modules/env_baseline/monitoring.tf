@@ -35,17 +35,17 @@ module "monitoring_project" {
 
   labels = merge(
     var.custom_labels, {
-    environment       = var.env
-    application_name  = "${var.env}-monitoring"
-    billing_code      = "${var.env}-${random_id.billing_code_random_id.hex}"
-    primary_contact   = var.primary_contact
-    secondary_contact = var.secondary_contact
-    business_code     = var.bu_code
-    env_code          = var.environment_code
-    stage_name        = var.stage
-    bu_name           = var.bu
-    organisation_id   = var.org_id
-    created_by        = var.author
+      environment       = var.env
+      application_name  = "${var.env}-monitoring"
+      billing_code      = "${var.env}-${random_id.billing_code_random_id.hex}"
+      primary_contact   = var.primary_contact
+      secondary_contact = var.secondary_contact
+      business_code     = var.bu_code
+      env_code          = var.environment_code
+      stage_name        = var.stage
+      bu_name           = var.bu
+      organisation_id   = var.org_id
+      created_by        = var.author
     }
   )
 

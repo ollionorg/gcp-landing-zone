@@ -16,7 +16,7 @@
 
 locals {
   parent_id               = var.parent_folder != "" ? "folders/${var.parent_folder}" : "organizations/${var.org_id}"
-  interconnect_project_id = data.google_projects.interconnect_project.projects[0].project_id
+  interconnect_project_id = var.interconnect_project_id
   suffix1                 = lookup(var.cloud_router_labels, "vlan_1", "cr1")
   suffix2                 = lookup(var.cloud_router_labels, "vlan_2", "cr2")
   suffix3                 = lookup(var.cloud_router_labels, "vlan_3", "cr3")

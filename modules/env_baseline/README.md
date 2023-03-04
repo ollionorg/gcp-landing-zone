@@ -1,4 +1,19 @@
 
+<!-- BEGIN_TF_DOCS -->
+Copyright 2021 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
 ## Requirements
 
 | Name | Version |
@@ -11,8 +26,8 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | >= 3.89 |
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+| <a name="provider_google"></a> [google](#provider\_google) | 4.52.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.4.3 |
 
 ## Modules
 
@@ -20,6 +35,7 @@
 |------|--------|---------|
 | <a name="module_base_shared_vpc_host_project"></a> [base\_shared\_vpc\_host\_project](#module\_base\_shared\_vpc\_host\_project) | ../../modules/base_shared_vpc_host_project | n/a |
 | <a name="module_env_secrets"></a> [env\_secrets](#module\_env\_secrets) | ../../modules/env_secrets | n/a |
+| <a name="module_logging_project"></a> [logging\_project](#module\_logging\_project) | ../../modules/monitoring_project | n/a |
 | <a name="module_monitoring_project"></a> [monitoring\_project](#module\_monitoring\_project) | ../../modules/monitoring_project | n/a |
 | <a name="module_restricted_shared_vpc_host_project"></a> [restricted\_shared\_vpc\_host\_project](#module\_restricted\_shared\_vpc\_host\_project) | ../../modules/restricted_shared_vpc_host_project | n/a |
 
@@ -28,6 +44,8 @@
 | Name | Type |
 |------|------|
 | [google_folder.env](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/folder) | resource |
+| [google_logging_folder_sink.env-sink](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/logging_folder_sink) | resource |
+| [google_project_iam_binding.log-writer](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_binding) | resource |
 | [google_project_iam_member.monitoring_editor](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [random_id.billing_code_random_id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [google_active_folder.common](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/active_folder) | data source |
@@ -36,12 +54,16 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_author"></a> [author](#input\_author) | Author who deploys the code | `any` | n/a | yes |
 | <a name="input_base_network_project_alert_pubsub_topic"></a> [base\_network\_project\_alert\_pubsub\_topic](#input\_base\_network\_project\_alert\_pubsub\_topic) | The name of the Cloud Pub/Sub topic where budget related messages will be published, in the form of `projects/{project_id}/topics/{topic_id}` for the base networks project | `string` | `null` | no |
 | <a name="input_base_network_project_alert_spent_percents"></a> [base\_network\_project\_alert\_spent\_percents](#input\_base\_network\_project\_alert\_spent\_percents) | A list of percentages of the budget to alert on when threshold is exceeded for the base networks project | `list(number)` | <pre>[<br>  0.5,<br>  0.75,<br>  0.9,<br>  0.95<br>]</pre> | no |
 | <a name="input_base_network_project_budget_amount"></a> [base\_network\_project\_budget\_amount](#input\_base\_network\_project\_budget\_amount) | The amount to use as the budget for the base networks project | `number` | `1000` | no |
 | <a name="input_billing_account"></a> [billing\_account](#input\_billing\_account) | The ID of the billing account to associate this project with | `string` | n/a | yes |
 | <a name="input_bu"></a> [bu](#input\_bu) | It contains the bu name | `string` | `""` | no |
 | <a name="input_bu_code"></a> [bu\_code](#input\_bu\_code) | It contains the Business unit code | `string` | `""` | no |
+| <a name="input_custom_labels"></a> [custom\_labels](#input\_custom\_labels) | Customer designed labels for project | `map(string)` | `{}` | no |
+| <a name="input_enable_env_log_sink"></a> [enable\_env\_log\_sink](#input\_enable\_env\_log\_sink) | Flag for enabling environment specific log sink | `bool` | `false` | no |
+| <a name="input_enable_restricted_network"></a> [enable\_restricted\_network](#input\_enable\_restricted\_network) | Flag for enabling restricted network | `bool` | `true` | no |
 | <a name="input_env"></a> [env](#input\_env) | The environment to prepare (ex. development) | `string` | n/a | yes |
 | <a name="input_environment_code"></a> [environment\_code](#input\_environment\_code) | A short form of the folder level resources (environment) within the Google Cloud organization (ex. d). | `string` | n/a | yes |
 | <a name="input_folder_prefix"></a> [folder\_prefix](#input\_folder\_prefix) | Name prefix to use for folders created. | `string` | `"fldr"` | no |
@@ -71,5 +93,7 @@
 | <a name="output_base_shared_vpc_project_id"></a> [base\_shared\_vpc\_project\_id](#output\_base\_shared\_vpc\_project\_id) | Project for base shared VPC network. |
 | <a name="output_env_folder"></a> [env\_folder](#output\_env\_folder) | Environment folder created under parent. |
 | <a name="output_env_secrets_project_id"></a> [env\_secrets\_project\_id](#output\_env\_secrets\_project\_id) | Project for environment secrets. |
+| <a name="output_logging_project_id"></a> [logging\_project\_id](#output\_logging\_project\_id) | Project for monitoring infra. |
 | <a name="output_monitoring_project_id"></a> [monitoring\_project\_id](#output\_monitoring\_project\_id) | Project for monitoring infra. |
 | <a name="output_restricted_shared_vpc_project_id"></a> [restricted\_shared\_vpc\_project\_id](#output\_restricted\_shared\_vpc\_project\_id) | Project for restricted shared VPC network. |
+<!-- END_TF_DOCS -->

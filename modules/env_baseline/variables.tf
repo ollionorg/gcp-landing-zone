@@ -172,7 +172,19 @@ variable "author" {
 }
 
 variable "custom_labels" {
-  description = "Customer desigend labels for project"
+  description = "Customer designed labels for project"
   type        = map(string)
   default     = {}
+}
+
+variable "enable_env_log_sink" {
+  description = "Flag for enabling environment specific log sink"
+  type        = bool
+  default     = false
+}
+
+variable "enable_restricted_network" {
+  description = "Flag for enabling restricted network"
+  type        = bool
+  default     = true
 }

@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+variable "interconnect_project_id" {
+  type        = string
+  description = "Interconnect project ID."
+}
+
 variable "org_id" {
   type        = string
   description = "Organization ID"

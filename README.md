@@ -1,8 +1,11 @@
-changequote(,)
+
 # Landing zone using Google Cloud Foundation
 
 # Resources
 https://cloud.google.com/architecture/security-foundations/using-example-terraform
+
+# Reference Architecture diagram v1.5.0
+Please refer [link](Reference_Architecture.png) for Architecture diagram
 
 # Landing Zone User Guide
 Please refer to this [link](https://drive.google.com/file/d/1KY_WSmBY3_T5dyMH05WuYZ8siKpDDCZW/view?usp=sharing) for Landing Zone user guide.
@@ -66,7 +69,7 @@ For more information about the permissions that are required, and the resources 
 
 # Deploying with GitHub Actions/Cloud Build
 
-* `REPO_NAME` code is present on GitHub, with Github Actions enabled.
+* `gcf-lz-v2` code is present on GitHub, with Github Actions enabled.
 * GitHub Actions will plan and on success, will submit builds to Cloud Build, depending on the type of workflow defined.
 * Cloud Build will deploy the terraform code accordingly.
 
@@ -75,10 +78,11 @@ For more information about the permissions that are required, and the resources 
 1. Create a new branch from the main branch which will be in template form, New branch name should be `${prj_name}-init`.
 2. Create bot machine user and a GitHub Token with repo `read:org` and `read:discussions`.
 3. Add relevant values to the terraform.tfvars of 0-bootstrap in the new branch. [Understanding user inputs for LZ](https://cldcvr.atlassian.net/wiki/spaces/GCF/pages/18562875393)
-4. Add correct billing ID in the terraform.tfvars file for the initial deployment of the 0-bootstrap stage.
-5. `bu_code` variables must **not be greater than 3 characters**.
-6. Create Slack WebHook Secret in GitHub `GCF_SLACK_WEBHOOK`, GitHub Token Secret in GitHub as `GH_TOKEN`.
-7. Setup `GH_TOKEN` as `$GITHUB_PAT` environment variable and execute the wrapper script using below commands:
+4. Review `default.auto.tfvars`, `networks.auto.tfvars` and `interconnect.auto.tfvars` files in 0-bootstrap. One can modify the values if required.
+5. Add correct billing ID in the terraform.tfvars file for the initial deployment of the 0-bootstrap stage.
+6. `bu_code` variables must **not be greater than 3 characters**.
+7. Create Slack WebHook Secret in GitHub `SLACK_WEBHOOK_URL`, GitHub Token Secret in GitHub as `GH_TOKEN`.
+8. Setup `GH_TOKEN` as `$GITHUB_PAT` environment variable and execute the wrapper script using below commands:
 ```bash
 $ cd ./prerequisites/scripts
 
@@ -105,7 +109,9 @@ Allow auto-merge and allow auto-deletion of branches
 11. On GitHub, create a new branch `${prj_name}-main` from the main branch and create a pull request to merge the changes from step 14 into `${prj_name}-main` from `${prj_name}-init`.
 12. Start deployment by raising PRs for subsequent stages by pushing the backend.tf changes made by wrapper script for each stage in `${prj_name}-init`.
     For more information refer [GCF Landing Zone Prerequisites Checklist](https://drive.google.com/file/d/1KY_WSmBY3_T5dyMH05WuYZ8siKpDDCZW/view)
-
+13. Once `3-networks` is deployed execute `gcf-lz-v2/prerequisites/scripts/create_bu.sh` script to create business units [BU].
+14. Multiple BU can be created, pass in the BU_NAME and BU_CODE while executing the script. e.g `./create_bu.sh  gaming  gme`. This will create the required files in `4-projects` and `5-app-infra` along with `github actions yml` files
+15. Follow the normal process of deployment by raising PRs sequentially once the BU is created.
 ## Troubleshooting
 
 Please refer to [troubleshooting](https://drive.google.com/file/d/1KY_WSmBY3_T5dyMH05WuYZ8siKpDDCZW/view) if you run into issues.

@@ -23,7 +23,7 @@ module "org_audit_logs" {
   random_project_id           = "true"
   impersonate_service_account = local.terraform_service_account
   default_service_account     = "deprivilege"
-  name                        = "${local.project_prefix}-${local.shared_environment_code}-logging"
+  name                        = "${local.project_prefix}-${local.shared_environment_code}-audit-logging"
   org_id                      = local.org_id
   billing_account             = local.billing_account
   folder_id                   = google_folder.common.id
@@ -35,12 +35,80 @@ module "org_audit_logs" {
 
   labels = merge(
     local.custom_labels, {
-    environment       = "production"
-    application_name  = "org-logging"
-    primary_contact   = local.primary_contact
-    secondary_contact = local.secondary_contact
-    created_by        = var.author
-    organisation_id   = local.org_id
+      environment       = "production"
+      application_name  = "org-logging"
+      primary_contact   = local.primary_contact
+      secondary_contact = local.secondary_contact
+      created_by        = var.author
+      organisation_id   = local.org_id
+    }
+  )
+  budget_alert_pubsub_topic   = var.org_audit_logs_project_alert_pubsub_topic
+  budget_alert_spent_percents = var.org_audit_logs_project_alert_spent_percents
+  budget_amount               = var.org_audit_logs_project_budget_amount
+}
+
+/******************************************
+  Projects for log sinks
+*****************************************/
+
+module "org_security_logs" {
+  source                      = "../../../modules/base_network_hub"
+  random_project_id           = "true"
+  impersonate_service_account = local.terraform_service_account
+  default_service_account     = "deprivilege"
+  name                        = "${local.project_prefix}-${local.shared_environment_code}-security-logging"
+  org_id                      = local.org_id
+  billing_account             = local.billing_account
+  folder_id                   = google_folder.common.id
+  activate_apis = [
+    "logging.googleapis.com",
+    "bigquery.googleapis.com",
+    "billingbudgets.googleapis.com"
+  ]
+
+  labels = merge(
+    local.custom_labels, {
+      environment       = "production"
+      application_name  = "org-logging"
+      primary_contact   = local.primary_contact
+      secondary_contact = local.secondary_contact
+      created_by        = var.author
+      organisation_id   = local.org_id
+    }
+  )
+  budget_alert_pubsub_topic   = var.org_audit_logs_project_alert_pubsub_topic
+  budget_alert_spent_percents = var.org_audit_logs_project_alert_spent_percents
+  budget_amount               = var.org_audit_logs_project_budget_amount
+}
+
+/******************************************
+  Projects for log sinks
+*****************************************/
+
+module "org_operations_logs" {
+  source                      = "../../../modules/base_network_hub"
+  random_project_id           = "true"
+  impersonate_service_account = local.terraform_service_account
+  default_service_account     = "deprivilege"
+  name                        = "${local.project_prefix}-${local.shared_environment_code}-operations-logging"
+  org_id                      = local.org_id
+  billing_account             = local.billing_account
+  folder_id                   = google_folder.common.id
+  activate_apis = [
+    "logging.googleapis.com",
+    "bigquery.googleapis.com",
+    "billingbudgets.googleapis.com"
+  ]
+
+  labels = merge(
+    local.custom_labels, {
+      environment       = "production"
+      application_name  = "org-logging"
+      primary_contact   = local.primary_contact
+      secondary_contact = local.secondary_contact
+      created_by        = var.author
+      organisation_id   = local.org_id
     }
   )
   budget_alert_pubsub_topic   = var.org_audit_logs_project_alert_pubsub_topic
@@ -65,12 +133,12 @@ module "org_billing_logs" {
 
   labels = merge(
     local.custom_labels, {
-    environment       = "production"
-    application_name  = "org-billing-logs"
-    primary_contact   = local.primary_contact
-    secondary_contact = local.secondary_contact
-    created_by        = var.author
-    organisation_id   = local.org_id
+      environment       = "production"
+      application_name  = "org-billing-logs"
+      primary_contact   = local.primary_contact
+      secondary_contact = local.secondary_contact
+      created_by        = var.author
+      organisation_id   = local.org_id
     }
   )
   budget_alert_pubsub_topic   = var.org_billing_logs_project_alert_pubsub_topic
@@ -99,12 +167,12 @@ module "org_secrets" {
 
   labels = merge(
     local.custom_labels, {
-    environment       = "production"
-    application_name  = "org-secrets"
-    primary_contact   = local.primary_contact
-    secondary_contact = local.secondary_contact
-    created_by        = var.author
-    organisation_id   = local.org_id
+      environment       = "production"
+      application_name  = "org-secrets"
+      primary_contact   = local.primary_contact
+      secondary_contact = local.secondary_contact
+      created_by        = var.author
+      organisation_id   = local.org_id
     }
   )
   budget_alert_pubsub_topic   = var.org_secrets_project_alert_pubsub_topic
@@ -116,12 +184,13 @@ module "org_secrets" {
   Project for Interconnect
 *****************************************/
 
-module "interconnect" {
+module "trust_interconnect" {
   source                      = "../../../modules/base_network_hub"
+  count                       = local.enable_interconnect_projects ? 1 : 0
   random_project_id           = "true"
   impersonate_service_account = local.terraform_service_account
   default_service_account     = "deprivilege"
-  name                        = "${local.project_prefix}-${local.shared_environment_code}-interconnect"
+  name                        = "${local.project_prefix}-${local.shared_environment_code}-t-interconnect"
   org_id                      = local.org_id
   billing_account             = local.billing_account
   folder_id                   = google_folder.common.id
@@ -132,17 +201,49 @@ module "interconnect" {
 
   labels = merge(
     local.custom_labels, {
-    environment       = "production"
-    application_name  = "org-interconnect"
-    primary_contact   = local.primary_contact
-    secondary_contact = local.secondary_contact
-    created_by        = var.author
-    organisation_id   = local.org_id
+      environment       = "production"
+      application_name  = "org-trust-interconnect"
+      primary_contact   = local.primary_contact
+      secondary_contact = local.secondary_contact
+      created_by        = var.author
+      organisation_id   = local.org_id
     }
   )
   budget_alert_pubsub_topic   = var.interconnect_project_alert_pubsub_topic
   budget_alert_spent_percents = var.interconnect_project_alert_spent_percents
   budget_amount               = var.interconnect_project_budget_amount
+
+}
+
+module "notrust_interconnect" {
+  source                      = "../../../modules/base_network_hub"
+  count                       = local.enable_interconnect_projects ? 1 : 0
+  random_project_id           = "true"
+  impersonate_service_account = local.terraform_service_account
+  default_service_account     = "deprivilege"
+  name                        = "${local.project_prefix}-${local.shared_environment_code}-nt-interconnect"
+  org_id                      = local.org_id
+  billing_account             = local.billing_account
+  folder_id                   = google_folder.common.id
+  activate_apis = [
+    "billingbudgets.googleapis.com",
+    "compute.googleapis.com"
+  ]
+
+  labels = merge(
+    local.custom_labels, {
+      environment       = "production"
+      application_name  = "org-notrust-interconnect"
+      primary_contact   = local.primary_contact
+      secondary_contact = local.secondary_contact
+      created_by        = var.author
+      organisation_id   = local.org_id
+    }
+  )
+  budget_alert_pubsub_topic   = var.interconnect_project_alert_pubsub_topic
+  budget_alert_spent_percents = var.interconnect_project_alert_spent_percents
+  budget_amount               = var.interconnect_project_budget_amount
+
 }
 
 /******************************************
@@ -167,12 +268,12 @@ module "scc_notifications" {
 
   labels = merge(
     local.custom_labels, {
-    environment       = "production"
-    application_name  = "org-scc"
-    primary_contact   = local.primary_contact
-    secondary_contact = local.secondary_contact
-    created_by        = var.author
-    organisation_id   = local.org_id
+      environment       = "production"
+      application_name  = "org-scc"
+      primary_contact   = local.primary_contact
+      secondary_contact = local.secondary_contact
+      created_by        = var.author
+      organisation_id   = local.org_id
     }
   )
   budget_alert_pubsub_topic   = var.scc_notifications_project_alert_pubsub_topic
@@ -205,12 +306,12 @@ module "dns_hub" {
 
   labels = merge(
     local.custom_labels, {
-    environment       = "production"
-    application_name  = "org-dns-hub"
-    primary_contact   = local.primary_contact
-    secondary_contact = local.secondary_contact
-    created_by        = var.author
-    organisation_id   = local.org_id
+      environment       = "production"
+      application_name  = "org-dns-hub"
+      primary_contact   = local.primary_contact
+      secondary_contact = local.secondary_contact
+      created_by        = var.author
+      organisation_id   = local.org_id
     }
   )
   budget_alert_pubsub_topic   = var.dns_hub_project_alert_pubsub_topic
@@ -244,12 +345,12 @@ module "base_network_hub" {
 
   labels = merge(
     local.custom_labels, {
-    environment       = "production"
-    application_name  = "org-base-net-hub"
-    primary_contact   = local.primary_contact
-    secondary_contact = local.secondary_contact
-    created_by        = var.author
-    organisation_id   = local.org_id
+      environment       = "production"
+      application_name  = "org-base-net-hub"
+      primary_contact   = local.primary_contact
+      secondary_contact = local.secondary_contact
+      created_by        = var.author
+      organisation_id   = local.org_id
     }
   )
   budget_alert_pubsub_topic   = var.base_net_hub_project_alert_pubsub_topic
@@ -262,8 +363,8 @@ module "base_network_hub" {
 *****************************************/
 
 module "restricted_network_hub" {
+  count                       = local.enable_restricted_network && local.enable_hub_and_spoke ? 1 : 0
   source                      = "../../../modules/base_network_hub"
-  count                       = local.enable_hub_and_spoke ? 1 : 0
   random_project_id           = "true"
   impersonate_service_account = local.terraform_service_account
   default_service_account     = "deprivilege"
@@ -284,15 +385,15 @@ module "restricted_network_hub" {
 
   labels = merge(
     local.custom_labels, {
-    environment       = "production"
-    application_name  = "org-restricted-net-hub"
-    primary_contact   = local.primary_contact
-    secondary_contact = local.secondary_contact
-    created_by        = var.author
-    organisation_id   = local.org_id
+      environment       = "production"
+      application_name  = "org-restricted-net-hub"
+      primary_contact   = local.primary_contact
+      secondary_contact = local.secondary_contact
+      created_by        = var.author
+      organisation_id   = local.org_id
     }
   )
-  
+
   budget_alert_pubsub_topic   = var.restricted_net_hub_project_alert_pubsub_topic
   budget_alert_spent_percents = var.restricted_net_hub_project_alert_spent_percents
   budget_amount               = var.restricted_net_hub_project_budget_amount

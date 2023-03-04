@@ -25,6 +25,11 @@ output "monitoring_project_id" {
   value       = module.env.monitoring_project_id
 }
 
+output "logging_project_id" {
+  description = "Project for logging sink."
+  value       = module.env.logging_project_id
+}
+
 output "base_shared_vpc_project_id" {
   description = "Project for base shared VPC."
   value       = module.env.base_shared_vpc_project_id

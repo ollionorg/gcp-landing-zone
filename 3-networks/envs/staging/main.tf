@@ -15,7 +15,6 @@
  */
 
 
-
 data "google_active_folder" "env" {
   display_name = "${local.folder_prefix}-${local.env}"
   parent       = local.parent_id
@@ -26,11 +25,13 @@ data "google_active_folder" "env" {
 *****************************************/
 
 data "google_projects" "restricted_host_project" {
+  count  = local.enable_restricted_network ? 1 : 0
   filter = "parent.id:${split("/", data.google_active_folder.env.name)[1]} labels.application_name=restricted-shared-vpc-host labels.environment=${local.env} lifecycleState=ACTIVE"
 }
 
 data "google_project" "restricted_host_project" {
-  project_id = data.google_projects.restricted_host_project.projects[0].project_id
+  count      = local.enable_restricted_network ? 1 : 0
+  project_id = data.google_projects.restricted_host_project[0].projects[0].project_id
 }
 
 data "google_projects" "base_host_project" {
@@ -42,6 +43,7 @@ data "google_projects" "base_host_project" {
 *****************************************/
 module "restricted_shared_vpc" {
   source                           = "../../../modules/restricted_shared_vpc"
+  count                            = local.enable_restricted_network ? 1 : 0
   project_id                       = local.restricted_project_id
   project_number                   = local.restricted_project_number
   environment_code                 = local.environment_code
@@ -50,7 +52,7 @@ module "restricted_shared_vpc" {
   members                          = ["serviceAccount:${local.terraform_service_account}"]
   private_service_cidr             = local.restricted_private_service_cidr
   org_id                           = local.org_id
-  parent_folder                    = var.parent_folder
+  parent_folder                    = local.parent_folder
   bgp_asn_subnet                   = local.bgp_asn_number
   default_region1                  = local.default_region1
   default_region2                  = local.default_region2
@@ -102,7 +104,7 @@ module "base_shared_vpc" {
   environment_code              = local.environment_code
   private_service_cidr          = local.base_private_service_cidr
   org_id                        = local.org_id
-  parent_folder                 = var.parent_folder
+  parent_folder                 = local.parent_folder
   default_region1               = local.default_region1
   default_region2               = local.default_region2
   domain                        = local.domain

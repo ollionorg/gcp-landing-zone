@@ -44,6 +44,16 @@ output "org_audit_logs_project_id" {
   description = "The org audit logs project ID"
 }
 
+output "org_security_logs_project_id" {
+  value       = module.org_security_logs.project_id
+  description = "The org security logs project ID"
+}
+
+output "org_operations_logs_project_id" {
+  value       = module.org_operations_logs.project_id
+  description = "The org operations logs project ID"
+}
+
 output "org_billing_logs_project_id" {
   value       = module.org_billing_logs.project_id
   description = "The org billing logs project ID"
@@ -54,9 +64,14 @@ output "org_secrets_project_id" {
   description = "The org secrets project ID"
 }
 
-output "interconnect_project_id" {
-  value       = module.interconnect.project_id
-  description = "The Dedicated Interconnect project ID"
+output "trust_interconnect_project_id" {
+  value       = module.trust_interconnect[0].project_id
+  description = "The trust Interconnect project ID"
+}
+
+output "notrust_interconnect_project_id" {
+  value       = module.notrust_interconnect[0].project_id
+  description = "The notrust Interconnect project ID"
 }
 
 output "scc_notifications_project_id" {
@@ -75,7 +90,7 @@ output "base_net_hub_project_id" {
 }
 
 output "restricted_net_hub_project_id" {
-  value       = try(module.restricted_network_hub[0].project_id, null)
+  value       = try(module.restricted_network_hub[0].project_id, "disabled")
   description = "The Restricted Network hub project ID"
 }
 
@@ -94,10 +109,20 @@ output "logs_export_storage_bucket_name" {
   description = "The storage bucket for destination of log exports"
 }
 
+output "logs_export_storage_bucket_name_operations" {
+  value       = module.storage_destination_operations.resource_name
+  description = "The storage bucket for destination of log exports"
+}
+
+output "logs_export_storage_bucket_name_security" {
+  value       = module.storage_destination_security.resource_name
+  description = "The storage bucket for destination of log exports"
+}
+
 output "billing_account" {
   value = data.terraform_remote_state.bootstrap.outputs.billing_account
 }
 
 output "access_context_manager_policy_id" {
-  value = google_access_context_manager_access_policy.access_policy[0].id
+  value = try(google_access_context_manager_access_policy.access_policy[0].id, "")
 }

@@ -159,5 +159,7 @@ module "org_enforce_bucket_level_access" {
 resource "google_access_context_manager_access_policy" "access_policy" {
   count  = var.create_access_context_manager_access_policy ? 1 : 0
   parent = "organizations/${local.org_id}"
-  title  = "${local.project_name}-policy"
+  title  = "Scoped_Access_Policy_for_${local.project_name}"
+  scopes = local.parent_folder != "" ? ["folders/${local.parent_folder}"] : ["organizations/${local.org_id}"]
 }
+#parent = local.parent_folder != "" ? "folders/${local.parent_folder}" : "organizations/${local.org_id}"

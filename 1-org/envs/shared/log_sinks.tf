@@ -39,11 +39,57 @@ module "log_export_to_biqquery" {
   }
 }
 
+module "log_export_to_biqquery_operations" {
+  source                 = "../../../modules/bigquery_destination"
+  destination_uri        = module.bigquery_destination_operations.destination_uri
+  filter                 = local.operations_logs_filter
+  log_sink_name          = "${local.log_sink_prefix}-${local.shared_environment_code}-operations-logging-bq"
+  parent_resource_id     = local.parent_resource_id
+  parent_resource_type   = local.parent_resource_type
+  include_children       = true
+  unique_writer_identity = true
+  bigquery_options = {
+    use_partitioned_tables = true
+  }
+}
+
+module "log_export_to_biqquery_security" {
+  source                 = "../../../modules/bigquery_destination"
+  destination_uri        = module.bigquery_destination_security.destination_uri
+  filter                 = local.security_logs_filter
+  log_sink_name          = "${local.log_sink_prefix}-${local.shared_environment_code}-security-logging-bq"
+  parent_resource_id     = local.parent_resource_id
+  parent_resource_type   = local.parent_resource_type
+  include_children       = true
+  unique_writer_identity = true
+  bigquery_options = {
+    use_partitioned_tables = true
+  }
+}
+
 module "bigquery_destination" {
   source                     = "../../../modules/bigquery"
   project_id                 = module.org_audit_logs.project_id
   dataset_name               = "audit_logs"
   log_sink_writer_identity   = module.log_export_to_biqquery.writer_identity
+  expiration_days            = var.audit_logs_table_expiration_days
+  delete_contents_on_destroy = var.audit_logs_table_delete_contents_on_destroy
+}
+
+module "bigquery_destination_operations" {
+  source                     = "../../../modules/bigquery"
+  project_id                 = module.org_operations_logs.project_id
+  dataset_name               = "operations_logs"
+  log_sink_writer_identity   = module.log_export_to_biqquery_operations.writer_identity
+  expiration_days            = var.audit_logs_table_expiration_days
+  delete_contents_on_destroy = var.audit_logs_table_delete_contents_on_destroy
+}
+
+module "bigquery_destination_security" {
+  source                     = "../../../modules/bigquery"
+  project_id                 = module.org_security_logs.project_id
+  dataset_name               = "security_logs"
+  log_sink_writer_identity   = module.log_export_to_biqquery_security.writer_identity
   expiration_days            = var.audit_logs_table_expiration_days
   delete_contents_on_destroy = var.audit_logs_table_delete_contents_on_destroy
 }
@@ -75,6 +121,51 @@ module "storage_destination" {
   versioning                  = var.log_export_storage_versioning
 }
 
+module "log_export_to_storage_operations" {
+  source                 = "../../../modules/bigquery_destination"
+  destination_uri        = module.storage_destination_operations.destination_uri
+  filter                 = local.all_logs_filter
+  log_sink_name          = "${local.log_sink_prefix}-${local.shared_environment_code}-operations-logging-${local.bucket_prefix}"
+  parent_resource_id     = local.parent_resource_id
+  parent_resource_type   = local.parent_resource_type
+  include_children       = true
+  unique_writer_identity = true
+}
+
+module "storage_destination_operations" {
+  source                      = "../../../modules/storage"
+  project_id                  = module.org_operations_logs.project_id
+  storage_bucket_name         = "${local.bucket_prefix}-${module.org_operations_logs.project_id}-operations-logs-${random_string.suffix.result}"
+  log_sink_writer_identity    = module.log_export_to_storage_operations.writer_identity
+  uniform_bucket_level_access = true
+  location                    = var.log_export_storage_location
+  retention_policy            = var.log_export_storage_retention_policy
+  force_destroy               = var.log_export_storage_force_destroy
+  versioning                  = var.log_export_storage_versioning
+}
+
+module "log_export_to_storage_security" {
+  source                 = "../../../modules/bigquery_destination"
+  destination_uri        = module.storage_destination_security.destination_uri
+  filter                 = local.all_logs_filter
+  log_sink_name          = "${local.log_sink_prefix}-${local.shared_environment_code}-security-logging-${local.bucket_prefix}"
+  parent_resource_id     = local.parent_resource_id
+  parent_resource_type   = local.parent_resource_type
+  include_children       = true
+  unique_writer_identity = true
+}
+
+module "storage_destination_security" {
+  source                      = "../../../modules/storage"
+  project_id                  = module.org_security_logs.project_id
+  storage_bucket_name         = "${local.bucket_prefix}-${module.org_security_logs.project_id}-security-logs-${random_string.suffix.result}"
+  log_sink_writer_identity    = module.log_export_to_storage_security.writer_identity
+  uniform_bucket_level_access = true
+  location                    = var.log_export_storage_location
+  retention_policy            = var.log_export_storage_retention_policy
+  force_destroy               = var.log_export_storage_force_destroy
+  versioning                  = var.log_export_storage_versioning
+}
 /******************************************
   Send logs to Pub\Sub
 *****************************************/

@@ -15,8 +15,6 @@ locals {
   vpc_prefix                = data.terraform_remote_state.bootstrap.outputs.vpc_prefix
   gcp_region                = data.terraform_remote_state.bootstrap.outputs.gcp_region
   project_service_account   = data.terraform_remote_state.BU_NAME_production.outputs.base_shared_vpc_project_sa
-  bu_code                   = data.terraform_remote_state.bootstrap.outputs.bu_code
-  bu_name                   = data.terraform_remote_state.bootstrap.outputs.bu_name
   base_shared_network_name  = data.terraform_remote_state.networks.outputs.base_network_name
   base_shared_subnet_name   = data.terraform_remote_state.networks.outputs.base_subnets_names[0]
   base_shared_subnet_name2  = data.terraform_remote_state.networks.outputs.base_subnets_names[1]

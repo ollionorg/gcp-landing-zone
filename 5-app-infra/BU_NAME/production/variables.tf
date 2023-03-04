@@ -30,3 +30,13 @@ variable "dbps" {
   type = string
   sensitive = true
 }
+
+variable "bu_name" {
+  description = "BU Name"
+  type = string
+}
+
+variable "bu_code" {
+  description = "BU Code"
+  type = string
+}

@@ -1,4 +1,3 @@
-
 /**
  * Copyright 2021 Google LLC
  *
@@ -16,25 +15,29 @@
  */
 
 /******************************************
-  Project for Environment Secrets
+  Projects for monitoring workspaces
 *****************************************/
 
-module "env_secrets" {
-  source                      = "../../modules/env_secrets"
+module "logging_project" {
+  count                       = var.enable_env_log_sink ? 1 : 0
+  source                      = "../../modules/monitoring_project"
   random_project_id           = "true"
   impersonate_service_account = var.terraform_service_account
-  default_service_account     = "deprivilege"
-  name                        = "${var.project_prefix}-${var.environment_code}-secrets"
+  name                        = "${var.project_prefix}-${var.environment_code}-logging"
   org_id                      = var.org_id
   billing_account             = var.billing_account
   folder_id                   = google_folder.env.id
   disable_services_on_destroy = false
-  activate_apis               = ["logging.googleapis.com", "secretmanager.googleapis.com"]
+  activate_apis = [
+    "logging.googleapis.com",
+    "monitoring.googleapis.com",
+    "billingbudgets.googleapis.com"
+  ]
 
   labels = merge(
     var.custom_labels, {
       environment       = var.env
-      application_name  = "${var.env}-secrets"
+      application_name  = "${var.env}-logging"
       billing_code      = "${var.env}-${random_id.billing_code_random_id.hex}"
       primary_contact   = var.primary_contact
       secondary_contact = var.secondary_contact
@@ -46,7 +49,8 @@ module "env_secrets" {
       created_by        = var.author
     }
   )
-  budget_alert_pubsub_topic   = var.secret_project_alert_pubsub_topic
-  budget_alert_spent_percents = var.secret_project_alert_spent_percents
-  budget_amount               = var.secret_project_budget_amount
+
+  budget_alert_pubsub_topic   = var.monitoring_project_alert_pubsub_topic
+  budget_alert_spent_percents = var.monitoring_project_alert_spent_percents
+  budget_amount               = var.monitoring_project_budget_amount
 }

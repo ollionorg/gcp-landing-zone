@@ -38,16 +38,16 @@ module "base_shared_vpc_host_project" {
 
   labels = merge(
     var.custom_labels, {
-    environment       = var.env
-    application_name  = "base-shared-${var.vpc_prefix}-host"
-    billing_code      = "${var.env}-${random_id.billing_code_random_id.hex}"
-    primary_contact   = var.primary_contact
-    secondary_contact = var.secondary_contact
-    business_code     = var.bu_code
-    env_code          = var.environment_code
-    stage_name        = var.stage
-    bu_name           = var.bu
-    organisation_id   = var.org_id
+      environment       = var.env
+      application_name  = "base-shared-${var.vpc_prefix}-host"
+      billing_code      = "${var.env}-${random_id.billing_code_random_id.hex}"
+      primary_contact   = var.primary_contact
+      secondary_contact = var.secondary_contact
+      business_code     = var.bu_code
+      env_code          = var.environment_code
+      stage_name        = var.stage
+      bu_name           = var.bu
+      organisation_id   = var.org_id
     }
   )
   budget_alert_pubsub_topic   = var.base_network_project_alert_pubsub_topic
@@ -57,6 +57,7 @@ module "base_shared_vpc_host_project" {
 
 module "restricted_shared_vpc_host_project" {
   source                      = "../../modules/restricted_shared_vpc_host_project"
+  count = var.enable_restricted_network ? 1 : 0
   random_project_id           = "true"
   impersonate_service_account = var.terraform_service_account
   name                        = format("%s-%s-shared-restricted", var.project_prefix, var.environment_code)

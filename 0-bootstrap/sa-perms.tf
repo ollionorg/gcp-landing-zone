@@ -28,7 +28,7 @@ resource "google_organization_iam_member" "cb_sa_org_perms" {
 # group org admins perms org level
 resource "google_organization_iam_member" "grp_org_admin_perms" {
   org_id = var.org_id
-  member = "group:${var.audit_data_users}"
+  member = "group:${var.cto_audit_compliance_operations_group}"
   role   = "roles/iam.securityReviewer"
 }
 

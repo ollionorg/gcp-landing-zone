@@ -18,7 +18,7 @@ module "env" {
   source                     = "../../../modules/env_baseline"
   env                        = basename(path.cwd)
   environment_code           = local.environment_code
-  parent_id                  = var.parent_folder != "" ? "folders/${var.parent_folder}" : "organizations/${local.org_id}"
+  parent_id                  = local.parent_folder != "" ? "folders/${local.parent_folder}" : "organizations/${local.org_id}"
   org_id                     = local.org_id
   billing_account            = local.billing_account
   terraform_service_account  = local.terraform_service_account
@@ -30,4 +30,6 @@ module "env" {
   vpc_prefix                 = local.vpc_prefix
   author                     = var.author
   custom_labels              = local.custom_labels
+  enable_env_log_sink        = local.enable_env_log_sink
+  enable_restricted_network  = local.enable_restricted_network
 }

@@ -39,13 +39,9 @@ jobs:
             --project=${{ env.PROJECT_ID }} \
             --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ env.BRANCH_NAME }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/3-networks/envs/staging"
 
-      - name: Report Status
-        uses: ravsamhq/notify-slack-action@v1
-        if: always()
+      - name: "Report Status as Slack Notification"
+        if: failure()
+        uses: vishal-kapse/slack-notify-action@v1.0
         with:
-          notification_title: '{workflow} has {status_message}'
-          status: ${{ job.status }}
-          notify_when : 'failure'
-          footer: 'Linked to Repo <{repo_url}|{repo}>'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.GCF_SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+          message: "Github workflow run has status ${{ job.status }}"

@@ -46,22 +46,22 @@ output "peering_network" {
 
 output "restricted_shared_vpc_project" {
   description = "Project sample restricted project id."
-  value       = module.restricted_shared_vpc_project.project_id
+  value       = try(module.restricted_shared_vpc_project[0].project_id, null)
 }
 
 output "restricted_shared_vpc_project_number" {
   description = "Project sample restricted project."
-  value       = module.restricted_shared_vpc_project.project_number
+  value       = try(module.restricted_shared_vpc_project[0].project_number, null)
 }
 
 output "vpc_service_control_perimeter_name" {
   description = "VPC Service Control name."
-  value       = data.terraform_remote_state.networks.outputs.restricted_service_perimeter_name
+  value       = try(data.terraform_remote_state.networks.outputs.restricted_service_perimeter_name, null)
 }
 
 output "restricted_enabled_apis" {
   description = "Activated APIs."
-  value       = module.restricted_shared_vpc_project.enabled_apis
+  value       = try(module.restricted_shared_vpc_project[0].enabled_apis, null)
 }
 
 output "access_context_manager_policy_id" {

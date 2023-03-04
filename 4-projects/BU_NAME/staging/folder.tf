@@ -16,6 +16,6 @@
 
 data "google_active_folder" "env" {
   display_name = "${local.folder_prefix}-${basename(path.cwd)}"
-  parent       = var.parent_folder != "" ? "folders/${var.parent_folder}" : "organizations/${local.org_id}"
+  parent       = local.parent_folder != "" ? "folders/${local.parent_folder}" : "organizations/${local.org_id}"
 }
 

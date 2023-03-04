@@ -16,5 +16,5 @@
 
 data "google_active_folder" "common" {
   display_name = "${local.folder_prefix}-common"
-  parent       = var.parent_folder != "" ? "folders/${var.parent_folder}" : "organizations/${local.org_id}"
+  parent       = local.parent_folder != "" ? "folders/${local.parent_folder}" : "organizations/${local.org_id}"
 }

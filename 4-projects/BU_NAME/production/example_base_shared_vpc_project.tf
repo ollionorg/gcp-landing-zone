@@ -32,6 +32,7 @@ module "base_shared_vpc_project" {
   sa_roles                    = ["roles/editor"]
   enable_cloudbuild_deploy    = true
   cloudbuild_sa               = local.cloudbuild_sa
+  author                      = var.author
   activate_apis = [
     "iam.googleapis.com",
     "cloudresourcemanager.googleapis.com"

@@ -37,4 +37,4 @@ module "floating_project" {
   secondary_contact = local.secondary_contact
   business_code     = var.bu_code
   custom_labels     = local.custom_labels
-  }
+}

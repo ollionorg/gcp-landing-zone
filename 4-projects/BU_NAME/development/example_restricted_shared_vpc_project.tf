@@ -16,6 +16,7 @@
 
 module "restricted_shared_vpc_project" {
   source                      = "../../../modules/single_project"
+  count                       = local.enable_restricted_network ? 1 : 0
   impersonate_service_account = local.terraform_service_account
   org_id                      = local.org_id
   billing_account             = local.billing_account

@@ -11,8 +11,13 @@ locals {
   folder_prefix             = data.terraform_remote_state.bootstrap.outputs.folder_prefix
   staging_env_code          = data.terraform_remote_state.bootstrap.outputs.staging_environment_code
   access_context_policy_id  = data.terraform_remote_state.org.outputs.access_context_manager_policy_id
-  restricted_perimeter_name = data.terraform_remote_state.networks.outputs.restricted_service_perimeter_name
+  enable_restricted_network = data.terraform_remote_state.bootstrap.outputs.enable_restricted_network
+  parent_folder             = data.terraform_remote_state.bootstrap.outputs.parent_folder
+  restricted_perimeter_name = try(data.terraform_remote_state.networks.outputs.restricted_service_perimeter_name, null)
   vpc_prefix                = data.terraform_remote_state.bootstrap.outputs.vpc_prefix
   stage_name                = data.terraform_remote_state.bootstrap.outputs.staging_folder
   custom_labels             = data.terraform_remote_state.bootstrap.outputs.custom_labels
+
+  cto_operations_group = data.terraform_remote_state.bootstrap.outputs.cto_operations_group
+  bu_app_deploy_group  = data.terraform_remote_state.bootstrap.outputs.bu_app_deploy_group
 }

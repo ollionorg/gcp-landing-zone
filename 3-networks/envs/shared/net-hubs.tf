@@ -43,7 +43,7 @@ module "base_shared_vpc" {
   project_id                    = local.base_net_hub_project_id
   environment_code              = local.environment_code
   org_id                        = local.org_id
-  parent_folder                 = var.parent_folder
+  parent_folder                 = local.parent_folder
   bgp_asn_subnet                = local.bgp_asn_number
   default_region1               = local.default_region1
   default_region2               = local.default_region2
@@ -89,7 +89,7 @@ module "base_shared_vpc" {
 
 module "restricted_shared_vpc" {
   source                           = "../../../modules/restricted_shared_vpc"
-  count                            = local.enable_hub_and_spoke ? 1 : 0
+  count                            = local.enable_hub_and_spoke && local.enable_restricted_network ? 1 : 0
   project_id                       = local.restricted_net_hub_project_id
   project_number                   = local.restricted_net_hub_project_number
   environment_code                 = local.environment_code
@@ -97,7 +97,7 @@ module "restricted_shared_vpc" {
   restricted_services              = ["bigquery.googleapis.com", "storage.googleapis.com"]
   members                          = ["serviceAccount:${local.terraform_service_account}"]
   org_id                           = local.org_id
-  parent_folder                    = var.parent_folder
+  parent_folder                    = local.parent_folder
   bgp_asn_subnet                   = local.bgp_asn_number
   default_region1                  = local.default_region1
   default_region2                  = local.default_region2

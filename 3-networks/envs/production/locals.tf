@@ -1,10 +1,12 @@
 locals {
   environment_code                 = data.terraform_remote_state.bootstrap.outputs.prod_environment_code
   env                              = basename(path.cwd)
-  restricted_project_id            = data.google_projects.restricted_host_project.projects[0].project_id
-  restricted_project_number        = data.google_project.restricted_host_project.number
+  enable_restricted_network        = data.terraform_remote_state.bootstrap.outputs.enable_restricted_network
+  restricted_project_id            = local.enable_restricted_network ? data.google_projects.restricted_host_project[0].projects[0].project_id : null
+  restricted_project_number        = try(data.google_project.restricted_host_project[0].number, null)
   base_project_id                  = data.google_projects.base_host_project.projects[0].project_id
-  parent_id                        = var.parent_folder != "" ? "folders/${var.parent_folder}" : "organizations/${data.terraform_remote_state.bootstrap.outputs.org_id}"
+  parent_folder = data.terraform_remote_state.bootstrap.outputs.parent_folder
+  parent_id                        = local.parent_folder != "" ? "folders/${local.parent_folder}" : "organizations/${data.terraform_remote_state.bootstrap.outputs.org_id}"
   mode                             = data.terraform_remote_state.bootstrap.outputs.enable_hub_and_spoke ? "spoke" : null
   bgp_asn_number                   = var.enable_partner_interconnect ? "16550" : "64514"
   enable_transitivity              = data.terraform_remote_state.bootstrap.outputs.enable_hub_and_spoke && data.terraform_remote_state.bootstrap.outputs.enable_hub_and_spoke_transitivity

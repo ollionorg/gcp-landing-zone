@@ -52,7 +52,7 @@ module "base_transitivity" {
  */
 
 module "restricted_transitivity" {
-  count               = local.enable_transitivity ? 1 : 0
+  count               = local.enable_transitivity && local.enable_restricted_network ? 1 : 0
   source              = "../../../modules/transitivity"
   project_id          = local.restricted_net_hub_project_id
   regions             = keys(local.restricted_subnet_primary_ranges)

@@ -16,65 +16,48 @@
 
 module "shared_restricted_interconnect" {
   source                         = "../../../modules/partner_interconnect"
-  org_id                         = data.terraform_remote_state.bootstrap.outputs.org_id
-  parent_folder                  = var.parent_folder
+  count                          = local.restricted_enable_partner_interconnect && local.enable_restricted_network ? 1 : 0
+  org_id                         = local.org_id
+  parent_folder                  = var.parent_folder // need to add output from env
   vpc_name                       = "${local.environment_code}-shared-restricted"
   environment                    = local.env
-  enable_hub_and_spoke           = data.terraform_remote_state.bootstrap.outputs.enable_hub_and_spoke
+  enable_hub_and_spoke           = local.enable_hub_and_spoke
   vpc_type                       = "restricted"
-  preactivate                    = var.preactivate_partner_interconnect
-
-  region1                        = data.terraform_remote_state.bootstrap.outputs.gcp_region
+  preactivate                    = local.p_r_preactivate_partner_interconnect
+  region1                        = local.default_region
   region1_router1_name           = module.restricted_shared_vpc[0].region1_router1.router.name
-  region1_interconnect1_location = "las-zone1-770"
+  region1_interconnect1_location = local.p_r_region1_interconnect1_location
   region1_router2_name           = module.restricted_shared_vpc[0].region1_router2.router.name
-  region1_interconnect2_location = "las-zone1-770"
-
-  region2                        = data.terraform_remote_state.bootstrap.outputs.default_region2
+  region1_interconnect2_location = local.p_r_region1_interconnect2_location
+  region2                        = local.default_region2
   region2_router1_name           = module.restricted_shared_vpc[0].region2_router1.router.name
-  region2_interconnect1_location = "lax-zone2-19"
+  region2_interconnect1_location = local.p_r_region2_interconnect1_location
   region2_router2_name           = module.restricted_shared_vpc[0].region2_router2.router.name
-  region2_interconnect2_location = "lax-zone1-403"
-
-  folder_prefix                  = data.terraform_remote_state.bootstrap.outputs.folder_prefix
-
-  cloud_router_labels = {
-    vlan_1 = "cr5",
-    vlan_2 = "cr6",
-    vlan_3 = "cr7",
-    vlan_4 = "cr8"
-  }
+  region2_interconnect2_location = local.p_r_region2_interconnect2_location
+  folder_prefix                  = local.folder_prefix
+  cloud_router_labels            = local.p_r_cloud_router_labels
 }
 
 module "shared_base_interconnect" {
   source                         = "../../../modules/partner_interconnect"
-
+  count                          = local.shared_enable_partner_interconnect ? 1 : 0
   org_id                         = data.terraform_remote_state.bootstrap.outputs.org_id
-  parent_folder                  = var.parent_folder
+  parent_folder                  = var.parent_folder // need to add output from env
   vpc_name                       = "${local.environment_code}-shared-base"
   environment                    = local.env
-  enable_hub_and_spoke           = data.terraform_remote_state.bootstrap.outputs.enable_hub_and_spoke
+  enable_hub_and_spoke           = local.enable_hub_and_spoke
   vpc_type                       = "base"
-  preactivate                    = var.preactivate_partner_interconnect
-
-  region1                        = data.terraform_remote_state.bootstrap.outputs.gcp_region
+  preactivate                    = local.p_s_preactivate_partner_interconnect
+  region1                        = local.default_region
   region1_router1_name           = module.base_shared_vpc[0].region1_router1.router.name
-  region1_interconnect1_location = "las-zone1-770"
+  region1_interconnect1_location = local.p_s_region1_interconnect1_location
   region1_router2_name           = module.base_shared_vpc[0].region1_router2.router.name
-  region1_interconnect2_location = "las-zone1-770"
-
-  region2                        = data.terraform_remote_state.bootstrap.outputs.default_region2
+  region1_interconnect2_location = local.p_s_region1_interconnect2_location
+  region2                        = local.default_region2
   region2_router1_name           = module.base_shared_vpc[0].region2_router1.router.name
-  region2_interconnect1_location = "lax-zone2-19"
+  region2_interconnect1_location = local.p_s_region2_interconnect1_location
   region2_router2_name           = module.base_shared_vpc[0].region2_router2.router.name
-  region2_interconnect2_location = "lax-zone1-403"
-
-  folder_prefix                  = data.terraform_remote_state.bootstrap.outputs.folder_prefix
-
-  cloud_router_labels = {
-    vlan_1 = "cr1",
-    vlan_2 = "cr2",
-    vlan_3 = "cr3",
-    vlan_4 = "cr4"
-  }
+  region2_interconnect2_location = local.p_s_region2_interconnect2_location
+  folder_prefix                  = local.folder_prefix
+  cloud_router_labels            = local.p_s_cloud_router_labels
 }

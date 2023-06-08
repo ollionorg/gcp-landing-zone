@@ -1,0 +1,13 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPCloudNatNetworkConstraintV1
+metadata:
+  name: gcp-cloud-nat-network-constraint
+  annotations:
+    description:  Ensure that any created NAT does not accept 0.0.0.0/0 as a source and destination
+spec:
+  severity: high
+  match:
+    ancestries:
+    - "projects/**"
+    excludedAncestries: []
+  parameters: {}

@@ -1,0 +1,29 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpcloudarmorenablepreviewmodeconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPCloudArmorEnablePreviewModeConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+            package templates.gcp.GCPCloudArmorEnablePreviewModeConstraintV1
+
+            violation[{
+            	"msg": msg,
+            }] {
+            	resource := input.review
+            	resource.type == "google_compute_security_policy"
+            	msg := check_preview_mode(resource)
+            }
+
+            check_preview_mode(resource) = msg {
+                resource.change.after.rule[_].preview == false
+                msg := sprintf("Violation: Rule preview mode should be enabled for resource %s.%s", [resource.type, resource.name])
+            }

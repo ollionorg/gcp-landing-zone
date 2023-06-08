@@ -1,0 +1,13 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPFirewallWithTagsConstraintV1
+metadata:
+  name: gcp-firewall-with-tags
+  annotations:
+    description:  Ensure Firewall Rules are configured via Tag's (or) Label's
+spec:
+  severity: high
+  match:
+    ancestries:
+    - "projects/**"
+    excludedAncestries: []
+  parameters: {}

@@ -1,0 +1,13 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPComputeEnableDeletionProtectionConstraintV1
+metadata:
+  name: gcpcomputeenabledeletionprotectionconstraintv1
+  annotations:
+    description:  Ensure deletion protection is enabled to avoid accidental VM deletion.
+spec:
+  severity: high
+  match:
+    ancestries:
+    - "organizations/**"
+    excludedAncestries: []
+  parameters: {}

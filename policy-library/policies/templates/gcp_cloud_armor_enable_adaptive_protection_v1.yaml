@@ -1,0 +1,29 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpcloudarmorenableadaptiveprotectionconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPCloudArmorEnableAdaptiveProtectionConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+            package templates.gcp.GCPCloudArmorEnableAdaptiveProtectionConstraintV1
+
+            violation[{
+            	"msg": msg,
+            }] {
+            	resource := input.review
+            	resource.type == "google_compute_security_policy"
+            	msg := check_adaptive_protection(resource)
+            }
+
+            check_adaptive_protection(resource) = msg {
+                resource.change.after.adaptive_protection_config == []
+                msg := sprintf("Violation: Adaptive Protection should be enabled for resource %s.%s",[resource.type, resource.name])
+            }

@@ -86,7 +86,7 @@ resource "google_storage_bucket" "cloudbuild_artifacts" {
 
 resource "google_kms_key_ring" "tf_keyring" {
   project  = module.cloudbuild_project.project_id
-  name     = "tf-keyring"
+  name     = "tf-keyring-${random_id.suffix.hex}"
   location = var.default_region
 }
 
@@ -95,7 +95,7 @@ resource "google_kms_key_ring" "tf_keyring" {
  *****************************************/
 
 resource "google_kms_crypto_key" "tf_key" {
-  name     = "tf-key"
+  name     = "tf-key-${random_id.suffix.hex}"
   key_ring = google_kms_key_ring.tf_keyring.id
 }
 

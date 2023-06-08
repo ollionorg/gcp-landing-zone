@@ -207,31 +207,31 @@ variable "advertised_ip_ranges" {
 
 // PROJECT Variables
 
-variable "management_sub_ip_cidr_range" {
+variable "management-sub-ip_cidr_range" {
   default = "10.0.0.0/24"
 }
 
-variable "untrust_sub_ip_cidr_range" {
+variable "untrust-sub-ip_cidr_range" {
   default = "10.0.1.0/24"
 }
 
-variable "trust_sub_ip_cidr_range" {
+variable "trust-sub-ip_cidr_range" {
   default = "10.0.2.0/24"
 }
 
-variable "allow_mgmt_source_ranges" {
+variable "allow-mgmt-source-ranges" {
   default = ["0.0.0.0/0"]
 }
 
-variable "allow_inbound_source_ranges" {
+variable "allow-inbound-source-ranges" {
   default = ["0.0.0.0/0"]
 }
 
-variable "allow_outbound_source_ranges" {
+variable "allow-outbound-source-ranges" {
   default = ["0.0.0.0/0"]
 }
 
-variable "trust_dest_range" {
+variable "trust-dest_range" {
   default = "0.0.0.0/0"
 }
 

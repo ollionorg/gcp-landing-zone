@@ -27,7 +27,7 @@ steps:
     path: /root/.ssh
 
 - id: 'tf init'
-  name: 'GCP_REGION-docker.pkg.dev/${PROJECT_ID}/GAR_REPO_NAME/tf-lz-image:latest'
+  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcp-lz-image/tf-lz-image:latest'
   entrypoint: 'bash'
   args:
   - -c
@@ -36,7 +36,7 @@ steps:
       terraform init
 
 - id: 'tf apply'
-  name: 'GCP_REGION-docker.pkg.dev/${PROJECT_ID}/GAR_REPO_NAME/tf-lz-image:latest'
+  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcp-lz-image/tf-lz-image:latest'
   entrypoint: 'bash'
   args:
   - -c

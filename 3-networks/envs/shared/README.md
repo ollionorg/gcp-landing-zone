@@ -3,22 +3,14 @@
 
 The purpose of this step is to set up the global [DNS Hub](https://cloud.google.com/blog/products/networking/cloud-forwarding-peering-and-zones) that will be used by all environments.
 
-
-This steps also creates below resources if enabled in bootstrap terraform.tfvars
-1. Interconnects
-
-   a. Dedicated Interconnect
-
-   b. Partner interconnect
-2. Next Gen Firewall in Base Shared hub
-
 ## Prerequisites
 
 1. 0-bootstrap executed successfully.
-1. 1-org executed successfully.
+2. 1-org executed successfully.
+3. 2-env executed successfully
 
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
-<!-- BEGIN_TF_DOCS -->
 Copyright 2021 Google LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,6 +24,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+**/
 
 ## Requirements
 
@@ -45,8 +38,8 @@ limitations under the License.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 4.47.0 |
-| <a name="provider_google.impersonate"></a> [google.impersonate](#provider\_google.impersonate) | 4.47.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | 4.65.2 |
+| <a name="provider_google.impersonate"></a> [google.impersonate](#provider\_google.impersonate) | 4.65.2 |
 | <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
 ## Modules
@@ -113,9 +106,9 @@ limitations under the License.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_advertised_ip_ranges"></a> [advertised\_ip\_ranges](#input\_advertised\_ip\_ranges) | User-specified list of individual IP ranges to advertise in custom mode. | `string` | n/a | yes |
-| <a name="input_allow_inbound_source_ranges"></a> [allow\_inbound\_source\_ranges](#input\_allow\_inbound\_source\_ranges) | n/a | `list` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
-| <a name="input_allow_mgmt_source_ranges"></a> [allow\_mgmt\_source\_ranges](#input\_allow\_mgmt\_source\_ranges) | n/a | `list` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
-| <a name="input_allow_outbound_source_ranges"></a> [allow\_outbound\_source\_ranges](#input\_allow\_outbound\_source\_ranges) | n/a | `list` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
+| <a name="input_allow-inbound-source-ranges"></a> [allow-inbound-source-ranges](#input\_allow-inbound-source-ranges) | n/a | `list` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
+| <a name="input_allow-mgmt-source-ranges"></a> [allow-mgmt-source-ranges](#input\_allow-mgmt-source-ranges) | n/a | `list` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
+| <a name="input_allow-outbound-source-ranges"></a> [allow-outbound-source-ranges](#input\_allow-outbound-source-ranges) | n/a | `list` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
 | <a name="input_base_hub_dns_enable_inbound_forwarding"></a> [base\_hub\_dns\_enable\_inbound\_forwarding](#input\_base\_hub\_dns\_enable\_inbound\_forwarding) | Toggle inbound query forwarding for Base Hub VPC DNS. | `bool` | `true` | no |
 | <a name="input_base_hub_dns_enable_logging"></a> [base\_hub\_dns\_enable\_logging](#input\_base\_hub\_dns\_enable\_logging) | Toggle DNS logging for Base Hub VPC DNS. | `bool` | `true` | no |
 | <a name="input_base_hub_firewall_enable_logging"></a> [base\_hub\_firewall\_enable\_logging](#input\_base\_hub\_firewall\_enable\_logging) | Toggle firewall logging for VPC Firewalls in Base Hub VPC. | `bool` | `true` | no |
@@ -142,7 +135,7 @@ limitations under the License.
 | <a name="input_machine_cpu_fw"></a> [machine\_cpu\_fw](#input\_machine\_cpu\_fw) | n/a | `string` | `"Intel Skylake"` | no |
 | <a name="input_machine_type_fw"></a> [machine\_type\_fw](#input\_machine\_type\_fw) | n/a | `string` | `"n1-standard-4"` | no |
 | <a name="input_machine_type_web"></a> [machine\_type\_web](#input\_machine\_type\_web) | n/a | `string` | `"f1-micro"` | no |
-| <a name="input_management_sub_ip_cidr_range"></a> [management\_sub\_ip\_cidr\_range](#input\_management\_sub\_ip\_cidr\_range) | n/a | `string` | `"10.0.0.0/24"` | no |
+| <a name="input_management-sub-ip_cidr_range"></a> [management-sub-ip\_cidr\_range](#input\_management-sub-ip\_cidr\_range) | n/a | `string` | `"10.0.0.0/24"` | no |
 | <a name="input_next_hop_internet"></a> [next\_hop\_internet](#input\_next\_hop\_internet) | URL to a gateway that should handle matching packets. Currently, you can only specify the internet gateway, using a full or partial valid URL | `bool` | n/a | yes |
 | <a name="input_parent_folder"></a> [parent\_folder](#input\_parent\_folder) | Optional - for an organization with existing projects or for development/validation. It will place all the example foundation resources under the provided folder instead of the root organization. The value is the numeric folder ID. The folder must already exist. Must be the same value used in previous step. | `string` | `""` | no |
 | <a name="input_preactivate_partner_interconnect"></a> [preactivate\_partner\_interconnect](#input\_preactivate\_partner\_interconnect) | Preactivate Partner Interconnect VLAN attachment in the environment. | `bool` | `false` | no |
@@ -164,9 +157,9 @@ limitations under the License.
 | <a name="input_shared_vpc_host_project"></a> [shared\_vpc\_host\_project](#input\_shared\_vpc\_host\_project) | Toggle shared VPC host project | `bool` | `false` | no |
 | <a name="input_subnet_private_access"></a> [subnet\_private\_access](#input\_subnet\_private\_access) | When enabled, VMs in this subnetwork without external IP addresses can access Google APIs and services by using Private Google Access. | `bool` | `true` | no |
 | <a name="input_subnetworks_enable_logging"></a> [subnetworks\_enable\_logging](#input\_subnetworks\_enable\_logging) | Toggle subnetworks flow logging for VPC Subnetworks. | `bool` | `true` | no |
-| <a name="input_trust_dest_range"></a> [trust\_dest\_range](#input\_trust\_dest\_range) | n/a | `string` | `"0.0.0.0/0"` | no |
-| <a name="input_trust_sub_ip_cidr_range"></a> [trust\_sub\_ip\_cidr\_range](#input\_trust\_sub\_ip\_cidr\_range) | n/a | `string` | `"10.0.2.0/24"` | no |
-| <a name="input_untrust_sub_ip_cidr_range"></a> [untrust\_sub\_ip\_cidr\_range](#input\_untrust\_sub\_ip\_cidr\_range) | n/a | `string` | `"10.0.1.0/24"` | no |
+| <a name="input_trust-dest_range"></a> [trust-dest\_range](#input\_trust-dest\_range) | n/a | `string` | `"0.0.0.0/0"` | no |
+| <a name="input_trust-sub-ip_cidr_range"></a> [trust-sub-ip\_cidr\_range](#input\_trust-sub-ip\_cidr\_range) | n/a | `string` | `"10.0.2.0/24"` | no |
+| <a name="input_untrust-sub-ip_cidr_range"></a> [untrust-sub-ip\_cidr\_range](#input\_untrust-sub-ip\_cidr\_range) | n/a | `string` | `"10.0.1.0/24"` | no |
 | <a name="input_web_server_name"></a> [web\_server\_name](#input\_web\_server\_name) | WEB-SERVER Vaiables | `string` | `"webserver"` | no |
 | <a name="input_zone"></a> [zone](#input\_zone) | n/a | `string` | `"us-west1-a"` | no |
 | <a name="input_zone_2"></a> [zone\_2](#input\_zone\_2) | n/a | `string` | `"us-west1-b"` | no |
@@ -180,4 +173,3 @@ limitations under the License.
 | <a name="output_firewall-name"></a> [firewall-name](#output\_firewall-name) | n/a |
 | <a name="output_firewall-untrust-ips-for-nat-healthcheck"></a> [firewall-untrust-ips-for-nat-healthcheck](#output\_firewall-untrust-ips-for-nat-healthcheck) | n/a |
 | <a name="output_internal-lb-ip-for-nat-healthcheck"></a> [internal-lb-ip-for-nat-healthcheck](#output\_internal-lb-ip-for-nat-healthcheck) | n/a |
-<!-- END_TF_DOCS -->

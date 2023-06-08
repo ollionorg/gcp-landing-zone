@@ -1,7 +1,7 @@
 variable "gh_key_comment" {
-  type = string
+  type        = string
   description = "comment for the created key to be added to the github."
-  default = "runner@key"
+  default     = "runner@key"
 }
 
 variable "gh_token" {
@@ -11,9 +11,9 @@ variable "gh_token" {
 }
 
 variable "gh_key_file_name" {
-  type = string
+  type        = string
   description = "file names for the created private and public keys."
-  default = "secretkey"
+  default     = "secretkey"
 }
 
 variable "runner_repo_name" {

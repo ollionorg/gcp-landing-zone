@@ -1,0 +1,49 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpkmskeyringnotanonymouslyaccessibleconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPKMSKeyRingNotAnonymouslyAccessibleConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+        package templates.gcp.GCPKMSKeyRingNotAnonymouslyAccessibleConstraintV1
+        import future.keywords
+        
+        violation[{
+          "msg": msg,
+          "details": metadata,
+        }] {
+          resource := input.review
+          params := input.parameters.members
+           msg := check_accessibility(resource, params)
+          metadata := {
+            "Resource_Name" : resource.name
+          }
+        }
+        
+        check_accessibility(resource, params) = msg {
+            resource.type == "google_kms_key_ring_iam_member"
+            resource.change.after.member == "allUsers"
+            resource.change.after.member == "allAuthenticatedUsers"
+            msg := sprintf("Ensure you are not using allUsers as member for resource: %s", [resource.name])
+        }
+        
+        check_accessibility(resource, params) = msg {
+          resource.type == "google_kms_key_ring_iam_binding"
+          policy_members = resource.change.after.members
+          check(policy_members, params)
+          msg := sprintf("Ensure you are not using allAuthenticatedUsers & allUsers as member for resource: %s", [resource.name])
+        }
+        
+        check(policy_members, params) {
+          every x in policy_members {
+                x in cast_set(params)
+              }
+        }

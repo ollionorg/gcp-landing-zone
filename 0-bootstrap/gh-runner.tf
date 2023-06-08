@@ -16,6 +16,7 @@
 
 module "runner-mig" {
   source              = "../modules/terraform-google-github-actions-runners/modules/gh-runner-mig-vm"
+  version             = "1.0.0"
   create_network      = true
   project_id          = module.cloudbuild_bootstrap.cloudbuild_project_id
   repo_name           = var.runner_repo_name

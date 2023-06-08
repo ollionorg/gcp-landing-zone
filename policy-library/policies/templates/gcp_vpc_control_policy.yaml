@@ -1,0 +1,50 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpvpccontrolpolicyconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPVPCControlPolicyConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties:
+            restricted_services:
+              description: "A list of restricted service, for example: [storage.googleapis.com]"
+              type: array
+              items:
+                type: string
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+        package templates.gcp.GCPVPCControlPolicyConstraintV1
+        import future.keywords
+        
+        violation[{
+          "msg": msg,
+          "details": metadata,
+        }] {
+          resource := input.review
+          resource.type == "google_access_context_manager_service_perimeter"
+          params := input.parameters.restricted_services
+          msg := check_vpc_control_policy(resource, params)
+          metadata := {
+            "Resource_Name" : resource.name
+          }
+        }
+        
+        check_vpc_control_policy(resource, params) = msg {
+            resource.change.after.status[0].restricted_services == []
+            msg := sprintf("No restricted service is configured for  %s", [resource.name])
+        }
+        check_vpc_control_policy(resource, params) = msg {
+            not check(resource, params)
+            msg := sprintf("Restricted service list missing resource check constraint file parameters. %s", [params])
+        }
+        
+        check(resource, params) {
+          every x in resource.change.after.status[0].restricted_services {
+                x in cast_set(params)
+              }
+        }

@@ -1,0 +1,33 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPEnableAPIAtProjectLevelConstraintV1
+metadata:
+  name: gcpenableapiatprojectlevelconstraintv1
+  annotations:
+    description:  Ensure only required API's are enabled at Project Level.
+spec:
+  severity: high
+  match:
+    ancestries:
+    - "projects/**"
+    excludedAncestries: []
+  parameters:
+    service_list:
+      - iam.googleapis.com
+      - storage-api.googleapis.com
+      - storage-component.googleapis.com
+      - logging.googleapis.com
+      - bigquery.googleapis.com
+      - billingbudgets.googleapis.com
+      - compute.googleapis.com
+      - securitycenter.googleapis.com
+      - pubsub.googleapis.com
+      - dns.googleapis.com
+      - servicenetworking.googleapis.com
+      - cloudresourcemanager.googleapis.com
+      - iamcredentials.googleapis.com
+      - secretmanager.googleapis.com
+      - cloudkms.googleapis.com
+      - container.googleapis.com
+      - monitoring.googleapis.com
+
+    # Add service in the service_list which You want to grant access to on project level.

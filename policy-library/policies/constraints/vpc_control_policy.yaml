@@ -1,0 +1,15 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPVPCControlPolicyConstraintV1
+metadata:
+  name: gcp-vpc-control-policy-constraint
+  annotations:
+    description: Ensure VPC service control policies are associated with cloud storage service
+spec:
+  severity: high
+  match:
+    ancestries:
+    - "organizations/**"
+    excludedAncestries: []
+  parameters:
+    restricted_services:
+      - "storage.googleapis.com"

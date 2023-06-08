@@ -119,6 +119,11 @@ module "storage_destination" {
   retention_policy            = var.log_export_storage_retention_policy
   force_destroy               = var.log_export_storage_force_destroy
   versioning                  = var.log_export_storage_versioning
+  kms_key_name                = google_kms_crypto_key.audit_logs_key.id
+  depends_on = [
+    google_kms_crypto_key.audit_logs_key,
+    google_kms_key_ring.audit_logs_keyring
+  ]
 }
 
 module "log_export_to_storage_operations" {
@@ -142,6 +147,11 @@ module "storage_destination_operations" {
   retention_policy            = var.log_export_storage_retention_policy
   force_destroy               = var.log_export_storage_force_destroy
   versioning                  = var.log_export_storage_versioning
+  kms_key_name                = google_kms_crypto_key.org_operations_logs_key.id
+  depends_on = [
+    google_kms_crypto_key.org_operations_logs_key,
+    google_kms_key_ring.org_operations_logs_keyring
+  ]
 }
 
 module "log_export_to_storage_security" {
@@ -165,6 +175,11 @@ module "storage_destination_security" {
   retention_policy            = var.log_export_storage_retention_policy
   force_destroy               = var.log_export_storage_force_destroy
   versioning                  = var.log_export_storage_versioning
+  kms_key_name                = google_kms_crypto_key.storage_destination_security_key.id
+  depends_on = [
+    google_kms_crypto_key.storage_destination_security_key,
+    google_kms_key_ring.storage_destination_security_keyring
+  ]
 }
 /******************************************
   Send logs to Pub\Sub

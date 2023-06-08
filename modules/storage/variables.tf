@@ -50,7 +50,12 @@ variable "uniform_bucket_level_access" {
 variable "expiration_days" {
   description = "Object expiration time. If unset logs will never be deleted."
   type        = number
-  default     = null
+  default     = 179
+}
+
+variable "kms_key_name" {
+  type    = string
+  default = ""
 }
 
 variable "force_destroy" {
@@ -73,3 +78,4 @@ variable "versioning" {
   type        = bool
   default     = false
 }
+

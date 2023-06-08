@@ -1,0 +1,17 @@
+apiVersion: constraints.gatekeeper.sh/v1alpha1
+kind: GCPStorageCMEKEncryptionConstraintV1
+metadata:
+  name: require_storage_cmek_encryption
+  annotations:
+    name: bucket_encrypted_with_cmek_key
+    benchmark: MAS_TRM_8.4.4
+spec:
+  constraintVersion: 0.1.0
+  severity: high
+  match:
+    ancestries:
+      - "organizations/unknown"
+    excludedAncestries:
+      - organizations/542139653104/folders/959676550738/folders/58452498151/projects/prj-b-cicd-1b15
+
+  parameters: {}

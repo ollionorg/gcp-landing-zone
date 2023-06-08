@@ -19,7 +19,7 @@ output "dns_hub_project_id" {
   description = "The DNS hub project ID"
 }
 
-//enable_interconnect_firewall
+//interconnect-firewall
 
 output "firewall-name" {
   value = google_compute_instance.firewall.*.name

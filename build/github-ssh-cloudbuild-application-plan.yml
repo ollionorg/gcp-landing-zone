@@ -78,7 +78,7 @@ substitutions:
   _GIT_WORK_DIR: gcp-lz
   _GIT_HEAD_BRANCH: main
   _WORKFLOW: demo-workflow
-  _BUCKET: UPDATE_BACKEND_BUCKET
+  _BUCKET: bkt-b-tfstate-9d87
   _REPO: gcp-lz
 options:
     dynamic_substitutions: true

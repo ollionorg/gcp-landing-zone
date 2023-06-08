@@ -55,14 +55,17 @@ p_s_cloud_router_labels = {
 }
 
 
-// enable_interconnect_firewall
-management_sub_ip_cidr_range = "10.0.0.0/24"
-untrust_sub_ip_cidr_range    = "10.0.1.0/24"
-trust_sub_ip_cidr_range      = "10.0.2.0/24"
-allow_mgmt_source_ranges     = ["0.0.0.0/0"]
-allow_inbound_source_ranges  = ["0.0.0.0/0"]
-allow_outbound_source_ranges = ["0.0.0.0/0"]
-trust_dest_range             = "0.0.0.0/0"
+// interconnect-firewall
+management-sub-ip_cidr_range = "10.0.0.0/24"
+untrust-sub-ip_cidr_range    = "10.0.1.0/24"
+trust-sub-ip_cidr_range      = "10.0.2.0/24"
+allow-mgmt-source-ranges     = ["0.0.0.0/0"]
+allow-inbound-source-ranges  = ["0.0.0.0/0"]
+allow-outbound-source-ranges = ["0.0.0.0/0"]
+trust-dest_range             = "0.0.0.0/0"
 region_zone                  = "us-west1-a"
 zone                         = "us-west1-a"
 zone_2                       = "us-west1-b"
+
+// Interconnect firewall
+interconnect-firewall = true

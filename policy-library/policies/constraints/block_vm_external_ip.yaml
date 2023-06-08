@@ -1,0 +1,9 @@
+apiVersion: constraints.gatekeeper.sh/v1alpha1
+kind: GCPComputeExternalIpAccessConstraintV2
+metadata:
+  name: forbid_external_ip_default
+  annotations:
+    description: "Verifies that network access config block w/ external IP"
+    benchmark: MAS_TRM_11.1.5
+spec:
+  severity: high

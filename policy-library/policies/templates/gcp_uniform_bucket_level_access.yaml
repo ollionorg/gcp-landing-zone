@@ -1,0 +1,33 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpstoragebucketuniformlevelaccessconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPStorageBucketUniformLevelAccessConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+        package templates.gcp.GCPStorageBucketUniformLevelAccessConstraintV1
+        
+        violation[{
+          "msg": msg,
+          "details": metadata,
+        }] {
+          resource := input.review
+          resource.type == "google_storage_bucket"
+          uniformBucketLevelAccess := input.parameters.uniformBucketLevelAccess
+          msg := check_uniform_level_access(resource, uniformBucketLevelAccess)
+          metadata := {
+            "bucket_name" : resource.change.after.name
+          }
+        }
+        check_uniform_level_access(resource, params) = msg {
+            not resource.change.after.uniform_bucket_level_access
+            msg := sprintf("Set uniform bucket level access for bucket: %s", [resource.change.after.name])
+        }

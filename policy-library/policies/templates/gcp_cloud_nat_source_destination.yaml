@@ -1,0 +1,44 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpcloudnatnetworkconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPCloudNatNetworkConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+        package templates.gcp.GCPCloudNatNetworkConstraintV1
+        
+        violation[{
+          "msg": msg,
+          "details": metadata,
+        }] {
+          resource := input.review
+          resource.type == "google_compute_router_nat"
+          msg := check_cloud_nat(resource)
+          metadata := {
+            "ResourceName" : resource.name
+          }
+        }
+        
+        check_cloud_nat(resource) = msg {
+          not resource.change.after.subnetwork
+          msg := sprintf("Cloud Nat is configured with no rule, resource: %s", [resource.name])
+        }
+        check_cloud_nat(resource) = msg {
+          resource.change.after.subnetwork[_].source_ip_ranges_to_nat != "ALL_IP_RANGES"
+          msg := sprintf("Cloud Nat is allowing ALL_IP_RANGES in rule, resource: %s", [resource.name])
+        }
+        
+        
+        
+        
+        
+          

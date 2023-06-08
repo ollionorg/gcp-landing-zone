@@ -1,0 +1,11 @@
+# policies/constraints/tf_compute_address_internal_only.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPCloudArmorEnablePreviewModeConstraintV1
+metadata:
+  name: gcpcloudarmorenablepreviewmodeconstraintv1
+spec:
+  severity: high
+  match:
+    addresses:
+    - "**"
+  parameters: {}

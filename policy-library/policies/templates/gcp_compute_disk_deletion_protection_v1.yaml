@@ -1,0 +1,36 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpcomputediskdeletionprotectionconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPComputeDiskDeletionProtectionConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+        package templates.gcp.GCPComputeDiskDeletionProtectionConstraintV1
+        import future.keywords.in
+        
+        violation[{
+          "msg": msg,
+          "details": metadata,
+        }] {
+          resource := input.review
+          resource.type == "google_compute_instance"
+          msg := check_protection_enabled(resource)
+          metadata := {
+            "ResourceName" : resource.name,
+             "Key" : "auto_delete"
+          }
+        }
+        
+        check_protection_enabled(resource) = msg {
+          resource.change.after.boot_disk[_].auto_delete == true
+          msg := sprintf("Ensure auto_delete should be Disabled for boot_disk, resource: %s", [resource.name])
+        }

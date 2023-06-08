@@ -1,0 +1,42 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpbackendserviceloggingconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPBackendServiceLoggingConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+        package templates.gcp.GCPBackendServiceLoggingConstraintV1
+        
+        violation[{
+          "msg": msg,
+          "details": metadata,
+        }] {
+          resource := input.review
+          resource.type == "google_compute_backend_service"
+          params := input.parameters
+          msg := check_logging(resource)
+          metadata := {
+            "ResourceName" : resource.name
+          }
+        }
+        
+        check_logging(resource) = msg {
+          resource.change.after.log_config == []
+          msg := sprintf("No log configuration found for backend service for resource: %s", [resource.name])
+        }
+        
+        check_logging(resource) = msg {
+          resource.change.after.log_config[_].enable == false
+          msg := sprintf("Log config is disabled for backend service resource: %s", [resource.name])
+        }
+        
+          

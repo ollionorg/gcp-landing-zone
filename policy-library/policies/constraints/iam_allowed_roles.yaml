@@ -1,0 +1,126 @@
+# Copyright 2019 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: constraints.gatekeeper.sh/v1alpha1
+kind: GCPIAMAllowBanRolesConstraintV1
+metadata:
+  name: iam_allow_roles
+  annotations:
+    description: Only the roles in this list are allowed. All other roles trigger violation.
+spec:
+  severity: high
+  match:
+    ancestries:
+    - "organizations/**"
+    excludedAncestries: [] # optional, default is no exclusions
+  parameters:
+    mode: "allow"
+    roles:
+      - "roles/appengine.appViewer"
+      - "roles/logging.viewer"
+      - "roles/logging.configWriter"
+      - "roles/logging.admin"
+      - "roles/storage.hmacKeyAdmin"
+      - "roles/identityplatform.admin"
+      - "roles/storage.admin"
+      - "roles/storage.objectAdmin"
+      - "roles/viewer"
+      - "roles/owner"
+      - "roles/browser"
+      - "roles/editor"
+      - "roles/accesscontextmanager.policyAdmin"
+      - "roles/accesscontextmanager.policyEditor"
+      - "roles/billing.projectManager"
+      - "roles/orgpolicy.policyAdmin"
+      - "roles/serviceusage.serviceUsageConsumer"
+      - "roles/resourcemanager.projectCreator"
+      - "roles/resourcemanager.folderEditor"
+      - "roles/resourcemanager.folderAdmin"
+      - "roles/resourcemanager.folderViewer"
+      - "roles/resourcemanager.folderCreator"
+      - "roles/resourcemanager.organizationViewer"
+      - "roles/orgpolicy.policyViewer"
+      - "roles/iam.securityReviewer"
+      - "roles/iam.securityAdmin"
+      - "roles/iam.organizationRoleViewer"
+      - "roles/iam.organizationRoleAdmin"
+      - "roles/iam.serviceAccountKeyAdmin"
+      - "roles/gkemulticloud.admin"
+      - "roles/gkehub.admin"
+      - "roles/dns.admin"
+      - "roles/container.clusterAdmin"
+      - "roles/container.admin"
+      - "roles/compute.xpnAdmin"
+      - "roles/compute.viewer"
+      - "roles/compute.admin"
+      - "roles/compute.osLoginExternalUser"
+      - "roles/compute.orgSecurityPolicyUser"
+      - "roles/compute.networkViewer"
+      - "roles/compute.orgSecurityResourceAdmin"
+      - "roles/compute.orgSecurityPolicyAdmin"
+      - "roles/compute.networkViewer"
+      - "roles/compute.networkAdmin"
+      - "roles/cloudsql.admin"
+      - "roles/cloudkms.viewer"
+      - "roles/cloudfunctions.serviceAgent"
+      - "roles/cloudasset.viewer"
+      - "roles/cloudasset.owner"
+      - "roles/billing.viewer"
+      - "roles/billing.user"
+      - "roles/billing.creator"
+      - "roles/billing.admin"
+      - "roles/bigquery.admin"
+      - "roles/bigquery.dataEditor"
+      - "roles/bigquery.dataViewer"
+      - "roles/bigquery.user"
+      - "roles/logging.privateLogViewer"
+      - "roles/axt.admin"
+      - "roles/axt.admin"
+      - "roles/apigee.admin"
+      - "organizations/542139653104/roles/MDCCustomRole"
+      - "organizations/542139653104/roles/goldenimagemonitoringcustomrole8pcd"
+      - "organizations/542139653104/roles/goldenimagemonitoringcustomroletan6"
+      - "organizations/542139653104/roles/orgrole"
+      - "organizations/542139653104/roles/iris3"
+      - "roles/serviceusage.serviceUsageConsumer"
+      - "roles/serviceusage.serviceUsageAdmin"
+      - "roles/serviceusage.apiKeysAdmin"
+      - "roles/securitycenter.sourcesViewer"
+      - "roles/securitycenter.adminEditor"
+      - "roles/securitycenter.assetsViewer"
+      - "roles/securitycenter.notificationConfigEditor"
+      - "roles/securitycenter.findingsViewer"
+      - "roles/securitycenter.findingSecurityMarksWriter"
+      - "roles/securitycenter.findingSecurityMarksWriter"
+      - "roles/securitycenter.controlServiceAgent"
+      - "roles/securitycenter.admin"
+      - "roles/secretmanager.secretAccessor"
+      - "roles/secretmanager.admin"
+      - "roles/resourcemanager.projectMover"
+      - "roles/resourcemanager.projectIamAdmin"
+      - "roles/resourcemanager.projectDeleter"
+      - "roles/resourcemanager.organizationAdmin"
+      - "roles/resourcemanager.lienModifier"
+      - "roles/resourcemanager.folderIamAdmin"
+      - "roles/iam.serviceAccountUser"
+      - "roles/iam.serviceAccountTokenCreator"
+      - "roles/managedidentities.admin"
+      - "roles/storage.objectCreator"
+      - "roles/iam.serviceAccountAdmin"
+      - "roles/pubsub.subscriber"
+      - "roles/pubsub.viewer"
+      - "roles/pubsub.publisher"
+      - "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+      - "roles/logging.bucketWriter"
+      - "roles/monitoring.editor"

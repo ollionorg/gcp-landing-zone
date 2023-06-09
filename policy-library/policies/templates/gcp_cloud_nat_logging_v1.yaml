@@ -1,0 +1,53 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpcloudnatnetworkloggingconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPCloudNatNetworkLoggingConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties:
+            filters:
+              description: "Specifies the desired filtering of logs on this NAT. Possible values: ['ERRORS_ONLY', 'TRANSLATIONS_ONLY', 'ALL']."
+              type: array
+              items:
+                type: string
+            enable:
+              description: "Indicates whether or not to export logs."
+              type: boolean
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+            #INLINE("validator/tf_cloud_nat_logging_constraint_v1.rego")
+            package templates.gcp.GCPCloudNatNetworkLoggingConstraintV1
+            import future.keywords.in
+            
+            violation[{
+              "msg": msg,
+              "details": metadata,
+            }] {
+                  resource := input.review
+                  resource.type == "google_compute_router_nat"
+                  params := input.parameters
+                  msg := check_cloud_nat(resource, params)
+                  metadata := {
+                    "ResourceName" : resource.name
+                  }
+            }
+            
+            check_cloud_nat(resource, params) = msg {
+              not resource.change.after.log_config
+              msg := sprintf("Cloud Nat is not configured with no logging, resource: %s", [resource.name])
+            }
+            check_cloud_nat(resource, params) = msg {
+              resource.change.after.log_config[_].enable != params.enable
+              msg := sprintf("Cloud Nat is not configured with no logging set enable = true, resource: %s", [resource.name])
+            }
+            check_cloud_nat(resource, params) = msg {
+              not resource.change.after.log_config[0].filter in params.filters
+              msg := sprintf("Cloud Nat logging filter is not set with allowed filter values, resource: %s", [resource.name])
+            }
+            #ENDINLINE

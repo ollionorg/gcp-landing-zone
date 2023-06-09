@@ -1,0 +1,36 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpcomputeenabledeletionprotectionconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPComputeEnableDeletionProtectionConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+        package templates.gcp.GCPComputeEnableDeletionProtectionConstraintV1
+        import future.keywords.in
+        
+        violation[{
+          "msg": msg,
+          "details": metadata,
+        }] {
+          resource := input.review
+          resource.type == "google_compute_instance"
+          msg := check_protection_enabled(resource)
+          metadata := {
+            "ResourceName" : resource.name,
+            "Key" : "deletion_protection"
+          }
+        }
+        
+        check_protection_enabled(resource) = msg {
+          resource.change.after.deletion_protection == false
+          msg := sprintf("Ensure deletion_protection is Enabled for instance, resource: %s", [resource.name])
+        }

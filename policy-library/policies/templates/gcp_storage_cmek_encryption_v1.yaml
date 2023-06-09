@@ -56,7 +56,7 @@ spec:
             	asset.asset_type == "storage.googleapis.com/Bucket"
             
             	bucket := asset.resource.data
-            	kms_key_name := "" #default_kms_key_name(bucket)
+            	kms_key_name := default_kms_key_name(bucket)
             	kms_key_name == ""
             
             	message := sprintf("%v does not have the required CMEK encryption configured.", [asset.name])

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+
 terraform {
   backend "gcs" {
     bucket = "UPDATE_BACKEND_BUCKET"

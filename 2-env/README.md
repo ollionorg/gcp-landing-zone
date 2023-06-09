@@ -1,8 +1,18 @@
-<!-- BEGIN_TF_DOCS -->
+# 2-environments
+
+## Purpose
+
+The purpose of this step is to setup development, non-production, and production environments within the Google Cloud organization that you've created.
+
 ## Prerequisites
 
 1. 0-bootstrap executed successfully.
 2. 1-org executed successfully.
+3. Cloud Identity / Google Workspace group for monitoring admins.
+4. Membership in the monitoring admins group for user running Terraform.
+## Requirements
+
+No requirements.
 
 ## Providers
 
@@ -33,4 +43,3 @@ No modules.
 ## Outputs
 
 No outputs.
-<!-- END_TF_DOCS -->

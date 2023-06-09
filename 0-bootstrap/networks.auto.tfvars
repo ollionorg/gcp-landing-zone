@@ -14,13 +14,13 @@ egress_ranges_firewall       = ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12"]
 subnet_ip_cidr_range_region1 = "172.16.0.0/25"   //The range of internal addresses that are owned by this subnetwork. Only IPv4 is supported.
 subnet_ip_cidr_range_region2 = "172.16.0.128/25" //The range of internal addresses that are owned by this subnetwork. Only IPv4 is supported.
 
-base_vpc_global_address_private = {
+base_vpc_global_address_private = {               // Global VPC created in common network for different environments.
   "d" = "10.16.64.0/21"  //development
   "s" = "10.16.128.0/21" //staging
   "p" = "10.16.192.0/21" //production
 }
 
-base_vpc_private_subnet_default_region = {
+base_vpc_private_subnet_default_region = {        // environment based network for shared network in project.
   "d" = "10.0.64.0/21"
   "s" = "10.0.128.0/21"
   "p" = "10.0.192.0/21"

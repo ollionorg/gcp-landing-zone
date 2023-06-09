@@ -1,0 +1,29 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpcloudarmorruledescriptionconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPCloudArmorRuleDescriptionConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+            package templates.gcp.GCPCloudArmorRuleDescriptionConstraintV1
+
+            violation[{
+            	"msg": msg,
+            }] {
+            	resource := input.review
+            	resource.type == "google_compute_security_policy"
+            	msg := check_verbose_logging(resource)
+            }
+
+            check_verbose_logging(resource) = msg {
+                resource.change.after.rule[_].description == ""
+                msg := sprintf("Violation: Rule description should not be empty for resource %s.%s",[resource.type, resource.name])
+            }

@@ -30,7 +30,8 @@ module "org_audit_logs" {
   activate_apis = [
     "logging.googleapis.com",
     "bigquery.googleapis.com",
-    "billingbudgets.googleapis.com"
+    "billingbudgets.googleapis.com",
+    "cloudkms.googleapis.com"
   ]
 
   labels = merge(
@@ -64,7 +65,8 @@ module "org_security_logs" {
   activate_apis = [
     "logging.googleapis.com",
     "bigquery.googleapis.com",
-    "billingbudgets.googleapis.com"
+    "billingbudgets.googleapis.com",
+    "cloudkms.googleapis.com"
   ]
 
   labels = merge(
@@ -98,7 +100,8 @@ module "org_operations_logs" {
   activate_apis = [
     "logging.googleapis.com",
     "bigquery.googleapis.com",
-    "billingbudgets.googleapis.com"
+    "billingbudgets.googleapis.com",
+    "cloudkms.googleapis.com"
   ]
 
   labels = merge(

@@ -1,0 +1,34 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcplegacynetworkblockedconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPLegacyNetworkBlockedConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+        package templates.gcp.GCPLegacyNetworkBlockedConstraintV1
+        
+        violation[{
+          "msg": msg,
+          "details": metadata,
+        }] {
+          resource := input.review
+          resource.type == "google_compute_network"
+          msg := check_network(resource)
+          metadata := {
+            "ResourceName": resource.name
+          }
+        }
+        
+        check_network(resource) = msg {
+          resource.change.after.auto_create_subnetworks == true
+          msg := sprintf("Disable auto_create_subnetworks feature for resource %s", [resource.name])
+        }

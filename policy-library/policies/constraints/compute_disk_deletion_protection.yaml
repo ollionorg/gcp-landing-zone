@@ -1,0 +1,13 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPComputeDiskDeletionProtectionConstraintV1
+metadata:
+  name: gcpcomputediskdeletionprotectionconstraintv1
+  annotations:
+    description:  Ensure deletion protection is enabled to avoid accidental disable disk deletion.
+spec:
+  severity: high
+  match:
+    ancestries:
+    - "organizations/**"
+    excludedAncestries: []
+  parameters: {}

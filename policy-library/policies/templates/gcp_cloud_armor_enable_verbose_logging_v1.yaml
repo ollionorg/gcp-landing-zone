@@ -1,0 +1,31 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpcloudarmorenableverboseloggingconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPCloudArmorEnableVerboseLoggingConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+            package templates.gcp.GCPCloudArmorEnableJsonParsingConstraintV1
+
+            violation[{
+            	"msg": msg,
+            }] {
+            	resource := input.review
+              allowed_logging_types := input.parameters.allowed_logging_types
+              logging_type_set := {x | x = allowed_logging_types[_]}
+            	resource.type == "google_compute_security_policy"
+            	msg := check_verbose_logging(resource, logging_type_set)
+            }
+
+            check_verbose_logging(resource, logging_type_set) = msg {
+                count({resource.change.after.advanced_options_config[_].log_level} & logging_type_set) == 0
+                msg := sprintf("Violation: Logging level should be %s for resource %s.%s.", [logging_type_set, resource.type, resource.name])
+            }

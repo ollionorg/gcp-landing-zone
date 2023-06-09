@@ -1,0 +1,36 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpstoragebucketislockedconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPStorageBucketIsLockedConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+        package templates.gcp.GCPStorageBucketIsLockedConstraintV1
+        
+        violation[{
+          "msg": msg,
+          "details": metadata,
+        }] {
+          resource := input.review
+          resource.type == "google_storage_bucket"
+          msg := check_bucket_lock(resource)
+          metadata := {
+            "bucket_name" : resource.change.after.name
+          }
+        }
+        check_bucket_lock(resource) = msg {
+          resource.change.after.retention_policy == []
+          msg := sprintf("Retention policy is not set for bucket: %s", [resource.change.after.name])
+        }
+        check_bucket_lock(resource) = msg {
+          not resource.change.after.retention_policy[0].is_locked
+          msg := sprintf("Enable is_locked retention policy on bucket: %s", [resource.change.after.name])
+        }

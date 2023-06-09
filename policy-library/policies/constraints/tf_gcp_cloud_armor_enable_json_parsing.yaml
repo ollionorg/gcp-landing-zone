@@ -1,0 +1,13 @@
+# policies/constraints/tf_compute_address_internal_only.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPCloudArmorEnableJsonParsingConstraintV1
+metadata:
+  name: gcpcloudarmorenablejsonparsingconstraintv1
+spec:
+  severity: high
+  match:
+    addresses:
+    - "**"
+  parameters:
+    allowed_json_parsing_types:
+    - STANDARD

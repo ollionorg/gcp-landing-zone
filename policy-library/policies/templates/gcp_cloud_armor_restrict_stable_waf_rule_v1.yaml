@@ -1,0 +1,29 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpcloudarmorrestrictstablewafruleconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPCloudArmorRestrictStableWafRuleConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+            package templates.gcp.GCPCloudArmorRestrictStableWafRuleConstraintV1
+
+            violation[{
+            	"msg": msg,
+            }] {
+            	resource := input.review
+            	resource.type == "google_compute_security_policy"
+            	msg := check_waf_rule(resource)
+            }
+
+            check_waf_rule(resource) = msg {
+                glob.match("*stable*", [], resource.change.after.rule[_].match[_].expr[_].expression) == false
+                msg := sprintf("Violation: Use only stable set of WAF rules for resource %s.%s", [resource.type, resource.name])
+            }

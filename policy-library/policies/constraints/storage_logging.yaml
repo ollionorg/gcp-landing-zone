@@ -1,0 +1,19 @@
+apiVersion: constraints.gatekeeper.sh/v1alpha1
+kind: GCPStorageLoggingConstraintV1
+metadata:
+  name: storage_logging
+  annotations:
+    description: Ensure storage logs are delivered to a separate bucket
+spec:
+  severity: high
+  match:
+    ancestries:
+    - "organizations/**"
+    excludedAncestries:
+      # excluded for cloudbuild logs bucket and tf state bucket.
+    - organizations/542139653104/folders/959676550738/folders/58452498151/projects/prj-b-seed-bd01
+    - organizations/542139653104/folders/959676550738/folders/58452498151/projects/prj-b-cicd-1b15
+    - organizations/542139653104/folders/959676550738/folders/998226761871/projects/prj-c-security-logging-d5eb
+    - organizations/542139653104/folders/959676550738/folders/998226761871/projects/prj-c-operations-logging-2975
+    - organizations/542139653104/folders/959676550738/folders/998226761871/projects/prj-c-audit-logging-d250
+  parameters: {}

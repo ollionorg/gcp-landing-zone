@@ -4,16 +4,15 @@
 #locals
 
 locals {
-  base_net_hub_project_id = data.terraform_remote_state.org.outputs.base_net_hub_project_id
   #  public_key                   = data.terraform_remote_state.bootstrap.outputs.public_key
   #  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC5anyFJBnA8+AXN1qhuSZYPYgtSX8bbgqp857gnERZV9SPAlg4Fm+K7CeLk1SenEJ7pPh5WUUhcjig4yQWtU6ag3eKMGVWesnWDiiYfpNg2kPUD42NBySzGKwgzaQxaN1NZJ8Hy5iNGj0lI2KV0DIwIf/f++5RNVa7nrekK5GZKW7v2Xgn0qCuVHxj0+b64ra3ogVRaVe9OFdmpwAho0ws+qC6aH9YyAnhR6mPGWtKIpOry0CP/STPQwrkQ+tI1L46X/Iz3SysAR76SyqrvqPa8YKnOIU4TbPJiiK1+dFTpgc4rF7+bj0ALh0X00DqYoTkbdgx2Y487jTQq93EXKzJ5QA1mwC6l3AESjIU+0RO91ngwItHJ+00XDzKivJ4ZKLr0ROzEa5jRFnNMFgBLdNgeJfjFvouI1I6olL+IOsBw56foCNYS4cVliNVrL4dtBLiT5fyr4DzU9JlYnp4MTzG1e7uzmQyjZHFa9TpaZ3RdrKHVsibxmKGu2L5SYnyyzs= amankumarsingh@Aman-Kumar-Singh.local"
-  management_sub_ip_cidr_range = data.terraform_remote_state.bootstrap.outputs.management_sub_ip_cidr_range
-  untrust_sub_ip_cidr_range    = data.terraform_remote_state.bootstrap.outputs.untrust_sub_ip_cidr_range
-  trust_sub_ip_cidr_range      = data.terraform_remote_state.bootstrap.outputs.trust_sub_ip_cidr_range
-  allow_mgmt_source_ranges     = data.terraform_remote_state.bootstrap.outputs.allow_mgmt_source_ranges
-  allow_outbound_source_ranges = data.terraform_remote_state.bootstrap.outputs.allow_outbound_source_ranges
-  allow_inbound_source_ranges  = data.terraform_remote_state.bootstrap.outputs.allow_inbound_source_ranges
-  trust_dest_range             = data.terraform_remote_state.bootstrap.outputs.trust_dest_range
+  management-sub-ip_cidr_range = data.terraform_remote_state.bootstrap.outputs.management-sub-ip_cidr_range
+  untrust-sub-ip_cidr_range    = data.terraform_remote_state.bootstrap.outputs.untrust-sub-ip_cidr_range
+  trust-sub-ip_cidr_range      = data.terraform_remote_state.bootstrap.outputs.trust-sub-ip_cidr_range
+  allow-mgmt-source-ranges     = data.terraform_remote_state.bootstrap.outputs.allow-mgmt-source-ranges
+  allow-outbound-source-ranges = data.terraform_remote_state.bootstrap.outputs.allow-outbound-source-ranges
+  allow-inbound-source-ranges  = data.terraform_remote_state.bootstrap.outputs.allow-inbound-source-ranges
+  trust-dest_range             = data.terraform_remote_state.bootstrap.outputs.trust-dest_range
   project_name                 = data.terraform_remote_state.bootstrap.outputs.project_name
   default_region               = data.terraform_remote_state.bootstrap.outputs.gcp_region
   region_zone                  = data.terraform_remote_state.bootstrap.outputs.region_zone
@@ -37,67 +36,67 @@ locals {
 /*
 // Adding SSH Public Key Project Wide
 resource "google_compute_project_metadata_item" "ssh-keys1" {
-  count = local.enable_interconnect_firewall ? 1 : 0
+  count = local.interconnect-firewall ? 1 : 0
   key   = "ssh-keys1"
   value = local.public_key
 }
 */
 // Adding VPC Networks to Project  MANAGEMENT
 resource "google_compute_subnetwork" "management-sub" {
-  count         = local.enable_interconnect_firewall ? 1 : 0
+  count         = local.interconnect-firewall ? 1 : 0
   name          = "paloalto-management-sub"
-  project       = local.base_net_hub_project_id
-  ip_cidr_range = local.management_sub_ip_cidr_range
+  project       = local.interconnect_no_trust_project_id
+  ip_cidr_range = local.management-sub-ip_cidr_range
   network       = google_compute_network.management[count.index].id
   region        = local.default_region2
 }
 
 resource "google_compute_network" "management" {
-  count                   = local.enable_interconnect_firewall ? 1 : 0
-  project                 = local.base_net_hub_project_id
+  count                   = local.interconnect-firewall ? 1 : 0
+  project                 = local.interconnect_no_trust_project_id
   name                    = local.interface_0_name
   auto_create_subnetworks = "false"
 }
 
 // Adding VPC Networks to Project  UNTRUST
 resource "google_compute_subnetwork" "untrust-sub" {
-  count         = local.enable_interconnect_firewall ? 1 : 0
+  count         = local.interconnect-firewall ? 1 : 0
   name          = "paloalto-untrust-sub"
-  project       = local.base_net_hub_project_id
-  ip_cidr_range = local.untrust_sub_ip_cidr_range
+  project       = local.interconnect_no_trust_project_id
+  ip_cidr_range = local.untrust-sub-ip_cidr_range
   network       = google_compute_network.untrust[0].id
   region        = local.default_region2
 }
 
 resource "google_compute_network" "untrust" {
-  count                   = local.enable_interconnect_firewall ? 1 : 0
-  project                 = local.base_net_hub_project_id
+  count                   = local.interconnect-firewall ? 1 : 0
+  project                 = local.interconnect_no_trust_project_id
   name                    = local.interface_1_name
   auto_create_subnetworks = "false"
 }
 
 // Adding VPC Networks to Project  TRUST
 resource "google_compute_subnetwork" "trust-sub" {
-  count         = local.enable_interconnect_firewall ? 1 : 0
+  count         = local.interconnect-firewall ? 1 : 0
   name          = "paloalto-trust-sub"
-  project       = local.base_net_hub_project_id
-  ip_cidr_range = local.trust_sub_ip_cidr_range
+  project       = local.interconnect_no_trust_project_id
+  ip_cidr_range = local.trust-sub-ip_cidr_range
   network       = google_compute_network.trust[0].id
   region        = local.default_region2
 }
 
 resource "google_compute_network" "trust" {
-  count                   = local.enable_interconnect_firewall ? 1 : 0
-  project                 = local.base_net_hub_project_id
+  count                   = local.interconnect-firewall ? 1 : 0
+  project                 = local.interconnect_no_trust_project_id
   name                    = local.interface_2_name
   auto_create_subnetworks = "false"
 }
 
 // Adding GCP Firewall Rules for MANGEMENT
 resource "google_compute_firewall" "allow-mgmt" {
-  count   = local.enable_interconnect_firewall ? 1 : 0
+  count   = local.interconnect-firewall ? 1 : 0
   name    = "paloalto-allow-mgmt"
-  project = local.base_net_hub_project_id
+  project = local.interconnect_no_trust_project_id
   network = google_compute_network.management[0].id
   allow {
     protocol = "all"
@@ -106,14 +105,14 @@ resource "google_compute_firewall" "allow-mgmt" {
   }
 
 
-  source_ranges = local.allow_mgmt_source_ranges
+  source_ranges = local.allow-mgmt-source-ranges
 }
 
 // Adding GCP Firewall Rules for INBOUND
 resource "google_compute_firewall" "allow-inbound" {
-  count   = local.enable_interconnect_firewall ? 1 : 0
+  count   = local.interconnect-firewall ? 1 : 0
   name    = "paloalto-allow-inbound"
-  project = local.base_net_hub_project_id
+  project = local.interconnect_no_trust_project_id
   network = google_compute_network.untrust[0].name
 
   allow {
@@ -122,14 +121,14 @@ resource "google_compute_firewall" "allow-inbound" {
     #ports    = ["all"]
   }
 
-  source_ranges = local.allow_inbound_source_ranges
+  source_ranges = local.allow-inbound-source-ranges
 }
 
 // Adding GCP Firewall Rules for OUTBOUND
 resource "google_compute_firewall" "allow-outbound" {
-  count   = local.enable_interconnect_firewall ? 1 : 0
+  count   = local.interconnect-firewall ? 1 : 0
   name    = "paloalto-allow-outbound"
-  project = local.base_net_hub_project_id
+  project = local.interconnect_no_trust_project_id
   network = google_compute_network.trust[count.index].name
 
   allow {
@@ -138,15 +137,15 @@ resource "google_compute_firewall" "allow-outbound" {
     # ports    = ["all"]
   }
 
-  source_ranges = local.allow_outbound_source_ranges
+  source_ranges = local.allow-outbound-source-ranges
 }
 
 // Adding GCP ROUTE to TRUST Interface
 resource "google_compute_route" "trust" {
-  count                  = local.enable_interconnect_firewall ? 3 : 0
+  count                  = local.interconnect-firewall ? 3 : 0
   name                   = "paloalto-trust-route-${count.index + 1}"
-  dest_range             = local.trust_dest_range
-  project                = local.base_net_hub_project_id
+  dest_range             = local.trust-dest_range
+  project                = local.interconnect_no_trust_project_id
   network                = google_compute_network.trust[0].name
   next_hop_instance      = element(google_compute_instance.firewall.*.name, count.index)
   next_hop_instance_zone = local.zone
@@ -161,9 +160,9 @@ resource "google_compute_route" "trust" {
 
 // Create a new PAN-VM instance
 resource "google_compute_instance" "firewall" {
-  count                     = local.enable_interconnect_firewall ? 3 : 0
+  count                     = local.interconnect-firewall ? 3 : 0
   name                      = "${local.firewall_name}-${count.index + 1}"
-  project                   = local.base_net_hub_project_id
+  project                   = local.interconnect_no_trust_project_id
   machine_type              = local.machine_type_fw
   zone                      = local.zone
   min_cpu_platform          = local.machine_cpu_fw
@@ -218,8 +217,8 @@ resource "google_compute_instance" "firewall" {
 ######################################
 
 resource "google_compute_global_address" "external-address" {
-  count        = local.enable_interconnect_firewall ? 1 : 0
-  project      = local.base_net_hub_project_id
+  count        = local.interconnect-firewall ? 1 : 0
+  project      = local.interconnect_no_trust_project_id
   name         = "tf-external-address"
   purpose      = "PRIVATE_SERVICE_CONNECT"
   network      = google_compute_network.untrust[0].id
@@ -228,10 +227,10 @@ resource "google_compute_global_address" "external-address" {
 }
 
 resource "google_compute_instance_group" "fw-ig" {
-  count     = local.enable_interconnect_firewall ? 1 : 0
+  count     = local.interconnect-firewall ? 1 : 0
   zone      = local.zone
   name      = "fw-ig"
-  project   = local.base_net_hub_project_id
+  project   = local.interconnect_no_trust_project_id
   instances = google_compute_instance.firewall.*.id
 
   named_port {
@@ -241,8 +240,8 @@ resource "google_compute_instance_group" "fw-ig" {
 }
 
 resource "google_compute_health_check" "health-check" {
-  count   = local.enable_interconnect_firewall ? 1 : 0
-  project = local.base_net_hub_project_id
+  count   = local.interconnect-firewall ? 1 : 0
+  project = local.interconnect_no_trust_project_id
   name    = "elb-health-check"
 
   http_health_check {
@@ -251,9 +250,9 @@ resource "google_compute_health_check" "health-check" {
 }
 
 resource "google_compute_backend_service" "fw-backend" {
-  count    = local.enable_interconnect_firewall ? 1 : 0
+  count    = local.interconnect-firewall ? 1 : 0
   name     = "fw-backend"
-  project  = local.base_net_hub_project_id
+  project  = local.interconnect_no_trust_project_id
   protocol = "HTTP"
 
   backend {
@@ -264,31 +263,31 @@ resource "google_compute_backend_service" "fw-backend" {
 }
 
 resource "google_compute_url_map" "http-elb" {
-  count           = local.enable_interconnect_firewall ? 1 : 0
+  count           = local.interconnect-firewall ? 1 : 0
   name            = "http-elb"
-  project         = local.base_net_hub_project_id
+  project         = local.interconnect_no_trust_project_id
   default_service = google_compute_backend_service.fw-backend[count.index].id
 }
 
 resource "google_compute_target_http_proxy" "http-lb-proxy" {
-  count   = local.enable_interconnect_firewall ? 1 : 0
+  count   = local.interconnect-firewall ? 1 : 0
   name    = "tf-http-lb-proxy"
-  project = local.base_net_hub_project_id
+  project = local.interconnect_no_trust_project_id
   url_map = google_compute_url_map.http-elb[count.index].id
 }
 
 resource "google_compute_global_forwarding_rule" "default" {
-  count      = local.enable_interconnect_firewall ? 1 : 0
+  count      = local.interconnect-firewall ? 1 : 0
   name       = "http-content-gfr"
   target     = google_compute_target_http_proxy.http-lb-proxy[count.index].id
-  project    = local.base_net_hub_project_id
+  project    = local.interconnect_no_trust_project_id
   port_range = "80"
 }
 
 
 resource "google_compute_health_check" "my-tcp-health-check" {
-  count   = local.enable_interconnect_firewall ? 1 : 0
-  project = local.base_net_hub_project_id
+  count   = local.interconnect-firewall ? 1 : 0
+  project = local.interconnect_no_trust_project_id
   name    = "my-tcp-health-check"
 
   tcp_health_check {
@@ -297,9 +296,9 @@ resource "google_compute_health_check" "my-tcp-health-check" {
 }
 
 resource "google_compute_region_backend_service" "my-int-lb" {
-  count         = local.enable_interconnect_firewall ? 1 : 0
+  count         = local.interconnect-firewall ? 1 : 0
   name          = "my-int-lb"
-  project       = local.base_net_hub_project_id
+  project       = local.interconnect_no_trust_project_id
   health_checks = [google_compute_health_check.my-tcp-health-check[0].id]
   region        = local.default_region2
 
@@ -313,12 +312,12 @@ resource "google_compute_region_backend_service" "my-int-lb" {
 }
 
 resource "google_compute_forwarding_rule" "my-int-lb-forwarding-rule" {
-  count                 = local.enable_interconnect_firewall ? 1 : 0
+  count                 = local.interconnect-firewall ? 1 : 0
   name                  = "my-int-lb-forwarding-rule"
   region                = local.default_region2
   load_balancing_scheme = "INTERNAL"
   ports                 = ["80"]
-  project               = local.base_net_hub_project_id
+  project               = local.interconnect_no_trust_project_id
   network               = google_compute_network.trust[count.index].id
 
   subnetwork      = google_compute_subnetwork.trust-sub[count.index].id

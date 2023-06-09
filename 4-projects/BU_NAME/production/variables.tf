@@ -181,7 +181,7 @@ variable "bu_code" {
   type        = string
 
   validation {
-    condition     = length(var.bu_code) == 3
+    condition = length(var.bu_code) == 3
     error_message = "INVALID bu_code VALUE: The 'bu_code' variable should be 3 characters. Please pass the correct value in the terraform.tfvars file."
   }
 

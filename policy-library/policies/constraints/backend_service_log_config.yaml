@@ -1,0 +1,13 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPBackendServiceLoggingConstraintV1
+metadata:
+  name: gcpbackendserviceloggingconstraintv1
+  annotations:
+    description:  Ensure that Google Cloud load balancers enforce HTTPS to handle encrypted web traffic
+spec:
+  severity: high
+  match:
+    ancestries:
+    - "projects/**"
+    excludedAncestries: []
+  parameters: {}

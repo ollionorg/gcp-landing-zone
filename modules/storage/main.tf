@@ -31,6 +31,7 @@ resource "google_project_service" "enable_destination_api" {
 #----------------#
 # Storage bucket #
 #----------------#
+
 resource "google_storage_bucket" "bucket" {
   name                        = var.storage_bucket_name
   project                     = google_project_service.enable_destination_api.project
@@ -38,7 +39,9 @@ resource "google_storage_bucket" "bucket" {
   location                    = var.location
   force_destroy               = var.force_destroy
   uniform_bucket_level_access = var.uniform_bucket_level_access
-
+  encryption {
+    default_kms_key_name = var.kms_key_name
+  }
   versioning {
     enabled = var.versioning
   }
@@ -52,6 +55,7 @@ resource "google_storage_bucket" "bucket" {
       condition {
         age        = var.expiration_days
         with_state = "ANY"
+
       }
     }
   }

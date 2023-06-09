@@ -34,14 +34,13 @@ variable "billing_account" {
   type        = string
 }
 
-variable "org_admins_group" {
+variable "group_org_admins" {
   description = "Google Group for GCP Organization Administrators"
   type        = string
 }
 
-
-variable "bu_app_deploy_group" {
-  description = "Google Group for GCP deploy group"
+variable "group_billing_admins" {
+  description = "Google Group for GCP Billing Administrators"
   type        = string
 }
 
@@ -232,7 +231,7 @@ variable "tf_service_account_name" {
 variable "project_name" {
   type        = string
   description = "Project Name"
-  default     = "cldcvr"
+  default     = ""
 }
 
 variable "num_instances" {
@@ -335,6 +334,12 @@ variable "enable_hub_and_spoke" {
   type        = bool
 }
 
+variable "billing_data_users" {
+  description = "Google Workspace or Cloud Identity group that have access to billing data set."
+  type        = string
+}
+
+
 variable "domains_to_allow" {
   description = "The list of domains to allow users from in IAM. Used by Domain Restricted Sharing Organization Policy. Must include the domain of the organization you are deploying the foundation. To add other domains you must also grant access to these domains to the terraform service account used in the deploy."
   type        = list(any)
@@ -391,12 +396,19 @@ variable "cto_user_management_operations_group" {
   type        = string
 }
 
-variable "cfo_group" {
+variable "cfo" {
   description = "Google Workspace or Cloud Identity group billing data users."
   type        = string
 }
 
-# 3-networks
+#************ 2-env *************#
+
+variable "monitoring_workspace_users" {
+  description = "Google Workspace or Cloud Identity group that have access to Monitoring Workspaces."
+  type        = string
+}
+
+#*********** 3-networks ***********#
 variable "default_region2" {
   type        = string
   description = "Second subnet region for DNS Hub network."
@@ -429,6 +441,7 @@ variable "target_name_server_addresses" {
   description = "List of IPv4 address of target name servers for the forwarding zone configuration. See https://cloud.google.com/dns/docs/overview#dns-forwarding-zones for details on target name servers in the context of Cloud DNS forwarding zones."
   type        = list(string)
 }
+
 variable "dev_environment_code" {
   description = "Environment code used in 2-envs and 3-networks stages"
   type        = string
@@ -465,7 +478,7 @@ variable "bootstrap_environment_name" {
 }
 
 variable "log_sink_prefix" {
-  description = ""
+  description = "Add log sink prefix example, snk."
   type        = string
 }
 
@@ -484,7 +497,8 @@ variable "production_folder" {
   type        = string
 }
 
-#network
+#********* network *********#
+
 variable "base_vpc_firewall_egress_dest_ranges" {
   description = "Used in shared vpc firewall egress destination ranges"
   type        = list(any)
@@ -494,7 +508,7 @@ variable "base_vpc_firewall_ingress_src_ranges" {
   description = "Used in shared vpc firewall ingress source ranges"
   type        = list(any)
 }
-#network
+
 variable "base_vpc_global_address_private" {
   description = "IP address range supplied as an input to reserve a specific address in a network - Internal"
   type        = map(any)
@@ -545,8 +559,9 @@ variable "base_vpc_subnet_secondary_ip_range_gke_svc" {
   }
 }
 
-#Restricted network ranges
+#*********** Restricted network ranges *************#
 #common
+
 variable "rest_vpc_firewall_egress_dest_ranges" {
   description = "Used in shared vpc firewall egress destination ranges"
   type        = list(any)
@@ -556,7 +571,9 @@ variable "rest_vpc_firewall_ingress_src_ranges" {
   description = "Used in shared vpc firewall ingress source ranges"
   type        = list(any)
 }
+
 #network restricted - development
+
 variable "rest_vpc_global_address_private" {
   description = "IP address range supplied as an input to reserve a specific address in a network - Internal"
   type        = map(any)
@@ -644,105 +661,124 @@ variable "enable_interconnect_projects" {
   default     = false
 }
 
-variable "enable_interconnect_firewall" {
-  description = "enable_interconnect_firewall"
+variable "interconnect-firewall" {
+  description = "interconnect-firewall"
   type        = bool
   default     = false
 }
-//interconect-firewall variables
+//interconnect-firewall variables
 
 // PROJECT Variables
 
-variable "management_sub_ip_cidr_range" {
-  default = "10.0.0.0/24"
+variable "management-sub-ip_cidr_range" {
+  default     = "10.0.0.0/24"
+  description = "IP ranges for management subnet, this subnet will be used for managing state between firewall servers."
+  type        = string
+
 }
 
-variable "untrust_sub_ip_cidr_range" {
-  default = "10.0.1.0/24"
+variable "untrust-sub-ip_cidr_range" {
+  default     = "10.0.1.0/24"
+  description = "IP ranges for untrusted subnet, this subnet will be used for incoming untrusted traffic."
+  type        = string
 }
 
-variable "trust_sub_ip_cidr_range" {
-  default = "10.0.2.0/24"
+variable "trust-sub-ip_cidr_range" {
+  default     = "10.0.2.0/24"
+  type        = string
+  description = "IP ranges for trusted subnet, this subnet will be used for trusted traffic traffic for upstream services."
 }
 
-variable "allow_mgmt_source_ranges" {
-  default = ["0.0.0.0/0"]
+variable "allow-mgmt-source-ranges" {
+  default     = ["0.0.0.0/0"]
+  type        = list(string)
+  description = "Firewall rule for management network."
 }
 
-variable "allow_inbound_source_ranges" {
-  default = ["0.0.0.0/0"]
+variable "allow-inbound-source-ranges" {
+  default     = ["0.0.0.0/0"]
+  type        = list(string)
+  description = "Ingress firewall rule for untrusted network"
 }
 
-variable "allow_outbound_source_ranges" {
-  default = ["0.0.0.0/0"]
+variable "allow-outbound-source-ranges" {
+  default     = ["0.0.0.0/0"]
+  type        = list(string)
+  description = "egress firewall rule for untrusted network"
 }
 
-variable "trust_dest_range" {
-  default = "0.0.0.0/0"
+variable "trust-dest_range" {
+  default     = "0.0.0.0/0"
+  type        = string
+  description = "destination firewall rule for trusted network"
 }
-/*
-variable "region" {
-  default = "us-west1"
-}
-*/
+
 variable "region_zone" {
-  default = "us-west1-a"
+  default     = "us-west1-a"
+  type        = string
+  description = "region NGFW HA servers to deploy in"
 }
-/*
-variable "project_name" {
-  description = "The ID of the Google Cloud project"
-  default     = "prj-c-interconnect-9791"
-}
-*/
+
 variable "zone" {
-  default = "us-west1-a"
+  default     = "us-west1-a"
+  type        = string
+  description = "region NGFW HA servers to deploy in"
 }
 
 variable "zone_2" {
-  default = "us-west1-b"
+  default     = "us-west1-b"
+  type        = string
+  description = "region NGFW HA servers to deploy in"
 }
-/*
-variable "public_key" {
-  default = "admin:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDnYnPRM4fJzdYmG8K3zN3wkx2fS+mkT6zfjVkxY7MHDbQ9UlGsw6G0Z3a3S/huAzG1eLC4Oxw56u2vzFBbsT1da0tM4JD1IWCq2alisptZK8YRx9ddm/1kNlES8CbnN8VEzq9Rh+uA2F6i1zH33rNHXu0HuecS18sUAne5uiodH2L8pa/QWJgDrdL9oIrcD0sNkAZPmBoVN4XV4sDmj+qlL4zX6+kAy0Em1G3bGQQ4kTsEqDJB56+dezyAjvEfRTvmavPV5eftefIbX0rHRkNkdA7+IcjWkks64rQJMVra7RpevpuB9XnSQ+Aal41ZKr7tyIV8B9IKQXF5ZeznV31GEIIEseEcXHVdvWIT1UgTEz+/Tpg8zJwFfE/FbjFfkk8cXrKe7huofbsdk2YSBhMZRR27kSe+o9E0JCo13CzIxV2qj3iGx1D8oq4UuqOXmppnyfrbioF5QJeHj2tfpcceseNNZ6bLcIs7M7L2IXsAH1XKQLBCRt1cv8NfrvWMNV8= admin"
-}
-*/
+
 // FIREWALL Variables
 variable "firewall_name" {
-  default = "firewall"
+  default     = "firewall"
+  type        = string
+  description = "name of firewall"
 }
 
 variable "image_fw" {
-  # default = "Your_VM_Series_Image"
-
-  # /Cloud Launcher API Calls to images/
-  # default = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-byol-810"
-  # default = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle2-810"
-  default = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle1-810"
-
+  default     = "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-bundle1-810"
+  type        = string
+  description = "image from marketplace to pick for firewall server deployment"
 }
 
 variable "machine_type_fw" {
-  default = "n1-standard-4"
+  default     = "n1-standard-4"
+  type        = string
+  description = "machine size for firewall server deployment"
 }
 
 variable "machine_cpu_fw" {
-  default = "Intel Skylake"
+  default     = "Intel Skylake"
+  type        = string
+  description = "cpu processor type for firewall server deployment"
 }
 
 variable "bootstrap_bucket_fw" {
-  default = "bootstrap-alb"
+  default     = "bootstrap-alb"
+  type        = string
+  description = "gcp bucket for bootstrap script which will be used to bootstrap the firewall."
 }
 
 variable "interface_0_name" {
-  default = "management"
+  default     = "management"
+  type        = string
+  description = "interface name for management server"
 }
 
 variable "interface_1_name" {
-  default = "untrust"
+  default     = "untrust"
+  type        = string
+  description = "interface name for untrust server"
 }
 
 variable "interface_2_name" {
-  default = "trust"
+  default     = "trust"
+  type        = string
+  description = "interface name for trust server"
+
 }
 
 variable "scopes_fw" {
@@ -752,19 +788,27 @@ variable "scopes_fw" {
     "https://www.googleapis.com/auth/monitoring.write",
     "https://www.googleapis.com/auth/compute"
   ]
+  description = "scopes attached to server VMS."
+  type        = list(string)
 }
 
 // WEB-SERVER Vaiables
 variable "web_server_name" {
-  default = "webserver"
+  default     = "webserver"
+  type        = string
+  description = "upstream webserver name for testing, this is optional."
 }
 
 variable "machine_type_web" {
-  default = "f1-micro"
+  default     = "f1-micro"
+  type        = string
+  description = "upstream webserver type for testing, this is optional."
 }
 
 variable "image_web" {
-  default = "debian-8"
+  default     = "debian-8"
+  type        = string
+  description = "upstream webserver image type for testing, this is optional"
 }
 
 variable "scopes_web" {
@@ -774,6 +818,8 @@ variable "scopes_web" {
     "https://www.googleapis.com/auth/monitoring.write",
     "https://www.googleapis.com/auth/compute.readonly",
   ]
+  description = "scopes attached to web-server VMS, this is optional"
+  type        = list(string)
 }
 
 #################################
@@ -880,7 +926,8 @@ variable "d_cloud_router_labels" {
 }
 
 variable "d_peer_asn" {
-  type = string
+  description = "BGP Autonomous System Number (ASN)."
+  type        = string
 }
 
 ###################################
@@ -909,24 +956,29 @@ variable "p_r_region1_interconnect1_location" {
   type        = string
   description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region1"
 }
+
 variable "p_r_region1_interconnect2_location" {
   type        = string
   description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region1"
 }
+
 variable "p_r_region2_interconnect1_location" {
   type        = string
   description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region2"
 }
+
 variable "p_r_region2_interconnect2_location" {
   type        = string
   description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region2"
 }
+
 variable "p_r_cloud_router_labels" {
   type        = map(string)
   description = "A map of suffixes for labelling vlans with four entries like \"vlan_1\" => \"suffix1\" with keys from `vlan_1` to `vlan_4`."
   default     = {}
 
 }
+
 variable "p_s_region1_interconnect1_location" {
   type        = string
   description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region1"
@@ -942,18 +994,20 @@ variable "p_s_region1_interconnect2_location" {
   type        = string
   description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region1"
 }
+
 variable "p_s_region2_interconnect1_location" {
   type        = string
   description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region1"
 }
+
 variable "p_s_region2_interconnect2_location" {
   type        = string
   description = "Name of the interconnect location used in the creation of the Interconnect for the second location of region1"
 }
+
 variable "p_s_cloud_router_labels" {
   type        = map(string)
   description = "A map of suffixes for labelling vlans with four entries like \"vlan_1\" => \"suffix1\" with keys from `vlan_1` to `vlan_4`."
   default     = {}
-
 }
 

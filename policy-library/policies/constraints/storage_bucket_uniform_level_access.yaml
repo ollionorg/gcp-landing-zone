@@ -1,0 +1,14 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPStorageBucketUniformLevelAccessConstraintV1
+metadata:
+  name: gcp-storage-bucket-uniform-level-access-constraint-v1
+  annotations:
+    description: Ensure that Google Cloud Storage buckets have uniform bucket-level access enabled
+spec:
+  severity: low
+  match:
+    ancestries:
+    - "organizations/unknown"
+    excludedAncestries: [] # optional, default is no exclusions
+  parameters:
+    uniformBucketLevelAccess: true

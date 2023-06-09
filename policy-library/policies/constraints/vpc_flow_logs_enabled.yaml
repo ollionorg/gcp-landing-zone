@@ -1,0 +1,14 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPVPCFlowLogsEnabledConstraintV1
+metadata:
+  name: gcp-vpc-flow-logs-enabled-constraint-v1
+  annotations:
+    description: Ensure Logging Metadata is not included within VPC firewall log files.
+spec:
+  severity: high
+  match:
+    ancestries:
+    - "organizations/**"
+    excludedAncestries: []
+  parameters:
+    metadata: "EXCLUDE_ALL_METADATA"

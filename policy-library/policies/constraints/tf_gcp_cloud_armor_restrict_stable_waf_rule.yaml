@@ -1,0 +1,11 @@
+# policies/constraints/tf_compute_address_internal_only.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPCloudArmorRestrictStableWafRuleConstraintV1
+metadata:
+  name: gcpcloudarmorrestrictstablewafruleconstraintv1
+spec:
+  severity: high
+  match:
+    addresses:
+    - "**"
+  parameters: {}

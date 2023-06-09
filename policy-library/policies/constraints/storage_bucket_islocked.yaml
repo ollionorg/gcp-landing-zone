@@ -1,0 +1,13 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPStorageBucketIsLockedConstraintV1
+metadata:
+  name: gcpstoragebucketislockedconstraintv1
+  annotations:
+    description: Ensure that the log bucket retention policies are using the Bucket Lock feature.
+spec:
+  severity: low
+  match:
+    ancestries:
+    - "organizations/**"
+    excludedAncestries: [] # optional, default is no exclusions
+  parameters: {}

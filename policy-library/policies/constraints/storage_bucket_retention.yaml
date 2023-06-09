@@ -1,0 +1,15 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPStorageBucketRetentionConstraintV1
+metadata:
+  name: gcpstoragebucketretentionconstraintv1
+  benchmark: MAS_TRM_8.4.2
+  # https://cloud.google.com/storage/docs/bucket-lock
+spec:
+  severity: high
+  match:
+    target:
+    - "organizations/**"
+
+  parameters:
+    minimum_retention_days: 25
+    maximum_retention_days: 180

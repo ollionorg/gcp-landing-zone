@@ -1,0 +1,12 @@
+apiVersion: constraints.gatekeeper.sh/v1alpha1
+kind: GCPBigQueryCMEKEncryptionConstraintV1
+metadata:
+  name: gcp-bq-cmek-encryption
+  annotations:
+    description: "check if Bigquery is encrypted with KMS key."
+    benchmark: MAS_TRM_8.4.4
+spec:
+  severity: high
+  match:
+    target: ["organizations/**"]
+  parameters: {}

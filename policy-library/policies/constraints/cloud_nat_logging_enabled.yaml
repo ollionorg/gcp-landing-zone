@@ -1,0 +1,18 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPCloudNatNetworkLoggingConstraintV1
+metadata:
+  name: gcpcloudnatnetworkloggingconstraintv1
+  annotations:
+    description:  Ensure monitoring and logging of Port utilization , Network Drops and leverage Log-based metrics
+spec:
+  severity: high
+  match:
+    ancestries:
+    - "projects/**"
+    excludedAncestries: []
+  parameters:
+    filters:
+      - ERRORS_ONLY
+      - TRANSLATIONS_ONLY
+      - ALL
+    enable: true

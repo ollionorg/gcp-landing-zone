@@ -1,0 +1,12 @@
+apiVersion: constraints.gatekeeper.sh/v1alpha1
+kind: GCPComputeBlockSSHKeysConstraintV1
+metadata:
+  name: compute_block_ssh_keys
+  annotations:
+    benchmark: MAS_TRM_11.1.6
+    description: Checks if "Block Project-wide SSH keys" is enabled for VM instances
+spec:
+  severity: high
+  match:
+    target: [ "organization/*" ]
+  parameters: {}

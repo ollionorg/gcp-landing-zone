@@ -1,6 +1,6 @@
 locals {
   //dns-hub
-  enable_interconnect_projects     = data.terraform_remote_state.bootstrap.outputs.enable_interconnect_projects
+  enable_interconnect_projects     = false //data.terraform_remote_state.bootstrap.outputs.enable_interconnect_projects
   enable_restricted_network        = data.terraform_remote_state.bootstrap.outputs.enable_restricted_network
   dns_hub_project_id               = data.google_projects.dns_hub.projects[0].project_id
   interconnect_trust_project_id    = try(data.terraform_remote_state.org.outputs.trust_interconnect_project_id, null)
@@ -17,7 +17,7 @@ locals {
   bgp_asn_number   = var.enable_partner_interconnect ? "16550" : "64514"
   folder_prefix    = data.terraform_remote_state.bootstrap.outputs.folder_prefix
   //net hubs
-  #base_net_hub_project_id           = try(data.google_projects.base_net_hub[0].projects[0].project_id, null)
+  base_net_hub_project_id           = try(data.google_projects.base_net_hub[0].projects[0].project_id, null)
   restricted_net_hub_project_id     = try(data.google_projects.restricted_net_hub[0].projects[0].project_id, null)
   restricted_net_hub_project_number = try(data.google_projects.restricted_net_hub[0].projects[0].number, null)
   /*
@@ -48,7 +48,7 @@ locals {
   production_folder                = data.terraform_remote_state.bootstrap.outputs.production_folder
   vpc_prefix                       = data.terraform_remote_state.bootstrap.outputs.vpc_prefix
   target_name_server_addresses     = data.terraform_remote_state.bootstrap.outputs.target_name_server_addresses
-  enable_interconnect_firewall     = local.enable_interconnect_projects ? data.terraform_remote_state.bootstrap.outputs.enable_interconnect_firewall : false
+  interconnect-firewall            = local.enable_interconnect_projects ? data.terraform_remote_state.bootstrap.outputs.interconnect-firewall : false
   // Dedicated Interconnect Configuration.
   d_enable_dedicated_interconnect           = data.terraform_remote_state.bootstrap.outputs.d_enable_dedicated_interconnect
   d_region1_interconnect1_candidate_subnets = data.terraform_remote_state.bootstrap.outputs.d_region1_interconnect1_candidate_subnets

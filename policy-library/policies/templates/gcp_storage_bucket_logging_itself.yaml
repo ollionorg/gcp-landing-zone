@@ -1,0 +1,33 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpstorageloggingitselfconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPStorageLoggingItselfConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+            package templates.gcp.GCPStorageLoggingItselfConstraintV1
+
+            violation[{
+            	"msg": msg,
+                "details": metadata,
+            }] {
+            	resource := input.review
+            	resource.type == "google_storage_bucket"
+            	msg := check_bucket_logging(resource)
+                metadata := {           
+                    "bucket_name": resource.change.after.name
+                }     
+            }  
+                                
+            check_bucket_logging(resource) = msg {
+                resource.change.after.name == resource.change.after.logging[0].log_bucket
+                msg := sprintf("Bucket is logging to itself: %s", [resource.change.after.name])
+            }

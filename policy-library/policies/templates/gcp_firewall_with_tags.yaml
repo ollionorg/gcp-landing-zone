@@ -1,0 +1,37 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpfirewallwithtagsconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPFirewallWithTagsConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+        package templates.gcp.GCPFirewallWithTagsConstraintV1
+        
+        violation[{
+          "msg": msg,
+          "details": metadata,
+        }] {
+          resource := input.review
+          resource.type == "google_compute_firewall"
+        
+          msg := check_tags(resource)
+          metadata := {
+            "Resource_Name": resource.name
+          }
+        }
+        
+        check_tags(resource) = msg {
+          resource.change.after.source_tags == null
+          resource.change.after.target_tags == null
+          msg = sprintf("Kindly add source & target tags to firewall rules %s", [resource.name])
+        }
+      

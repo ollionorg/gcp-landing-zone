@@ -1,0 +1,37 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpenableapiatprojectlevelconstraintv1
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPEnableAPIAtProjectLevelConstraintV1
+      validation:
+        openAPIV3Schema:
+          properties: {}
+
+  targets:
+    - target: validation.resourcechange.terraform.cloud.google.com
+      rego: |
+        package templates.gcp.GCPEnableAPIAtProjectLevelConstraintV1
+        import future.keywords.in
+        
+        violation[{
+          "msg": msg,
+          "details": metadata,
+        }] {
+          resource := input.review
+          resource.type == "google_project_service"
+          params := input.parameters
+          msg := check_service(resource, params)
+          metadata := {
+            "ResourceName" : resource.name,
+            "ResourceAddress" : resource.address,
+          }
+        }
+        
+        check_service(resource, params) = msg {
+          not resource.change.after.service in params.service_list
+          msg := sprintf("Service is not part of provided constraint service list, resource %s", [resource.name])
+        }

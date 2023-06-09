@@ -16,7 +16,7 @@
 
 /*************************************************
   Bootstrap GCP Organization.
-*************************************************/
+**************************************************/
 
 resource "google_folder" "bootstrap" {
   display_name = "${var.folder_prefix}-bootstrap"
@@ -25,13 +25,14 @@ resource "google_folder" "bootstrap" {
 
 module "seed_bootstrap" {
   source                         = "../modules/terraform-google-bootstrap"
+  version                        = "1.0.0"
   org_id                         = var.org_id
   folder_id                      = google_folder.bootstrap.id
   project_id                     = "${var.project_prefix}-${var.bootstrap_env_code}-seed"
   state_bucket_name              = "${var.bucket_prefix}-${var.bootstrap_env_code}-tfstate"
   billing_account                = var.billing_account
-  group_org_admins               = var.org_admins_group
-  group_billing_admins           = var.cfo_group
+  group_org_admins               = var.group_org_admins
+  group_billing_admins           = var.group_billing_admins
   default_region                 = var.default_region
   org_project_creators           = var.org_project_creators
   sa_enable_impersonation        = true
@@ -103,12 +104,13 @@ resource "google_billing_account_iam_member" "tf_billing_admin" {
 
 module "cloudbuild_bootstrap" {
   source                      = "../modules/cloudbuild"
+  version                     = "1.0.0"
   create_cloud_source_repos   = false
   org_id                      = var.org_id
   folder_id                   = google_folder.bootstrap.id
   project_id                  = "${var.project_prefix}-${var.bootstrap_env_code}-cicd"
   billing_account             = var.billing_account
-  group_org_admins            = var.org_admins_group
+  group_org_admins            = var.group_org_admins
   default_region              = var.default_region
   terraform_sa_email          = module.seed_bootstrap.terraform_sa_email
   terraform_sa_name           = module.seed_bootstrap.terraform_sa_name
@@ -241,13 +243,3 @@ resource "google_folder_iam_member" "folder_tf_compute_security_resource_admin" 
   role   = "roles/compute.orgSecurityResourceAdmin"
   member = "serviceAccount:${module.seed_bootstrap.terraform_sa_email}"
 }
-
-
-#resource "google_billing_account_iam_member" "billing_admin_user_cloudbuild" {
-#  count              = var.billing_account != null ? 1 : 0
-#  billing_account_id = var.billing_account
-#  role               = "roles/billing.admin"
-#  member             = "serviceAccount:${module.cloudbuild_bootstrap.cloudbuild_project_id}@cloudbuild.gserviceaccount.com"
-#
-#  depends_on = [module.cloudbuild_bootstrap]
-#}

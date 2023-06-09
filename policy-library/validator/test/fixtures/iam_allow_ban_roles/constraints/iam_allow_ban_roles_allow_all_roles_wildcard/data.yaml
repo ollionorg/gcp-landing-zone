@@ -1,0 +1,15 @@
+apiVersion: constraints.gatekeeper.sh/v1alpha1
+kind: GCPIAMAllowBanRolesConstraintV1
+metadata:
+  name: iam_allow_all_roles_wildcard
+  annotations:
+    description: Allow all roles with wildcard.
+spec:
+  severity: high
+  match:
+    ancestries: ["organizations/**"]
+    excludedAncestries: [] # optional, default is no exclusions
+  parameters:
+    mode: "allow"
+    roles:
+      - "roles/*"

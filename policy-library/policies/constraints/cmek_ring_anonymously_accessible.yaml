@@ -1,0 +1,16 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPKMSKeyRingNotAnonymouslyAccessibleConstraintV1
+metadata:
+  name: gcp-kms-key-ring-not-anonymously-accessible-constraint
+  annotations:
+    description: Ensure that Cloud KMS Key Rings are not anonymously or publicly accessible
+spec:
+  severity: high
+  match:
+    ancestries:
+    - "organizations/**"
+    excludedAncestries: []
+  parameters:
+    members:
+      - "allUsers"
+      - "allAuthenticatedUsers"

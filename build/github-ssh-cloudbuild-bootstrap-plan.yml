@@ -27,7 +27,7 @@ steps:
     path: /root/.ssh
 
 - id: 'tf validate'
-  name: 'GCP_REGION-docker.pkg.dev/${PROJECT_ID}/GAR_REPO_NAME/tf-lz-image:latest'
+  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcp-lz-image/tf-lz-image:latest'
   entrypoint: 'bash'
   args:
   - -c
@@ -37,7 +37,7 @@ steps:
       terraform validate
 
 - id: 'tf plan'
-  name: 'GCP_REGION-docker.pkg.dev/${PROJECT_ID}/GAR_REPO_NAME/tf-lz-image:latest'
+  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcp-lz-image/tf-lz-image:latest'
   secretEnv: ['GH_TOKEN']
   entrypoint: 'bash'
   args:
@@ -50,7 +50,7 @@ steps:
       terraform show -json tf.plan > /workspace/tf.json
 
 - id: 'tf validator scan'
-  name: 'GCP_REGION-docker.pkg.dev/${PROJECT_ID}/GAR_REPO_NAME/tf-lz-image:latest'
+  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcp-lz-image/tf-lz-image:latest'
   entrypoint: 'bash'
   args:
     - -c
@@ -82,7 +82,7 @@ substitutions:
   _GIT_HEAD_BRANCH: main
   _SECRET_GH_TOKEN: gh-token
   _WORKFLOW: demo-workflow
-  _BUCKET: UPDATE_BACKEND_BUCKET
+  _BUCKET: bkt-b-tfstate-9d87
   _REPO: gcp-lz
   _GIT_AUTHOR: author_name
 options:

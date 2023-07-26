@@ -22,7 +22,8 @@ spec:
   severity: high
   match:
     ancestries:
-    - "organizations/**"
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     mode: denylist
     project_id: 179891054368

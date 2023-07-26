@@ -7,6 +7,10 @@ metadata:
     benchmark: MAS_TRM_10.2.10
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     # Optionally specify the required key rotation period.  Default is 365 days
     # Valid time units are  "ns", "us", "ms", "s", "m", "h"

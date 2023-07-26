@@ -8,5 +8,7 @@ metadata:
 spec:
   severity: high
   match:
-    target: [ "organization/*" ]
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters: {}

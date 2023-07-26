@@ -8,5 +8,8 @@ spec:
   match:
     addresses:
     - "**"
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     rate_limit_threshold: 15

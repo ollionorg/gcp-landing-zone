@@ -8,6 +8,9 @@ spec:
   match:
     addresses:
     - "**"
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     allowed_json_parsing_types:
     - STANDARD

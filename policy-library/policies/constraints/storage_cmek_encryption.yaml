@@ -11,7 +11,5 @@ spec:
   match:
     ancestries:
       - "organizations/unknown"
-    excludedAncestries:
-      - organizations/542139653104/folders/959676550738/folders/58452498151/projects/prj-b-cicd-1b15
-
+    excludedAncestries: []
   parameters: {}

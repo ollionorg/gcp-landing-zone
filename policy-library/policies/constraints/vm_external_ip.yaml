@@ -22,6 +22,10 @@ metadata:
     description: Checks if Compute Engine instances have public IPs.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     # modes can be [allowlist, denylist]
     mode: allowlist

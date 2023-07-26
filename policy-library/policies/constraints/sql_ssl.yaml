@@ -23,4 +23,8 @@ metadata:
     description: Checks if Cloud SQL instances have SSL turned on.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters: {}

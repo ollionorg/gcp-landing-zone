@@ -19,7 +19,9 @@ metadata:
 spec:
   severity: high
   match:
-    ancestries: ["organizations/**"]
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     allowed_locations:
         - us-central1

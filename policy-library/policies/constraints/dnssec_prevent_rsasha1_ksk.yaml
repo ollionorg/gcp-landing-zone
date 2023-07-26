@@ -23,5 +23,10 @@ metadata:
     bundles.validator.forsetisecurity.org/scorecard-v1: security
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
+
   parameters:
     keyType: KEY_SIGNING

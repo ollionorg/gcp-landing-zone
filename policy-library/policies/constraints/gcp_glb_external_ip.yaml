@@ -20,6 +20,10 @@ metadata:
     description: Checks if Global Load Balancers have external IPs.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     mode: "allowlist"
     instances:

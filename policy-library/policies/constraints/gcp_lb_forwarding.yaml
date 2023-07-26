@@ -20,6 +20,10 @@ metadata:
     description: Verifies load balancer forwarding rules against allowed values.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     allowlist:
     - target: https://www.googleapis.com/compute/v1/projects/test-project/regions/us-east1/targetHttpProxies/test-noip-target-proxy

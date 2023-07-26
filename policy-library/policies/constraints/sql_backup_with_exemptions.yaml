@@ -24,7 +24,8 @@ spec:
   severity: high
   match:
     ancestries:
-    - "organizations/**"
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     exemptions:
     - //cloudsql.googleapis.com/projects/brunore-db-test/instances/mysqlv2-nomaintenance

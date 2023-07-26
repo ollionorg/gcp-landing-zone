@@ -3,10 +3,14 @@ kind: GCPStorageBucketRetentionConstraintV1
 metadata:
   name: storage_bucket_min_max_retention
   benchmark: MAS_TRM_8.4.2
+  fr_index: FR14
+  cobit_mapping: DSS01.03.6
 spec:
   severity: high
   match:
-    target: ["organizations/**"]
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     minimum_retention_days: 25
     maximum_retention_days: 60

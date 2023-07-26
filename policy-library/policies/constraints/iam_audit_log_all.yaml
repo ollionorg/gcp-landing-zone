@@ -5,13 +5,15 @@ metadata:
   annotations:
     description: Checks that all services have all types of audit logs enabled.
     bundles.validator.forsetisecurity.org/healthcare-baseline-v1: security
+    fr_index: FR10
+    cobit_mapping: DSS01.03.4
 spec:
   severity: medium
   match:
     ancestries:
       - "projects/**"
       - "folders/**"
-    excludedAncestries: ["organizations/542139653104/folders/959676550738"]
+    excludedAncestries: []
   parameters:
     services:
       - "allServices"

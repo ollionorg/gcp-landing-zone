@@ -20,6 +20,10 @@ metadata:
     description: Custom BigQuery role must only have specific permissions
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     mode: allowlist
     title: "My Custom BigQuery Role"

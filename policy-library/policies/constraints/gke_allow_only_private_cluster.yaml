@@ -23,4 +23,8 @@ metadata:
     description: Verifies all GKE clusters are Private Clusters.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters: {}

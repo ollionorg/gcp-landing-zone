@@ -23,6 +23,7 @@ spec:
   match:
     ancestries:
     - "organizations/**"
+    excludedAncestries: []
   parameters:
     minimum_retention_days: 100
     maximum_retention_days: 200

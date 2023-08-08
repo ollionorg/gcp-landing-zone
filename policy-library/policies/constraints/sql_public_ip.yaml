@@ -26,5 +26,5 @@ spec:
   severity: high
   match:
     ancestries:
-    - "organizations/**"
-    excludedAncestries: [] # optional, default is no exclusions
+      - "organizations/**"
+    excludedAncestries: [ ]

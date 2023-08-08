@@ -21,6 +21,10 @@ metadata:
     bundles.validator.forsetisecurity.org/healthcare-baseline-v1: security
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     mode: "allowlist"
     locations:

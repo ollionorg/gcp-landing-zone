@@ -24,9 +24,9 @@ metadata:
 spec:
   severity: high
   match:
-    target: # {"$ref":"#/definitions/io.k8s.cli.setters.target"}
-    - organizations/**
-    exclude: [] # optional, default is no exclusions
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     mode: denylist
     role: roles/*

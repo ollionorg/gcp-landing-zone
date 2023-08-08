@@ -21,6 +21,10 @@ metadata:
       snapshot schedules) attached to them.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     mode: "allowlist"
     resourcePolicies:

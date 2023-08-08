@@ -24,4 +24,8 @@ metadata:
     description: Checks if Cloud SQL instances are world readable.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters: {}

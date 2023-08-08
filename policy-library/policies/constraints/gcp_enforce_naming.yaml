@@ -21,6 +21,10 @@ metadata:
       are named according to regular expression pattern.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     # Provide naming patterns for each resource. You may provide more than one pattern per resource.
     # All the resources that do not follow the naming requirements are alerted. 

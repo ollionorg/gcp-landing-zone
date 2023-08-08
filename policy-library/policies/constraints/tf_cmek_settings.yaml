@@ -6,6 +6,10 @@ metadata:
     benchmark: MAS_TRM_10.2.10
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     # Valid time units are  "ns", "us", "ms", "s", "m", "h"
     # This is 90 days

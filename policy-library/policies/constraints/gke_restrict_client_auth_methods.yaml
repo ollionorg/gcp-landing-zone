@@ -25,4 +25,8 @@ metadata:
       are disabled for GKE clusters.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters: {}

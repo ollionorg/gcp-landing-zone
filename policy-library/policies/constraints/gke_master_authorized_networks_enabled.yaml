@@ -33,5 +33,9 @@ spec:
   # parameters:
   #     authorized_networks: ["...", "..."]
   # to specify that authorized networks need to be subnets of the given ones.
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     authorized_networks: ["35.187.118.0/24"]

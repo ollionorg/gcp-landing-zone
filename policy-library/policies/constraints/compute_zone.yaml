@@ -20,6 +20,10 @@ metadata:
     description: Checks the instances and Persistent Disks are in desired zones.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     mode: "allowlist"
     zones:

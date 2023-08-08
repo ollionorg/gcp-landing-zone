@@ -8,4 +8,7 @@ spec:
   match:
     addresses:
     - "**"
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters: {}

@@ -21,6 +21,10 @@ metadata:
       are named according to regular expression pattern.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     naming_rules:
     - resource: "compute.googleapis.com/SslCertificate"   # asset_type field from inventory

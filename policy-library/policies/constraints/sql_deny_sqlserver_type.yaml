@@ -20,6 +20,10 @@ metadata:
     description: Checks for allowed or disallowed Cloud SQL instance types.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     mode: "deny"
     sql_instance_types:

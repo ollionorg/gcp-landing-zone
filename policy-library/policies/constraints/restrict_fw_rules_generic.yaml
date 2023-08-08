@@ -24,7 +24,8 @@ spec:
   severity: high
   match:
     ancestries:
-    - "organizations/**"
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     rules:
     - direction: "INGRESS"

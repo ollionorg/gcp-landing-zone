@@ -22,6 +22,10 @@ metadata:
     description: Checks if a VM has IP forwarding turned on.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     mode: allowlist
     match_mode: regex

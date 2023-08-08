@@ -6,6 +6,9 @@ metadata:
 spec:
   severity: high
   match:
-    addresses:
-    - "**"
+    address:
+      - "**"
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters: {}

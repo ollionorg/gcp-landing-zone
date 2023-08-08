@@ -20,5 +20,9 @@ metadata:
     description: Checks Cloud SQL master authorized networks list against a allowlist.
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
   parameters:
     authorized_networks: ["35.187.118.0/24"]

@@ -7,3 +7,8 @@ metadata:
     benchmark: MAS_TRM_11.1.5
 spec:
   severity: high
+  match:
+    ancestries:
+      - "organizations/**"
+    excludedAncestries: [ ]
+  parameters: {}

@@ -59,6 +59,7 @@ if [[ -n "$GITHUB_PAT" ]]; then
     PRJ_NAME=$(terraform -chdir=../../0-bootstrap output -raw project_name || exit 1)
     export GITHUB_OWNER=$(terraform -chdir=../../0-bootstrap output -raw runner_repo_owner || exit 1)
     RNR_REPO_NAME=$(terraform -chdir=../../0-bootstrap output -raw runner_repo_name || exit 1)
+    SECRET_KEY=$(terraform -chdir=../../0-bootstrap output -raw git_pvt_key_scrt_name || exit 1)
     echo "Updating backend.tf with bucket name: $BKT_NAME"
     ## Updating the backend.tf file in the 0-bootstrap
     ## shellcheck disable=SC2086
@@ -107,7 +108,7 @@ if [[ -n "$GITHUB_PAT" ]]; then
 
     ## deploying gh-secret
     terraform -chdir=../ init || exit 1
-    terraform -chdir=../ apply -var=gh_token=$GITHUB_PAT -var=runner_repo_name=$RNR_REPO_NAME -var=project_id=$PRJ_CICD_NAME -var=project_name=$PRJ_NAME --auto-approve || exit 1
+    terraform -chdir=../ apply -var=gh_token=$GITHUB_PAT -var=runner_repo_name=$RNR_REPO_NAME -var=project_id=$PRJ_CICD_NAME -var=project_name=$PRJ_NAME -var=git_pvt_key_scrt_name=$SECRET_KEY --auto-approve || exit 1
   else
     echo -e "${RED}.github/workflows/ directory not found. Quitting" && exit 1
   fi

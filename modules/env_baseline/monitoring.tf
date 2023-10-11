@@ -45,7 +45,6 @@ module "monitoring_project" {
       stage_name        = var.stage
       bu_name           = var.bu
       organisation_id   = var.org_id
-      created_by        = var.author
     }
   )
 

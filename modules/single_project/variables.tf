@@ -153,11 +153,6 @@ variable "bu" {
   description = "It contains the bu name"
   type        = string
   default     = ""
-} 
-
-variable "author" {
-  description = "Author who deploys the code"
-  type        = string
 }
 
 variable "custom_labels" {

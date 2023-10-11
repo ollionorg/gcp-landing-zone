@@ -27,7 +27,6 @@ module "app_infra_cloudbuild_project" {
   alert_pubsub_topic          = var.alert_pubsub_topic
   budget_amount               = var.budget_amount
   project_prefix              = local.project_prefix
-  author                      = var.author
 
   activate_apis = [
     "cloudbuild.googleapis.com",

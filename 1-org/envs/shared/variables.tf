@@ -287,8 +287,3 @@ variable "gcp_billing_admin_user" {
   type        = string
   default     = null
 }
-
-variable "author" {
-  description = "Author who deploys the code"
-  type        = string
-}

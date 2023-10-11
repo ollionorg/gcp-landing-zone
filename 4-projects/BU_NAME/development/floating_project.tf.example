@@ -27,7 +27,6 @@ module "floating_project" {
   alert_pubsub_topic          = var.alert_pubsub_topic
   budget_amount               = var.budget_amount
   project_prefix              = local.project_prefix
-  author                      = var.author
 
   # Metadata
   project_suffix    = "${var.bu_code}-${var.floating_suffix}"

@@ -49,7 +49,6 @@ module "peering_project" {
   stage                       = var.stage_name
   bu                          = var.bu_name
   project_prefix              = local.project_prefix
-  author                      = var.author
 
   # Metadata
   project_suffix    = "${var.bu_code}-${var.peer_suffix}"

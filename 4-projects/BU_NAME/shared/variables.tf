@@ -99,11 +99,6 @@ variable "stage_name" {
   type        = string
 }
 
-variable "author" {
-  description = "Author who deploys the code"
-  type        = string
-}
-
 variable "bu_name" {
   description = "Name to create the business unit"
   type        = string

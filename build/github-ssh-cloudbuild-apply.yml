@@ -42,7 +42,6 @@ steps:
   - -c
   - |
       cd ${_GIT_WORK_DIR}
-      export TF_VAR_author=$(echo ${_GIT_AUTHOR})
       terraform apply -auto-approve
 
 availableSecrets:
@@ -54,6 +53,5 @@ substitutions:
   _GIT_LZ_REPO: "cldcvr/gcp-lz.git"
   _GIT_WORK_DIR: gcp-lz
   _GIT_HEAD_BRANCH: godmode-main
-  _GIT_AUTHOR: author_name
 options:
     dynamic_substitutions: true

@@ -28,7 +28,6 @@ module "env_secrets_project" {
   budget_amount               = var.budget_amount
   project_suffix              = var.secrets_prj_suffix
   project_prefix              = local.project_prefix
-  author                      = var.author
 
   activate_apis = ["logging.googleapis.com", "secretmanager.googleapis.com", "cloudkms.googleapis.com"]
 

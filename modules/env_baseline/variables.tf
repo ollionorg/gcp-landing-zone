@@ -167,10 +167,6 @@ variable "vpc_prefix" {
   default     = ""
 }
 
-variable "author" {
-  description = "Author who deploys the code"
-}
-
 variable "custom_labels" {
   description = "Customer designed labels for project"
   type        = map(string)

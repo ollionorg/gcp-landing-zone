@@ -48,7 +48,6 @@ module "project" {
     stage_name        = var.stage
     bu_name           = var.bu
     organisation_id   = var.org_id
-    created_by        = var.author
     }
   )
   budget_alert_pubsub_topic   = var.alert_pubsub_topic

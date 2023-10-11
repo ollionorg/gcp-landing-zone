@@ -30,7 +30,6 @@ module "restricted_shared_vpc_project" {
   budget_amount               = var.budget_amount
   project_prefix              = local.project_prefix
   enable_hub_and_spoke        = local.enable_hub_and_spoke
-  author                      = var.author
 
   activate_apis                      = ["accesscontextmanager.googleapis.com"]
   vpc_service_control_attach_enabled = "true"

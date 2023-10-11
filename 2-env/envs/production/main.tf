@@ -28,7 +28,6 @@ module "env" {
   primary_contact            = local.primary_contact
   secondary_contact          = local.secondary_contact
   vpc_prefix                 = local.vpc_prefix
-  author                     = var.author
   custom_labels              = local.custom_labels
   enable_env_log_sink        = local.enable_env_log_sink
   enable_restricted_network  = local.enable_restricted_network

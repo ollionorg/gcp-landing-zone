@@ -43,7 +43,6 @@ steps:
   - -c
   - |
       cd ${_GIT_WORK_DIR}
-      export TF_VAR_author=$(echo ${_GIT_AUTHOR})
       terraform plan -out tf.plan
       terraform show -json tf.plan > /workspace/tf.json
 
@@ -80,6 +79,5 @@ substitutions:
   _WORKFLOW: demo-workflow
   _BUCKET: bkt-b-tfstate-9d87
   _REPO: gcp-lz
-  _GIT_AUTHOR: author_name
 options:
     dynamic_substitutions: true

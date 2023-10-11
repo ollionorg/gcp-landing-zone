@@ -70,7 +70,7 @@ jobs:
           cd ${{ github.workspace}}/build
           gcloud builds submit --config=github-ssh-cloudbuild-plan.yml \
             --project=${{ env.PROJECT_ID }} \
-            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/4-projects/BU_NAME/production",_WORKFLOW="4-prj-prod",_REPO=${GITHUB_REPOSITORY##*/},_GIT_AUTHOR=${{ github.actor }}
+            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/4-projects/BU_NAME/production",_WORKFLOW="4-prj-prod",_REPO=${GITHUB_REPOSITORY##*/}
 
   terraform-versioncheck:
     name: 'terraform version check'

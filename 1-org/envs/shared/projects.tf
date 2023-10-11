@@ -40,7 +40,6 @@ module "org_audit_logs" {
       application_name  = "org-logging"
       primary_contact   = local.primary_contact
       secondary_contact = local.secondary_contact
-      created_by        = var.author
       organisation_id   = local.org_id
     }
   )
@@ -75,7 +74,6 @@ module "org_security_logs" {
       application_name  = "org-logging"
       primary_contact   = local.primary_contact
       secondary_contact = local.secondary_contact
-      created_by        = var.author
       organisation_id   = local.org_id
     }
   )
@@ -110,7 +108,6 @@ module "org_operations_logs" {
       application_name  = "org-logging"
       primary_contact   = local.primary_contact
       secondary_contact = local.secondary_contact
-      created_by        = var.author
       organisation_id   = local.org_id
     }
   )
@@ -140,7 +137,6 @@ module "org_billing_logs" {
       application_name  = "org-billing-logs"
       primary_contact   = local.primary_contact
       secondary_contact = local.secondary_contact
-      created_by        = var.author
       organisation_id   = local.org_id
     }
   )
@@ -174,7 +170,6 @@ module "org_secrets" {
       application_name  = "org-secrets"
       primary_contact   = local.primary_contact
       secondary_contact = local.secondary_contact
-      created_by        = var.author
       organisation_id   = local.org_id
     }
   )
@@ -208,7 +203,6 @@ module "trust_interconnect" {
       application_name  = "org-trust-interconnect"
       primary_contact   = local.primary_contact
       secondary_contact = local.secondary_contact
-      created_by        = var.author
       organisation_id   = local.org_id
     }
   )
@@ -239,7 +233,6 @@ module "notrust_interconnect" {
       application_name  = "org-notrust-interconnect"
       primary_contact   = local.primary_contact
       secondary_contact = local.secondary_contact
-      created_by        = var.author
       organisation_id   = local.org_id
     }
   )
@@ -275,7 +268,6 @@ module "scc_notifications" {
       application_name  = "org-scc"
       primary_contact   = local.primary_contact
       secondary_contact = local.secondary_contact
-      created_by        = var.author
       organisation_id   = local.org_id
     }
   )
@@ -313,7 +305,6 @@ module "dns_hub" {
       application_name  = "org-dns-hub"
       primary_contact   = local.primary_contact
       secondary_contact = local.secondary_contact
-      created_by        = var.author
       organisation_id   = local.org_id
     }
   )
@@ -352,7 +343,6 @@ module "base_network_hub" {
       application_name  = "org-base-net-hub"
       primary_contact   = local.primary_contact
       secondary_contact = local.secondary_contact
-      created_by        = var.author
       organisation_id   = local.org_id
     }
   )
@@ -392,7 +382,6 @@ module "restricted_network_hub" {
       application_name  = "org-restricted-net-hub"
       primary_contact   = local.primary_contact
       secondary_contact = local.secondary_contact
-      created_by        = var.author
       organisation_id   = local.org_id
     }
   )

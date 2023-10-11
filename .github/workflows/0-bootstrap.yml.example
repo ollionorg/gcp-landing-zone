@@ -39,7 +39,7 @@ jobs:
           cd ${{ github.workspace}}/build
           gcloud builds submit --config=github-ssh-cloudbuild-bootstrap-plan.yml \
             --project=${{ env.PROJECT_ID }} \
-            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/0-bootstrap",_WORKFLOW="0-bootstrap",_REPO=${GITHUB_REPOSITORY##*/},_GIT_AUTHOR=${{ github.actor }}
+            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/0-bootstrap",_WORKFLOW="0-bootstrap",_REPO=${GITHUB_REPOSITORY##*/}
 
   tflint:
     name: "tflint"

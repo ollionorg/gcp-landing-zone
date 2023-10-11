@@ -43,7 +43,6 @@ module "env_secrets" {
       stage_name        = var.stage
       bu_name           = var.bu
       organisation_id   = var.org_id
-      created_by        = var.author
     }
   )
   budget_alert_pubsub_topic   = var.secret_project_alert_pubsub_topic

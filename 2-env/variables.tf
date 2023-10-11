@@ -19,7 +19,3 @@ variable "parent_folder" {
   type        = string
   default     = ""
 }
-
-variable "author" {
-  description = "Author who deploys the code"
-}

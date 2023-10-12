@@ -138,6 +138,11 @@ output "gar_repo_name" {
   value       = var.gar_repo_name
 }
 
+output "git_pvt_key_scrt_name" {
+  description = "The name / secret id which holds the private key for the deploy keys added to the Github repo"
+  value       = var.git_pvt_key_scrt_name
+}
+
 # 1-org
 output "enable_hub_and_spoke" {
   description = "Enable Hub-and-Spoke architecture."

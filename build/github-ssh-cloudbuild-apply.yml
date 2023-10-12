@@ -27,7 +27,7 @@ steps:
     path: /root/.ssh
 
 - id: 'tf init'
-  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcp-lz-image/tf-lz-image:latest'
+  name: '${_GAR_REGION}-docker.pkg.dev/${PROJECT_ID}/gcp-lz-image/tf-lz-image:latest'
   entrypoint: 'bash'
   args:
   - -c
@@ -36,7 +36,7 @@ steps:
       terraform init
 
 - id: 'tf apply'
-  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcp-lz-image/tf-lz-image:latest'
+  name: '${_GAR_REGION}-docker.pkg.dev/${PROJECT_ID}/gcp-lz-image/tf-lz-image:latest'
   entrypoint: 'bash'
   args:
   - -c
@@ -53,5 +53,6 @@ substitutions:
   _GIT_LZ_REPO: "cldcvr/gcp-lz.git"
   _GIT_WORK_DIR: gcp-lz
   _GIT_HEAD_BRANCH: godmode-main
+  _GAR_REGION: asia-southeast1
 options:
     dynamic_substitutions: true

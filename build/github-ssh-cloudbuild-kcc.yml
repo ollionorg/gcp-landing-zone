@@ -27,7 +27,7 @@ steps:
     path: /root/.ssh
 
 - id: 'KCC Configuration - Enable Config Controller , Install Policy Controller, Apply Policy Constraints, Enable Config Sync with Anthos'
-  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
+  name: '${_GAR_REGION}-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
   secretEnv: ['GH_TOKEN']
   entrypoint: 'bash'
   args:
@@ -38,7 +38,7 @@ steps:
       bash configure.sh $gh_token
 
 - id: 'SCC terraform apply'
-  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
+  name: '${_GAR_REGION}-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
   entrypoint: 'bash'
   args:
   - -c
@@ -61,6 +61,7 @@ substitutions:
   _SECRET_GH_TOKEN: gh-token
   _GIT_WORK_DIR: gcp-lz
   _GIT_HEAD_BRANCH: godmode-main
+  _GAR_REGION: asia-southeast1
 options:
     dynamic_substitutions: true
 

@@ -1,5 +1,3 @@
-changecom(,)
-changequote(,)
 name: '4-projects - BU_NAME - development'
 
 on:
@@ -18,6 +16,7 @@ env:
   BUCKET: INSERT_BUCKET_NAME
   URL_SHRD_BU_NAME: https://api.github.com/repos/GITHUB_OWNER/REPO_NAME/actions/workflows/4-projects-shared-main-BU_NAME.yml/runs
   GITHUB_TOKEN: ${{ github.token }}
+  GAR_REGION: INSERT_GAR_REGION
 jobs:
   previous-stage-check:
     name: "Check Stage 4-projects-shared-BU_NAME"
@@ -93,7 +92,7 @@ jobs:
           cd ${{ github.workspace}}/build
           gcloud builds submit --config=github-ssh-cloudbuild-plan.yml \
             --project=${{ env.PROJECT_ID }} \
-            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/4-projects/BU_NAME/development",_WORKFLOW="4-prj-dev",_REPO=${GITHUB_REPOSITORY##*/}
+            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/4-projects/BU_NAME/development",_WORKFLOW="4-prj-dev",_REPO=${GITHUB_REPOSITORY##*/},_GAR_REGION=${{ env.GAR_REGION}}
 
   terraform-versioncheck:
     name: 'terraform version check'

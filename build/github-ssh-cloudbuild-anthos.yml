@@ -27,7 +27,7 @@ steps:
     path: /root/.ssh
 
 - id: 'trigger anthos'
-  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
+  name: '${_GAR_REGION}-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
   entrypoint: 'bash'
   args: ['${_GIT_WORK_DIR}/BU_NAME/development/scripts/anthos_install.sh']
 
@@ -41,5 +41,6 @@ substitutions:
   _GIT_LZ_REPO: "cldcvr/gcp-lz.git"
   _GIT_WORK_DIR: gcp-lz
   _GIT_HEAD_BRANCH: godmode-main
+  _GAR_REGION: asia-southeast1
 options:
     dynamic_substitutions: true

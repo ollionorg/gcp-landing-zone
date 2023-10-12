@@ -1,0 +1,13 @@
+environment-id: ""
+exclude: []
+format: json
+include:
+- rego
+input-type:
+- auto
+inputs: []
+no-built-ins: true
+no-ignore: false
+only: []
+severity: unknown
+sync: false

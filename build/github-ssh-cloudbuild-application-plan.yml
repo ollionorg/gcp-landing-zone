@@ -44,29 +44,7 @@ steps:
   - |
       cd ${_GIT_WORK_DIR}
       export TF_VAR_dbps="admin"
-      terraform plan -out tf.plan
-      terraform show -json tf.plan > /workspace/tf.json
-
-- id: 'tf validator scan'
-  name: 'asia-southeast1-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
-  entrypoint: 'bash'
-  args:
-    - -c
-    - |
-      date -u +%Y%m%d-T%H%M%S > _TAG
-      gcloud beta terraform vet /workspace/tf.json --policy-library=${_REPO}/policy-library --format=json > /workspace/tfvalidator-${_WORKFLOW}-$(cat _TAG).json
-      ls -ltr /workspace/tfvalidator-${_WORKFLOW}-$(cat _TAG).json | tr -s ' ' | cut -d ' ' -f 5 > _SIZE
-      if [ $(cat _SIZE) -le 3  ]
-      then 
-        echo " -------------------------- Terraform Validator -------------------------- "
-        echo -e " Infrastructure is in compliance according to the policies present at ${_REPO}/policy-library \n Nothing to upload to bucket"
-      else 
-        gsutil cp /workspace/tfvalidator-${_WORKFLOW}-$(cat _TAG).json gs://${_BUCKET}/tf-validator/tfvalidator-${_WORKFLOW}-$(cat _TAG).json
-        echo "-------------------------- Running Terraform Validator --------------------------"
-        gcloud beta terraform vet /workspace/tf.json --policy-library=${_REPO}/policy-library --format=json
-        echo -e " Please fix the above findings \n Uploading tfvalidator-${_WORKFLOW}-$(cat _TAG).json to gs://${_BUCKET}/tf-validator)"
-        exit 1
-      fi
+      terraform plan
 
 availableSecrets:
   secretManager:

@@ -88,6 +88,7 @@ if [[ -n "$GITHUB_PAT" ]]; then
       -D INSERT_RUNNER_LABEL=${RUNNER_LABEL} \
       -D INSERT_MAIN_BRANCH="${PRJ_NAME}-main" \
       -D GITHUB_OWNER=${GITHUB_OWNER} \
+      -D INSERT_BUCKET_NAME=${BKT_NAME} \
       -D REPO_NAME=${RNR_REPO_NAME} ${f} >"${f%.yml.example}.yml"
     rm ${f}
     fi

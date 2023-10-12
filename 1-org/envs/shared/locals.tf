@@ -6,9 +6,9 @@ locals {
   shared_env         = data.terraform_remote_state.bootstrap.outputs.shared_env
   org_id             = data.terraform_remote_state.bootstrap.outputs.org_id
   billing_data_users = data.terraform_remote_state.bootstrap.outputs.billing_data_users
-
-  cfo              = data.terraform_remote_state.bootstrap.outputs.cfo
-  group_org_admins = data.terraform_remote_state.bootstrap.outputs.group_org_admins
+  domain             = local.domains_to_allow[0]
+  cfo                = data.terraform_remote_state.bootstrap.outputs.cfo
+  group_org_admins   = data.terraform_remote_state.bootstrap.outputs.group_org_admins
   #user groups ops
   cto_security_operations_group          = data.terraform_remote_state.bootstrap.outputs.cto_security_operations_group
   cto_elevated_security_operations_group = data.terraform_remote_state.bootstrap.outputs.cto_elevated_security_operations_group

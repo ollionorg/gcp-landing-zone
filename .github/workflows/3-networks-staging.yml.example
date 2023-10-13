@@ -1,4 +1,3 @@
-changequote(,)
 name: '3-networks - staging'
 
 on:
@@ -17,6 +16,7 @@ env:
   BUCKET: INSERT_BUCKET_NAME
   URL_3_NET_DEV: https://api.github.com/repos/GITHUB_OWNER/REPO_NAME/actions/workflows/3-networks-development-main.yml/runs
   GITHUB_TOKEN: ${{ github.token }}
+  GAR_REGION: INSERT_GAR_REGION
 
 jobs:
   previous-stage-check:
@@ -93,7 +93,7 @@ jobs:
           cd ${{ github.workspace}}/build
           gcloud builds submit --config=github-ssh-cloudbuild-plan.yml \
             --project=${{ env.PROJECT_ID }} \
-            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/3-networks/envs/staging",_WORKFLOW="3-net-staging",_REPO=${GITHUB_REPOSITORY##*/}
+            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/3-networks/envs/staging",_WORKFLOW="3-net-staging",_REPO=${GITHUB_REPOSITORY##*/},_GAR_REGION=${{ env.GAR_REGION}}
   terraform-versioncheck:
     name: 'terraform version check'
     runs-on: INSERT_RUNNER_LABEL

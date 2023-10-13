@@ -1,4 +1,3 @@
-changequote(,)
 name: '2-env - development'
 
 on:
@@ -18,6 +17,7 @@ env:
   URL: https://api.github.com/repos/GITHUB_OWNER/REPO_NAME/actions/workflows/1-org-main.yml/runs
   URL_BS: https://api.github.com/repos/GITHUB_OWNER/REPO_NAME/actions/workflows/0-bootstrap-main.yml/runs
   GITHUB_TOKEN: ${{ github.token }}
+  GAR_REGION: INSERT_GAR_REGION
 
 jobs:
   previous-stage-check:
@@ -102,7 +102,7 @@ jobs:
           cd ${{ github.workspace}}/build
           gcloud builds submit --config=github-ssh-cloudbuild-plan.yml \
             --project=${{ env.PROJECT_ID }} \
-            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/2-env/envs/development",_WORKFLOW="2-env-development",_REPO=${GITHUB_REPOSITORY##*/}
+            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/2-env/envs/development",_WORKFLOW="2-env-development",_REPO=${GITHUB_REPOSITORY##*/},_GAR_REGION=${{ env.GAR_REGION}}
   tflint:
     runs-on: INSERT_RUNNER_LABEL
     defaults:

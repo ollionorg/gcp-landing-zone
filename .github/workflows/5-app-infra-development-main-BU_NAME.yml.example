@@ -6,6 +6,8 @@ env:
   PROJECT_ID: PRJ_B_CICD_XXXX
   SECRET_ID: git-gcplz-ssh-pvt
   BRANCH_NAME: INSERT_MAIN_BRANCH
+  GAR_REGION: INSERT_GAR_REGION
+
 on:
   push:
     branches:
@@ -39,7 +41,7 @@ jobs:
           cd ${{ github.workspace}}/build
           gcloud builds submit --config=github-ssh-cloudbuild-application-apply.yml \
             --project=${{ env.PROJECT_ID }} \
-            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ env.BRANCH_NAME }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/5-app-infra/BU_NAME/development"
+            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ env.BRANCH_NAME }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/5-app-infra/BU_NAME/development",_GAR_REGION=${{ env.GAR_REGION}}
 
       - name: "Report Status as Slack Notification"
         if: failure()

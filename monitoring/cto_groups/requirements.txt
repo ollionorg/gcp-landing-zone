@@ -1,0 +1,4 @@
+protobuf==4.24.3
+google-cloud-bigquery[pandas]==2.34.3
+google-cloud-storage
+datetime

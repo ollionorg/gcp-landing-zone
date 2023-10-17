@@ -25,7 +25,6 @@ resource "google_folder" "bootstrap" {
 
 module "seed_bootstrap" {
   source                         = "../modules/terraform-google-bootstrap"
-  version                        = "1.0.0"
   org_id                         = var.org_id
   folder_id                      = google_folder.bootstrap.id
   project_id                     = "${var.project_prefix}-${var.bootstrap_env_code}-seed"
@@ -104,7 +103,6 @@ resource "google_billing_account_iam_member" "tf_billing_admin" {
 
 module "cloudbuild_bootstrap" {
   source                      = "../modules/cloudbuild"
-  version                     = "1.0.0"
   create_cloud_source_repos   = false
   org_id                      = var.org_id
   folder_id                   = google_folder.bootstrap.id

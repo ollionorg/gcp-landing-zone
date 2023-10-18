@@ -91,6 +91,7 @@ if [[ -n "$GITHUB_PAT" ]]; then
       -D GITHUB_OWNER=${GITHUB_OWNER} \
       -D INSERT_BUCKET_NAME=${BKT_NAME} \
       -D INSERT_GAR_REGION=${GCP_REGION} \
+      -D INSERT_SECRET_KEY=${SECRET_KEY} \
       -D REPO_NAME=${RNR_REPO_NAME} ${f} >"${f%.yml.example}.yml"
     rm ${f}
     fi
@@ -99,7 +100,7 @@ if [[ -n "$GITHUB_PAT" ]]; then
     find ../.. -not -path "*/4-projects/*" -not -path "*/5-app-infra/*" -type f \( -name 'backend.tf' -o -name 'remote-state.tf' -o -name 'locals.tf' \) -prune ! -type l -print -print -exec bash -c "m4 -D UPDATE_BACKEND_BUCKET=${BKT_NAME} {} > {}.m4 && cat {}.m4 > {} && rm {}.m4" \;
 
     if [[ -d "../../build/" ]]; then
-      find ../../build -type f -iname "*.yml" -exec bash -c "m4 -D UPDATE_BACKEND_BUCKET=${BKT_NAME} -D GCP_REGION=${GCP_REGION} -D GAR_REPO_NAME=${REPO_NAME} {} > {}.m4  && cat {}.m4 > {} && rm {}.m4" \;
+      find ../../build -type f -iname "*.yml" -exec bash -c "m4 -D UPDATE_BACKEND_BUCKET=${BKT_NAME} -D GCP_REGION=${GCP_REGION} -D GAR_REPO_NAME=${REPO_NAME} -D INSERT_SECRET_KEY=${SECRET_KEY} -D PRJ_NAME=${PRJ_NAME} -D RNR_REPO_NAME=${RNR_REPO_NAME} -D INSERT_GAR_REGION=${GCP_REGION} {} > {}.m4  && cat {}.m4 > {} && rm {}.m4" \;
     fi
 
     m4 \

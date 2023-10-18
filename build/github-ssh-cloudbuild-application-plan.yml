@@ -51,13 +51,13 @@ availableSecrets:
   - versionName: projects/${PROJECT_ID}/secrets/${_SECRET_ID}/versions/latest
     env: 'SSH_KEY'
 substitutions:
-  _SECRET_ID: git-gcplz-ssh-pvt
-  _GIT_LZ_REPO: "cldcvr/gcp-lz.git"
-  _GIT_WORK_DIR: gcp-lz
-  _GIT_HEAD_BRANCH: main
+  _SECRET_ID: INSERT_SECRET_KEY
+  _GIT_LZ_REPO: "PRJ_NAME/RNR_REPO_NAME.git"
+  _GIT_WORK_DIR: RNR_REPO_NAME
+  _GIT_HEAD_BRANCH: PRJ_NAME-main
   _WORKFLOW: demo-workflow
-  _BUCKET: bkt-b-tfstate-9d87
-  _REPO: gcp-lz
-  _GAR_REGION: asia-southeast1
+  _BUCKET: UPDATE_BACKEND_BUCKET
+  _REPO: RNR_REPO_NAME
+  _GAR_REGION: INSERT_GAR_REGION
 options:
     dynamic_substitutions: true

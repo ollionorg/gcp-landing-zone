@@ -27,7 +27,7 @@ steps:
     path: /root/.ssh
 
 - id: 'tf init'
-  name: '${_GAR_REGION}-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
+  name: '${_GAR_REGION}-docker.pkg.dev/${PROJECT_ID}/${_GAR_REPO}/tf-lz-image:latest'
   entrypoint: 'bash'
   args:
   - -c
@@ -36,7 +36,7 @@ steps:
       terraform init
 
 - id: 'tf apply on target 1'
-  name: '${_GAR_REGION}-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
+  name: '${_GAR_REGION}-docker.pkg.dev/${PROJECT_ID}/${_GAR_REPO}/tf-lz-image:latest'
   entrypoint: 'bash'
   args:
   - -c
@@ -58,7 +58,7 @@ steps:
        -target="google_sql_user.boa_db_admin_user"
 
 - id: 'tf apply on target 2'
-  name: '${_GAR_REGION}-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
+  name: '${_GAR_REGION}-docker.pkg.dev/${PROJECT_ID}/${_GAR_REPO}/tf-lz-image:latest'
   entrypoint: 'bash'
   args:
   - -c
@@ -71,7 +71,7 @@ steps:
        -target="google_container_node_pool.general2"
 
 - id: 'tf apply on target 3'
-  name: '${_GAR_REGION}-docker.pkg.dev/${PROJECT_ID}/gcf-lz/tf-lz-image:latest'
+  name: '${_GAR_REGION}-docker.pkg.dev/${PROJECT_ID}/${_GAR_REPO}/tf-lz-image:latest'
   entrypoint: 'bash'
   args:
   - -c
@@ -97,6 +97,7 @@ substitutions:
   _GIT_WORK_DIR: RNR_REPO_NAME
   _GIT_HEAD_BRANCH: PRJ_NAME-main
   _GAR_REGION: INSERT_GAR_REGION
+  _GAR_REPO: GAR_REPO_NAME
 options:
     dynamic_substitutions: true
 

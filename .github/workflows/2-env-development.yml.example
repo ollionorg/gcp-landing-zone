@@ -43,11 +43,11 @@ jobs:
             -H"authorization: Bearer ${{ env.GITHUB_TOKEN }}" \
             -X GET ${{ env.URL_BS }} | jq -r '.workflow_runs[0].conclusion'`
           LAST_STAGE=true
-          if [ "$STATUS" == completed ] && [ "$CONCLUSION" == success ] && [ "$STATUS_BS" == completed ] && [ "$CONCLUSION_BS" == success ]; then  
-                echo "::set-output name=success::$LAST_STAGE"     
+          if [ "$STATUS" == completed ] && [ "$CONCLUSION" == success ] && [ "$STATUS_BS" == completed ] && [ "$CONCLUSION_BS" == success ]; then
+                echo "::set-output name=success::$LAST_STAGE"
           else
                LAST_STAGE=false
-               echo "::set-output name=failure::$LAST_STAGE"          
+               echo "::set-output name=failure::$LAST_STAGE"
           fi
 
   terraform:
@@ -102,7 +102,7 @@ jobs:
           cd ${{ github.workspace}}/build
           gcloud builds submit --config=github-ssh-cloudbuild-plan.yml \
             --project=${{ env.PROJECT_ID }} \
-            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/2-env/envs/development",_WORKFLOW="2-env-development",_REPO=${GITHUB_REPOSITORY##*/},_GAR_REGION=${{ env.GAR_REGION}}
+            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/2-env/envs/development",_GAR_REGION=${{ env.GAR_REGION}}
   tflint:
     runs-on: INSERT_RUNNER_LABEL
     defaults:
@@ -250,4 +250,3 @@ jobs:
             repo: context.repo.repo,
             body: '1-Org plan stage failed. Please run 0-bootstrap & 1-Org stage before running 2-env-Development.'
           })
-            

@@ -50,11 +50,11 @@ jobs:
             -H"authorization: Bearer ${{ env.GITHUB_TOKEN }}" \
             -X GET ${{ env.URL_3_NET_SHARED }} | jq -r '.workflow_runs[0].conclusion'`
         LAST_STAGE=true
-        if [ "$STATUS_BS" == completed ] && [ "$CONCLUSION_BS" == success ] && [ "$STATUS_ORG" == completed ] && [ "$CONCLUSION_ORG" == success ] && [ "$STATUS_3_NET_SHRD" == completed ] && [ "$CONCLUSION_3_NET_SHRD" == success ] ; then  
-                echo "::set-output name=success::$LAST_STAGE"     
+        if [ "$STATUS_BS" == completed ] && [ "$CONCLUSION_BS" == success ] && [ "$STATUS_ORG" == completed ] && [ "$CONCLUSION_ORG" == success ] && [ "$STATUS_3_NET_SHRD" == completed ] && [ "$CONCLUSION_3_NET_SHRD" == success ] ; then
+                echo "::set-output name=success::$LAST_STAGE"
         else
                LAST_STAGE=false
-               echo "::set-output name=failure::$LAST_STAGE"          
+               echo "::set-output name=failure::$LAST_STAGE"
         fi
   terraform:
     needs: [terraform-versioncheck,tflint,previous-stage-check]
@@ -107,7 +107,7 @@ jobs:
           cd ${{ github.workspace}}/build
           gcloud builds submit --config=github-ssh-cloudbuild-plan.yml \
             --project=${{ env.PROJECT_ID }} \
-            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/4-projects/BU_NAME/shared",_WORKFLOW="4-prj-shared",_REPO=${GITHUB_REPOSITORY##*/},_GAR_REGION=${{ env.GAR_REGION}}
+            --substitutions=_SECRET_ID=${{ env.SECRET_ID }},_GIT_HEAD_BRANCH=${{ github.event.pull_request.head.ref }},_GIT_LZ_REPO="${{ github.repository }}.git",_GIT_WORK_DIR="${GITHUB_REPOSITORY##*/}/4-projects/BU_NAME/shared",_GAR_REGION=${{ env.GAR_REGION}}
 
   terraform-versioncheck:
     name: 'terraform version check'

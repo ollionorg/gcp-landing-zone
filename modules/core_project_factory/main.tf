@@ -343,3 +343,11 @@ resource "google_project_service" "enable_access_context_manager" {
   project = google_project.main.number
   service = "accesscontextmanager.googleapis.com"
 }
+
+resource "google_compute_project_metadata" "metadata" {
+  project = google_project.main.number
+  metadata = {
+    enable-oslogin         = true
+    block-project-ssh-keys = true
+  }
+}

@@ -1,3 +1,4 @@
+# Changelog
 - Merge pull request #46 from cldcvr/amansingh14-patch-1
 - Update README.md
 - Merge pull request #40 from cldcvr/workflow

@@ -79,7 +79,7 @@ variable "decrypters" {
 
 variable "key_rotation_period" {
   type    = string
-  default = "100000s"
+  default = "7776000s"
 }
 
 variable "key_algorithm" {

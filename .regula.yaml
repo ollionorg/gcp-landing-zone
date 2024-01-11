@@ -1,6 +1,6 @@
 environment-id: ""
 exclude: []
-format: json
+format: text
 include:
 - rego
 input-type:

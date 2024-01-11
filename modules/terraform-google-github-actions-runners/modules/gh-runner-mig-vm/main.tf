@@ -32,12 +32,18 @@ resource "google_compute_network" "gh-network" {
   auto_create_subnetworks = false
 }
 resource "google_compute_subnetwork" "gh-subnetwork" {
-  count         = var.create_subnetwork ? 1 : 0
-  project       = var.project_id
-  name          = var.subnet_name
-  ip_cidr_range = var.subnet_ip
-  region        = var.region
-  network       = local.network_name
+  count                    = var.create_subnetwork ? 1 : 0
+  project                  = var.project_id
+  name                     = var.subnet_name
+  ip_cidr_range            = var.subnet_ip
+  region                   = var.region
+  network                  = local.network_name
+  private_ip_google_access = true
+  log_config {
+    aggregation_interval = "INTERVAL_10_MIN"
+    flow_sampling        = 0.5
+    metadata             = "INCLUDE_ALL_METADATA"
+  }
 }
 
 resource "google_compute_router" "default" {

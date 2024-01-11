@@ -120,13 +120,9 @@ resource "google_storage_bucket" "org_terraform_state" {
   versioning {
     enabled = true
   }
-
-  dynamic "encryption" {
-    for_each = var.encrypt_gcs_bucket_tfstate ? ["encryption"] : []
-    content {
+   encryption {
       default_kms_key_name = module.kms[0].keys["${var.project_prefix}-key"]
     }
-  }
 }
 
 //Creating folder to store UI evidence

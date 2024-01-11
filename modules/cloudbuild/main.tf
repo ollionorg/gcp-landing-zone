@@ -75,6 +75,9 @@ resource "google_storage_bucket" "cloudbuild_artifacts" {
   location                    = var.default_region
   labels                      = var.storage_bucket_labels
   uniform_bucket_level_access = true
+   encryption {
+    default_kms_key_name = google_kms_crypto_key.tf_key.id
+  }
   versioning {
     enabled = true
   }
@@ -95,8 +98,16 @@ resource "google_kms_key_ring" "tf_keyring" {
  *****************************************/
 
 resource "google_kms_crypto_key" "tf_key" {
-  name     = "tf-key-${random_id.suffix.hex}"
-  key_ring = google_kms_key_ring.tf_keyring.id
+  name            = "tf-key-${random_id.suffix.hex}"
+  key_ring        = google_kms_key_ring.tf_keyring.id
+  rotation_period = var.key_rotation_period
+  lifecycle {
+    prevent_destroy = true
+  }
+  version_template {
+    algorithm        = var.key_algorithm
+    protection_level = var.key_protection_level
+  }
 }
 
 /******************************************

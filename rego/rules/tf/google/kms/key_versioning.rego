@@ -28,6 +28,5 @@ resource_type := "google_kms_crypto_key"
 default allow = false
 
 allow {
-      input.version_template[_].protection_level != ""
       input.version_template[_].algorithm != ""
 }

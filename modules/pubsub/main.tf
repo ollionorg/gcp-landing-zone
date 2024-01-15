@@ -50,6 +50,7 @@ resource "google_pubsub_topic" "topic" {
   name    = var.topic_name
   project = google_project_service.enable_destination_api.project
   labels  = var.topic_labels
+  kms_key_name = 
 }
 
 #--------------------------------#

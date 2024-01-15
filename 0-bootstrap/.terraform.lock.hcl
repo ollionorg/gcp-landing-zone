@@ -4,6 +4,7 @@
 provider "registry.terraform.io/hashicorp/github" {
   version = "5.25.0"
   hashes = [
+    "h1:TgioenHLb8WJIJ82KoYgyHIeQRDXgMF6u2JDXOKMbZ0=",
     "h1:f6qFlKA6rGxjcV07ufb2LUHuXUJoF1g1vzTr58DG4TA=",
     "zh:15e6e652b10f225b1d2a6c675e38e7e119b0a19a3009a88e5c6a478d65f02fc5",
     "zh:1a875d13507eca65d64bdac0f62910f6ce26fb1ef746bbf5f7b2bbe86c78441b",
@@ -27,6 +28,7 @@ provider "registry.terraform.io/hashicorp/google" {
   constraints = ">= 3.53.0, >= 3.89.0, < 5.0.0"
   hashes = [
     "h1:fA1kuAkOfuDLSdpcyKpeBPZinyPWLpmzBcRyNiaSxYc=",
+    "h1:oT2shsj9Mb4dGGwzlbWQPMTGSex6yDtJZcF5xQJ7rdE=",
     "zh:097fcb0a45fa41c2476deeb7a9adeadf5142e35e4d1a9eeb7b1720900a06807c",
     "zh:177e6e34f10efb5cec16b4106af5aef5240f20c33d91d40f3ea73fdc6ce9a24a",
     "zh:3331b0f62f900f8f1447e654a7318f3db03723739ac5dcdc446f1a1b1bf5fd0b",
@@ -46,6 +48,7 @@ provider "registry.terraform.io/hashicorp/google-beta" {
   version     = "4.64.0"
   constraints = ">= 3.53.0, >= 3.89.0, < 5.0.0"
   hashes = [
+    "h1:J+OMEYpopsyQNPMCoCnQet/85LqvRQSaA2m5mQSXsz0=",
     "h1:fYIUEniyU0qX8tOUds1+HdJSU52a6Gr0wq7yHcyXKc4=",
     "zh:3a84df072e75042c7445d3cc9fd220a2f58199b01b0b936e220554b4e9b59b3c",
     "zh:60e8a5f5824415859bc847f69f8d48e83126dbe7c440c51fd1a6d1b1df5a3ba9",
@@ -66,6 +69,7 @@ provider "registry.terraform.io/hashicorp/null" {
   version = "3.2.1"
   hashes = [
     "h1:tSj1mL6OQ8ILGqR2mDu7OYYYWf+hoir0pf9KAQ8IzO8=",
+    "h1:ydA0/SNRVB1o95btfshvYsmxA+jZFRZcvKzZSB+4S1M=",
     "zh:58ed64389620cc7b82f01332e27723856422820cfd302e304b5f6c3436fb9840",
     "zh:62a5cc82c3b2ddef7ef3a6f2fedb7b9b3deff4ab7b414938b08e51d6e8be87cb",
     "zh:63cff4de03af983175a7e37e52d4bd89d990be256b16b5c7f919aff5ad485aa5",
@@ -84,6 +88,7 @@ provider "registry.terraform.io/hashicorp/null" {
 provider "registry.terraform.io/hashicorp/random" {
   version = "3.5.1"
   hashes = [
+    "h1:IL9mSatmwov+e0+++YX2V6uel+dV6bn+fC/cnGDK3Ck=",
     "h1:sZ7MTSD4FLekNN2wSNFGpM+5slfvpm5A/NLVZiB7CO0=",
     "zh:04e3fbd610cb52c1017d282531364b9c53ef72b6bc533acb2a90671957324a64",
     "zh:119197103301ebaf7efb91df8f0b6e0dd31e6ff943d231af35ee1831c599188d",

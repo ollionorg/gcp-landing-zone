@@ -7,11 +7,15 @@ resource "google_kms_key_ring" "audit_logs_keyring" {
 resource "google_kms_crypto_key" "audit_logs_key" {
   name            = "${module.org_audit_logs.project_id}-key-${random_string.suffix.result}"
   key_ring        = google_kms_key_ring.audit_logs_keyring.id
-  rotation_period = "100000s"
-
+  rotation_period = var.key_rotation_period
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
+  version_template {
+    algorithm        = var.key_algorithm
+    protection_level = var.key_protection_level
+  }
+
 }
 
 resource "google_kms_key_ring" "org_operations_logs_keyring" {
@@ -23,10 +27,13 @@ resource "google_kms_key_ring" "org_operations_logs_keyring" {
 resource "google_kms_crypto_key" "org_operations_logs_key" {
   name            = "${module.org_operations_logs.project_id}-key-${random_string.suffix.result}"
   key_ring        = google_kms_key_ring.org_operations_logs_keyring.id
-  rotation_period = "100000s"
-
+  rotation_period = var.key_rotation_period
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
+  }
+  version_template {
+    algorithm        = var.key_algorithm
+    protection_level = var.key_protection_level
   }
 }
 
@@ -39,10 +46,13 @@ resource "google_kms_key_ring" "storage_destination_security_keyring" {
 resource "google_kms_crypto_key" "storage_destination_security_key" {
   name            = "${module.org_security_logs.project_id}-key-${random_string.suffix.result}"
   key_ring        = google_kms_key_ring.storage_destination_security_keyring.id
-  rotation_period = "100000s"
-
+  rotation_period = var.key_rotation_period
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
+  }
+  version_template {
+    algorithm        = var.key_algorithm
+    protection_level = var.key_protection_level
   }
 }
 

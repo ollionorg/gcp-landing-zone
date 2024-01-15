@@ -6,7 +6,19 @@ __rego__metadoc__ := {
 	"id": "NFR8",
 	"title": "Storage bucket uniform access control should be enabled",
 	"description": "Storage bucket uniform access control should be enabled. Permissions for Cloud Storage can be granted using Cloud IAM or ACLs. Cloud IAM allows permissions at the bucket and project levels, whereas ACLs are only used by Cloud Storage, but allow per-object permissions. Uniform bucket-level access disables ACLs, which ensures that only Cloud IAM is used for permissions. This ensures that bucket-level and/or project-level permissions will be the same as object-level permissions.",
-	"custom": {"severity": "Medium"},
+	"custom": {"severity": "Medium",
+		"controls": {
+            "tool_detail": [
+                "DSS05.04.1"
+            ],
+            "implementation": [
+                ""
+            ],
+            "test_definition": [
+                ""
+            ]
+        }
+	},
 }
 
 resource_type := "google_storage_bucket"

@@ -4,13 +4,13 @@ __rego__metadoc__ := {
   "custom": {
     "controls": {
         "tool_detail": [
-            "DSS05.01.2"
+            "DSS05.02.4"
         ],
         "implementation": [
-            "DSS05.07.5"
+            ""
         ],
         "test_definition": [
-            "BAI07.05.6"
+            ""
         ]
       },
     "severity": "Medium"

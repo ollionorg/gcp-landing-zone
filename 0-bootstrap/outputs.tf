@@ -709,3 +709,7 @@ output "p_s_preactivate_partner_interconnect" {
   value       = var.p_s_preactivate_partner_interconnect
   description = "Preactivate Partner Interconnect VLAN attachment in the environment."
 }
+
+output "kms_key" {
+  value = module.cloudbuild_bootstrap.kms_crypto_key
+}

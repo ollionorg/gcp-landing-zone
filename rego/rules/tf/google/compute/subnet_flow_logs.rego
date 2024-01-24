@@ -26,4 +26,6 @@ default allow = false
 
 allow {
   count(input.log_config) > 0
+} {
+    input.enable_flow_logs == true
 }

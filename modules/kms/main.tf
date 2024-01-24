@@ -47,7 +47,7 @@ resource "google_kms_crypto_key" "key_ephemeral" {
   rotation_period = var.key_rotation_period
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 
   version_template {

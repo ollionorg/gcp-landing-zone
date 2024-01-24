@@ -13,7 +13,13 @@ __rego__metadoc__ := {
 	        ],
 	        "test_definition": [
 	            ""
-	        ]
+	        ],
+	        "CIS-Google_v1.1.0": [
+                "CIS-Google_v1.1.0_4.2"
+            ],
+            "CIS-Google_v1.2.0": [
+                "CIS-Google_v1.2.0_4.2"
+            ]
 	      }
 	    },
 	"description": "Compute instances should not use the default service account with full access to all Cloud APIs. If using the default Compute Engine service account (which is not recommended), note that the \"Editor\" role is assigned with three possible scopes: allow default access, allow full access to all Cloud APIs, and set access for each Cloud API. Avoid allowing the scope for full access to all Cloud APIs, as this may enable users accessing the Compute Engine instance to perform cloud operations outside the scope of responsibility, or increase the potential impact of a compromised instance. Note that GKE-created instances should be exempted from this.",

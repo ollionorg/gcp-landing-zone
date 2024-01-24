@@ -12,7 +12,10 @@ __rego__metadoc__ := {
 	        ],
 	        "test_definition": [
 	            ""
-	        ]
+	        ],
+	        "CIS-Google_v1.0.0": [
+                "CIS-Google_v1.0.0_3.8"
+            ]
 	    }
   },
   "description": "Enabling \"Private Google Access\" for VPC subnets allows virtual machines to connect to the external IP addresses used by Google APIs and services.",

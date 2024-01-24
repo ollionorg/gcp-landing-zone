@@ -76,6 +76,6 @@ variable "retention_policy" {
 variable "versioning" {
   description = "Toggles bucket versioning, ability to retain a non-current object version when the live object version gets replaced or deleted."
   type        = bool
-  default     = false
+  default     = true
 }
 

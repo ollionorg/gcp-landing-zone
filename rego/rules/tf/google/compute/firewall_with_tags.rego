@@ -14,6 +14,9 @@ resource_type := "google_compute_firewall"
 default allow = false
 
 allow {
-  count(input.source_tags) > 0
   count(input.target_tags) > 0
+} {
+   input.destination_ranges != ""
+} {
+  count(input.source_tags) > 0
 }

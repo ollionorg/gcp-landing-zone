@@ -3,7 +3,17 @@ package rules.tf_google_compute_no_default_service_account
 import data.google.compute.compute_instance_library as lib
 
 __rego__metadoc__ := {
-	"custom": {"severity": "Medium"},
+	"custom": {
+        "controls": {
+          "CIS-Google_v1.1.0": [
+            "CIS-Google_v1.1.0_4.1"
+          ],
+          "CIS-Google_v1.2.0": [
+            "CIS-Google_v1.2.0_4.1"
+          ]
+        },
+		"severity": "Medium"
+	},
 	"description": "Compute instances should not use the default service account. The default Compute Engine service account has an \"Editor\" role, which allows read and write access to most Google Cloud services. To apply the principle of least privileges and mitigate the risk of a Compute Engine instance being compromised, create a new service account for an instance with only the necessary permissions assigned. Note that GKE-created instances should be exempted from this.",
 	"id": "GCP_008",
 	"title": "Compute instances should not use the default service account",

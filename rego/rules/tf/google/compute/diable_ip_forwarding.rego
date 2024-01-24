@@ -11,7 +11,13 @@ __rego__metadoc__ := {
 	        ],
 	        "test_definition": [
 	            ""
-	        ]
+	        ],
+	        "CIS-Google_v1.1.0": [
+                "CIS-Google_v1.1.0_4.6"
+            ],
+              "CIS-Google_v1.2.0": [
+                "CIS-Google_v1.2.0_4.6"
+            ]
 	    }
 	},
 	"description": "Compute instances 'IP forwarding' should not be enabled. By default, a Compute Engine instance cannot forward a packet originated by another instance (\"IP forwarding\"). If this is enabled, Google Cloud no longer enforces packet source and destination checking, which can result in data loss or unintended information disclosure.",

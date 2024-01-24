@@ -11,7 +11,13 @@ __rego__metadoc__ := {
 	        ],
 	        "test_definition": [
 	            ""
-	        ]
+	        ],
+	        "CIS-Google_v1.1.0": [
+                "CIS-Google_v1.1.0_4.9"
+            ],
+            "CIS-Google_v1.2.0": [
+                "CIS-Google_v1.2.0_4.9"
+            ]
 	      }
 	    },
 	"description": "Compute instances should not have public IP addresses. Compute Engine instances should not have public IP addresses to reduce potential attack surfaces, as public IPs enable direct access via the internet. Instances serving internet traffic should be configured behind load balancers, which provide an additional layer of security.",

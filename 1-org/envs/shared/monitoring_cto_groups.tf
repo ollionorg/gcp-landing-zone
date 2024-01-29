@@ -4,6 +4,7 @@ module "output_bucket" {
   storage_bucket_name      = "cto-grp-monthly-report-${local.shared_environment_code}-${random_string.suffix.result}"
   project_id               = module.org_operations_logs.project_id
   log_sink_writer_identity = "serviceAccount:project-service-account@${module.org_operations_logs.project_id}.iam.gserviceaccount.com"
+  kms_key_name             = google_kms_crypto_key.audit_logs_key.id
 }
 
 resource "google_storage_bucket" "cf_default" {
@@ -11,6 +12,13 @@ resource "google_storage_bucket" "cf_default" {
   name                        = "cto-group-cf-${local.shared_environment_code}-${random_string.suffix.result}"
   uniform_bucket_level_access = true
   project                     = module.org_operations_logs.project_id
+  encryption {
+    default_kms_key_name = google_kms_crypto_key.audit_logs_key.id
+  }
+  retention_policy {
+    retention_period = 90 * 24 * 60 * 60
+    is_locked        = true
+  }
 }
 
 data "archive_file" "default" {
@@ -43,11 +51,11 @@ resource "google_cloudfunctions_function" "monitoring_ctos" {
 }
 
 resource "google_cloud_scheduler_job" "cto_scheduler" {
-  name             = "cto-group-cf-${local.shared_env}-${random_string.suffix.result}"
-  project          = module.org_operations_logs.project_id
-  region           = local.gcp_region
-  description      = "Schedule the cto group cloud function to run every 1st of month"
-  schedule         = "* * 1 * *"
+  name        = "cto-group-cf-${local.shared_env}-${random_string.suffix.result}"
+  project     = module.org_operations_logs.project_id
+  region      = local.gcp_region
+  description = "Schedule the cto group cloud function to run every 1st of month"
+  schedule    = "* * 1 * *"
   http_target {
     http_method = "GET"
     uri         = google_cloudfunctions_function.monitoring_ctos.https_trigger_url

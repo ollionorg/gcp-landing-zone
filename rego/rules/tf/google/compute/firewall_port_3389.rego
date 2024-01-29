@@ -16,6 +16,12 @@ __rego__metadoc__ := {
             ],
             "test_definition": [
                 "DSS05.02.3"
+            ],
+            "CIS-Google_v1.1.0": [
+                "CIS-Google_v1.1.0_3.7"
+            ],
+            "CIS-Google_v1.2.0": [
+                "CIS-Google_v1.2.0_3.7"
             ]
         },
       "severity": "High"

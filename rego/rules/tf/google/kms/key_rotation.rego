@@ -14,11 +14,14 @@ __rego__metadoc__ := {
 	        ],
 	        "test_definition": [
 	            "DSS05.03.10"
-	        ]
+	        ],
+	        "CIS-Google_v1.1.0": [
+                "CIS-Google_v1.1.0_1.10"
+            ]
 	      },
         "severity": "High"
     },
-	"title": "KMS keys should be rotated every 100 days or less",
+	"title": "KMS keys should be rotated every 90 days or less",
 	"description": "KMS keys should be rotated frequently because rotation helps reduce the potential impact of a compromised key as users cannot use the old key to access the data.",
 }
 
@@ -32,5 +35,5 @@ allow {
   trimmed_rotation_per = trim_right(rotation_per, "s")
   num_rotation_per = to_number(trimmed_rotation_per)
   # 100 days in seconds
-  num_rotation_per <= 8640000
+  num_rotation_per <= 7776000
 }

@@ -4,7 +4,25 @@ import data.fugue
 import data.google.compute.compute_instance_library as lib
 
 __rego__metadoc__ := {
-	"custom": {"severity": "High"},
+	"custom": {"severity": "High",
+	"controls": {
+		"tool_detail": [
+	            "DSS05.02.4"
+	        ],
+	        "implementation": [
+	            ""
+	        ],
+	        "test_definition": [
+	            ""
+	        ],
+	        "CIS-Google_v1.1.0": [
+                "CIS-Google_v1.1.0_4.5"
+            ],
+              "CIS-Google_v1.2.0": [
+                "CIS-Google_v1.2.0_4.5"
+            ]
+	    }
+	 },
 	"description": "Compute instances 'Enable connecting to serial ports' should not be enabled. A Compute Engine instance's serial port - also known as an interactive serial console - does not support IP-based access restrictions. If enabled, the interactive serial console can be used by clients to connect to the instance from any IP address. This enables anyone who has the correct SSH key, username, and other login information to connect to the instance.",
 	"id": "GCP_005",
 	"title": "Compute instances 'Enable connecting to serial ports' should not be enabled",

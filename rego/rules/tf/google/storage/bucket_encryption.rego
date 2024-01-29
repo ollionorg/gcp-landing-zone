@@ -6,7 +6,18 @@ import data.fugue
 __rego__metadoc__ := {
 	"id": "NFR8",
 	"custom": {
-	      "severity": "Medium"
+	      "severity": "Medium",
+            "controls": {
+            "tool_detail": [
+                "DSS05.03.10"
+            ],
+            "implementation": [
+                ""
+            ],
+            "test_definition": [
+                ""
+            ]
+        }
 	},
 	"title": "Ensure that Cloud Storage bucket is encrypted",
 	"description": "Storage buckets should be encrypted with KMS key",

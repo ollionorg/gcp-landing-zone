@@ -177,11 +177,11 @@ variable "tf_service_account_name" {
   default     = "CFT Organization Terraform Account"
 }
 
-variable "encrypt_gcs_bucket_tfstate" {
-  description = "Encrypt bucket used for storing terraform state files in seed project."
-  type        = bool
-  default     = false
-}
+#variable "encrypt_gcs_bucket_tfstate" {
+#  description = "Encrypt bucket used for storing terraform state files in seed project."
+#  type        = bool
+#  default     = false
+#}
 
 variable "key_protection_level" {
   type        = string
@@ -191,7 +191,7 @@ variable "key_protection_level" {
 
 variable "key_rotation_period" {
   type    = string
-  default = null
+  default = "7776000s"
 }
 
 variable "kms_prevent_destroy" {

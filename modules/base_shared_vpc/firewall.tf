@@ -40,6 +40,7 @@ resource "google_compute_firewall" "deny_all_egress" {
   }
 
   destination_ranges = ["0.0.0.0/0"]
+  target_tags = []
 }
 
 
@@ -49,7 +50,6 @@ resource "google_compute_firewall" "allow_private_api_egress" {
   project   = var.project_id
   direction = "EGRESS"
   priority  = 65534
-
   dynamic "log_config" {
     for_each = var.firewall_enable_logging == true ? [{
       metadata = "INCLUDE_ALL_METADATA"
@@ -68,6 +68,7 @@ resource "google_compute_firewall" "allow_private_api_egress" {
   destination_ranges = [local.private_googleapis_cidr]
 
   target_tags = ["allow-google-apis"]
+  source_ranges = ["allow-google-apis"]
 }
 
 /******************************************

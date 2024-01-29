@@ -90,7 +90,6 @@ data "google_storage_project_service_account" "gcs_account" {
 }
 
 module "kms" {
-  count  = var.encrypt_gcs_bucket_tfstate ? 1 : 0
   source = "../kms"
 
   project_id           = module.seed_project.project_id
@@ -120,13 +119,9 @@ resource "google_storage_bucket" "org_terraform_state" {
   versioning {
     enabled = true
   }
-
-  dynamic "encryption" {
-    for_each = var.encrypt_gcs_bucket_tfstate ? ["encryption"] : []
-    content {
-      default_kms_key_name = module.kms[0].keys["${var.project_prefix}-key"]
+   encryption {
+      default_kms_key_name = module.kms.keys["${var.project_prefix}-key"]
     }
-  }
 }
 
 //Creating folder to store UI evidence
@@ -134,7 +129,7 @@ resource "google_storage_bucket" "org_terraform_state" {
 resource "google_storage_bucket_object" "ui_evidence" {
   name          = "ui-evidence/"
   content       = "To store evidences collected form UI."
-  bucket        = "${google_storage_bucket.org_terraform_state.name}"
+  bucket        = google_storage_bucket.org_terraform_state.name
 }
 
 /***********************************************

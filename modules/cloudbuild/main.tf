@@ -15,6 +15,10 @@
  */
 
 locals {
+  retention_policy = {
+    retention_period = 179
+    is_locked        = true
+  }
   cloudbuild_project_id       = var.project_id != "" ? var.project_id : format("%s-%s", var.project_prefix, "cloudbuild")
   gar_repo_name               = var.gar_repo_name != "" ? var.gar_repo_name : format("%s-%s", var.project_prefix, "tf-runners")
   cloudbuild_apis             = ["cloudbuild.googleapis.com", "sourcerepo.googleapis.com", "cloudkms.googleapis.com", "artifactregistry.googleapis.com"]
@@ -47,6 +51,7 @@ module "cloudbuild_project" {
   billing_account             = var.billing_account
   activate_apis               = local.activate_apis
   labels                      = var.project_labels
+  bucket_location             = var.default_region
 }
 
 /******************************************
@@ -75,8 +80,12 @@ resource "google_storage_bucket" "cloudbuild_artifacts" {
   location                    = var.default_region
   labels                      = var.storage_bucket_labels
   uniform_bucket_level_access = true
-  versioning {
-    enabled = true
+  encryption {
+    default_kms_key_name = google_kms_crypto_key.tf_key.id
+  }
+  retention_policy {
+    retention_period = local.retention_policy.retention_period * 24 * 60 * 60
+    is_locked        = local.retention_policy.is_locked
   }
 }
 
@@ -95,8 +104,16 @@ resource "google_kms_key_ring" "tf_keyring" {
  *****************************************/
 
 resource "google_kms_crypto_key" "tf_key" {
-  name     = "tf-key-${random_id.suffix.hex}"
-  key_ring = google_kms_key_ring.tf_keyring.id
+  name            = "tf-key-${random_id.suffix.hex}"
+  key_ring        = google_kms_key_ring.tf_keyring.id
+  rotation_period = var.key_rotation_period
+  lifecycle {
+    prevent_destroy = true
+  }
+  version_template {
+    algorithm        = var.key_algorithm
+    protection_level = var.key_protection_level
+  }
 }
 
 /******************************************

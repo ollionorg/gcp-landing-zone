@@ -11,6 +11,12 @@ __rego__metadoc__ := {
         ],
         "test_definition": [
             "BAI05.02.2"
+        ],
+        "CIS-Google_v1.1.0": [
+            "CIS-Google_v1.1.0_3.5"
+        ],
+        "CIS-Google_v1.2.0": [
+            "CIS-Google_v1.2.0_3.5"
         ]
       },
     "severity": "High"

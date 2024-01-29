@@ -26,7 +26,14 @@ resource "google_dns_managed_zone" "peering" {
   dns_name    = var.domain
   description = var.description
   visibility  = "private"
-
+  dnssec_config {
+    state = "on"
+    default_key_specs {
+      algorithm = "rsasha256"
+      key_type = "keySigning"
+      key_length = 256
+    }
+  }
   private_visibility_config {
     dynamic "networks" {
       for_each = var.private_visibility_config_networks
@@ -51,7 +58,14 @@ resource "google_dns_managed_zone" "forwarding" {
   dns_name    = var.domain
   description = var.description
   visibility  = "private"
-
+  dnssec_config {
+    state = "on"
+    default_key_specs {
+      algorithm = "rsasha256"
+      key_type = "keySigning"
+      key_length = 256
+    }
+  }
   private_visibility_config {
     dynamic "networks" {
       for_each = var.private_visibility_config_networks
@@ -78,7 +92,14 @@ resource "google_dns_managed_zone" "private" {
   dns_name    = var.domain
   description = var.description
   visibility  = "private"
-
+  dnssec_config {
+    state = "on"
+    default_key_specs {
+      algorithm = "rsasha256"
+      key_type = "keySigning"
+      key_length = 256
+    }
+  }
   private_visibility_config {
     dynamic "networks" {
       for_each = var.private_visibility_config_networks
@@ -96,7 +117,14 @@ resource "google_dns_managed_zone" "public" {
   dns_name    = var.domain
   description = var.description
   visibility  = "public"
-
+  dnssec_config {
+    state = "on"
+    default_key_specs {
+      algorithm = "rsasha256"
+      key_type = "keySigning"
+      key_length = 256
+    }
+  }
   dynamic "dnssec_config" {
     for_each = var.dnssec_config == {} ? [] : list(var.dnssec_config)
     iterator = config

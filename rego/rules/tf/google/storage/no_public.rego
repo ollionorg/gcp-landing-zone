@@ -7,7 +7,25 @@ __rego__metadoc__ := {
 	"id": "NFR8",
 	"title": "Ensure Storage bucket access control should not contain allAuthenticateUsers or allUsers",
 	"description": "Storage buckets should not be anonymously or publicly accessible. Cloud Storage bucket permissions should not be configured to allow 'allUsers' or 'allAuthenticatedUsers' access. These permissions provides broad, public access, which can result in unknown or undesired data access.",
-	"custom": {"severity": "Medium"},
+	"custom": {"severity": "Medium",
+	    "controls": {
+            "tool_detail": [
+                "DSS05.04.1"
+            ],
+            "implementation": [
+                ""
+            ],
+            "test_definition": [
+                ""
+            ],
+            "CIS-Google_v1.1.0": [
+                "CIS-Google_v1.1.0_5.1"
+            ],
+            "CIS-Google_v1.2.0": [
+                "CIS-Google_v1.2.0_5.1"
+            ]
+        }
+	},
 }
 
 resource_type := "MULTIPLE"

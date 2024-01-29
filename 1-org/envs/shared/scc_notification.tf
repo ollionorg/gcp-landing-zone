@@ -19,8 +19,9 @@
 *****************************************/
 
 resource "google_pubsub_topic" "scc_notification_topic" {
-  name    = "${local.project_name}-topic-scc-notification"
-  project = module.scc_notifications.project_id
+  name         = "${local.project_name}-topic-scc-notification"
+  project      = module.scc_notifications.project_id
+  kms_key_name = google_kms_crypto_key.audit_logs_key.id
 }
 
 resource "google_pubsub_subscription" "scc_notification_subscription" {

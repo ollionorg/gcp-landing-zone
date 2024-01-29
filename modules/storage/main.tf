@@ -39,33 +39,24 @@ resource "google_storage_bucket" "bucket" {
   location                    = var.location
   force_destroy               = var.force_destroy
   uniform_bucket_level_access = var.uniform_bucket_level_access
+
   encryption {
     default_kms_key_name = var.kms_key_name
   }
-  versioning {
-    enabled = var.versioning
-  }
 
-  dynamic "lifecycle_rule" {
-    for_each = var.expiration_days == null ? [] : [var.expiration_days]
-    content {
-      action {
-        type = "Delete"
-      }
-      condition {
-        age        = var.expiration_days
-        with_state = "ANY"
+  lifecycle_rule {
+    action {
+      type = "Delete"
+    }
+    condition {
+      age        = var.expiration_days
+      with_state = "ANY"
 
-      }
     }
   }
-
-  dynamic "retention_policy" {
-    for_each = var.retention_policy == null ? [] : [var.retention_policy]
-    content {
-      is_locked        = var.retention_policy.is_locked
-      retention_period = var.retention_policy.retention_period_days * 24 * 60 * 60 // days to seconds
-    }
+  retention_policy {
+    is_locked        = var.retention_policy.is_locked
+    retention_period = var.retention_policy.retention_period_days * 24 * 60 * 60 // days to seconds
   }
 }
 

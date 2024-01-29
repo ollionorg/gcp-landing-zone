@@ -1,9 +1,9 @@
-package rules.tf_google_storage_versioning
+package rules.tf_google_storage_retention_policy
 
 __rego__metadoc__ := {
 	"id": "NFR8",
-	"title": "Ensure storage bucket should have versioning enabled",
-	"description": "To check storage bucket has versioning enabled. resolution enable versioning.",
+	"title": "Ensure storage bucket retention policy enabled",
+	"description": "To check storage bucket has retention policy enabled. resolution enable rentention policy for bucket.",
 	"custom": {"severity": "Medium",
 	    "controls": {
             "tool_detail": [
@@ -24,5 +24,5 @@ resource_type := "google_storage_bucket"
 default allow = false
 
 allow {
-    input.versioning[_].enabled == true
+    count(input.retention_policy) > 0
 }

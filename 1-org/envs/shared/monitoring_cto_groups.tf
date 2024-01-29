@@ -15,8 +15,9 @@ resource "google_storage_bucket" "cf_default" {
   encryption {
     default_kms_key_name = google_kms_crypto_key.audit_logs_key.id
   }
-  versioning {
-    enabled = true
+  retention_policy {
+    retention_period = 90 * 24 * 60 * 60
+    is_locked        = true
   }
 }
 

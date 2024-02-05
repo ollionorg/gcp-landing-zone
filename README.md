@@ -11,6 +11,7 @@ This repository contains the Terraform code necessary to set up a Landing Zone u
 
 To maintain organization and facilitate navigation, this repository is structured as follows:
 
+```
 repo:
 |- 0-bootstrap
    |- <terraform_code>
@@ -32,7 +33,7 @@ repo:
 |- modules
    |- <terraform_module_folder_1>
    |- <terraform_module_folder_2>
-
+```
 
 ## Prerequisites
 

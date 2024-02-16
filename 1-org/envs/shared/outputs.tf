@@ -65,12 +65,12 @@ output "org_secrets_project_id" {
 }
 
 output "trust_interconnect_project_id" {
-  value       = module.trust_interconnect[0].project_id
+  value       = try(module.trust_interconnect[0].project_id, null)
   description = "The trust Interconnect project ID"
 }
 
 output "notrust_interconnect_project_id" {
-  value       = module.notrust_interconnect[0].project_id
+  value       = try(module.notrust_interconnect[0].project_id, null)
   description = "The notrust Interconnect project ID"
 }
 
@@ -115,7 +115,7 @@ output "logs_export_storage_bucket_name_operations" {
 }
 
 output "logs_export_storage_bucket_name_security" {
-  value       = module.storage_destination_security.resource_name
+  value       = try(module.storage_destination_security.resource_name, null)
   description = "The storage bucket for destination of log exports"
 }
 

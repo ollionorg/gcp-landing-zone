@@ -99,7 +99,8 @@ module "org_operations_logs" {
     "logging.googleapis.com",
     "bigquery.googleapis.com",
     "billingbudgets.googleapis.com",
-    "cloudkms.googleapis.com"
+    "cloudkms.googleapis.com",
+    "cloudfunctions.googleapis.com"
   ]
 
   labels = merge(

@@ -254,3 +254,14 @@ resource "google_compute_firewall" "allow_lb" {
 
   target_tags = ["allow-lb"]
 }
+
+##enable dns policy on Peering vpc
+resource "google_dns_policy" "default_policy" {
+  project                   = module.peering_project.project_id
+  name                      = "dp-peering-policy"
+  enable_inbound_forwarding = "true"
+  enable_logging            =  "true"
+  networks {
+    network_url = module.peering_network.network_self_link
+  }
+}

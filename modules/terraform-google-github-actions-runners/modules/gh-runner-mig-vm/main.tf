@@ -145,6 +145,9 @@ module "mig_template" {
   source_image_project = var.source_image_project
   startup_script       = local.startup_script
   source_image         = var.source_image
+  shielded_instance_config = {
+    enable_secure_boot = true
+  }
   metadata = merge({
     "secret-id" = google_secret_manager_secret_version.gh-secret-version.name
     }, {

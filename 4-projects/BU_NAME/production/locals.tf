@@ -17,5 +17,7 @@ locals {
   vpc_prefix                = data.terraform_remote_state.bootstrap.outputs.vpc_prefix
   stage_name                = data.terraform_remote_state.bootstrap.outputs.production_folder
   custom_labels             = data.terraform_remote_state.bootstrap.outputs.custom_labels
-
+  cto_security_build_group  = data.terraform_remote_state.bootstrap.outputs.cto_security_build_group
+  cto_build_group           = data.terraform_remote_state.bootstrap.outputs.cto_build_group
+  cto_operations_group      = data.terraform_remote_state.bootstrap.outputs.cto_operations_group
 }

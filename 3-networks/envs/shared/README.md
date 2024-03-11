@@ -1,16 +1,3 @@
-# 3-networks/shared
-
-
-The purpose of this step is to set up the global [DNS Hub](https://cloud.google.com/blog/products/networking/cloud-forwarding-peering-and-zones) that will be used by all environments.
-
-## Prerequisites
-
-1. 0-bootstrap executed successfully.
-2. 1-org executed successfully.
-3. 2-env executed successfully
-
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
 Copyright 2021 Google LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");

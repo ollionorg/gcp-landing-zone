@@ -1,7 +1,6 @@
-changequote(,)
 ## Requirements
 
-4-projects BU_NAME shared environment should be deployed before running development environment.
+No requirements.
 
 ## Providers
 
@@ -36,6 +35,14 @@ changequote(,)
 | [google_compute_firewall.allow_private_api_egress](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
 | [google_compute_firewall.allow_windows_activation](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
 | [google_compute_firewall.deny_all_egress](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
+| [google_project_iam_member.floating_project_build](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.floating_project_operations](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.peering_project_build](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.peering_project_operations](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.secrets_project_build](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.secrets_project_operations](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.shared_vpc_build](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.shared_vpc_operations](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [random_string.bucket_name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [google_active_folder.env](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/active_folder) | data source |
 | [google_compute_network.shared_vpc](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_network) | data source |
@@ -61,6 +68,8 @@ changequote(,)
 | <a name="input_base_suffix"></a> [base\_suffix](#input\_base\_suffix) | Base shared VPC suffix name | `string` | n/a | yes |
 | <a name="input_base_vpc_type"></a> [base\_vpc\_type](#input\_base\_vpc\_type) | Base shared VPC type | `string` | n/a | yes |
 | <a name="input_billing_code"></a> [billing\_code](#input\_billing\_code) | billing code for application | `string` | n/a | yes |
+| <a name="input_bu_code"></a> [bu\_code](#input\_bu\_code) | Name to create the business unit | `string` | n/a | yes |
+| <a name="input_bu_name"></a> [bu\_name](#input\_bu\_name) | Name to create the business unit | `string` | n/a | yes |
 | <a name="input_budget_amount"></a> [budget\_amount](#input\_budget\_amount) | The amount to use as the budget | `number` | `1000` | no |
 | <a name="input_firewall_enable_logging"></a> [firewall\_enable\_logging](#input\_firewall\_enable\_logging) | Toggle firewall logging for VPC Firewalls. | `bool` | `true` | no |
 | <a name="input_floating_suffix"></a> [floating\_suffix](#input\_floating\_suffix) | floating project suffix | `string` | n/a | yes |
@@ -89,6 +98,7 @@ changequote(,)
 |------|-------------|
 | <a name="output_access_context_manager_policy_id"></a> [access\_context\_manager\_policy\_id](#output\_access\_context\_manager\_policy\_id) | Access Context Manager Policy ID. |
 | <a name="output_base_shared_vpc_project"></a> [base\_shared\_vpc\_project](#output\_base\_shared\_vpc\_project) | Project sample base project. |
+| <a name="output_base_shared_vpc_project_number"></a> [base\_shared\_vpc\_project\_number](#output\_base\_shared\_vpc\_project\_number) | Base Project number. |
 | <a name="output_base_shared_vpc_project_sa"></a> [base\_shared\_vpc\_project\_sa](#output\_base\_shared\_vpc\_project\_sa) | Project sample base project SA. |
 | <a name="output_bucket"></a> [bucket](#output\_bucket) | The created storage bucket |
 | <a name="output_env_secrets_project"></a> [env\_secrets\_project](#output\_env\_secrets\_project) | Project sample peering project id. |

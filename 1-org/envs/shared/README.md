@@ -10,6 +10,7 @@
 
 | Name | Version |
 |------|---------|
+| <a name="provider_archive"></a> [archive](#provider\_archive) | n/a |
 | <a name="provider_google"></a> [google](#provider\_google) | 4.47.0 |
 | <a name="provider_google.impersonate"></a> [google.impersonate](#provider\_google.impersonate) | 4.47.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | 3.5.1 |
@@ -49,6 +50,7 @@
 | <a name="module_org_shared_vpc_lien_removal"></a> [org\_shared\_vpc\_lien\_removal](#module\_org\_shared\_vpc\_lien\_removal) | ../../../modules/org_policies | n/a |
 | <a name="module_org_skip_default_network"></a> [org\_skip\_default\_network](#module\_org\_skip\_default\_network) | ../../../modules/org_policies | n/a |
 | <a name="module_org_vm_external_ip_access"></a> [org\_vm\_external\_ip\_access](#module\_org\_vm\_external\_ip\_access) | ../../../modules/org_policies | n/a |
+| <a name="module_output_bucket"></a> [output\_bucket](#module\_output\_bucket) | ../../../modules/storage | n/a |
 | <a name="module_pubsub_destination"></a> [pubsub\_destination](#module\_pubsub\_destination) | ../../../modules/pubsub | n/a |
 | <a name="module_restricted_network_hub"></a> [restricted\_network\_hub](#module\_restricted\_network\_hub) | ../../../modules/base_network_hub | n/a |
 | <a name="module_scc_notifications"></a> [scc\_notifications](#module\_scc\_notifications) | ../../../modules/base_network_hub | n/a |
@@ -64,7 +66,9 @@
 | [google_access_context_manager_access_policy.access_policy](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/access_context_manager_access_policy) | resource |
 | [google_bigquery_dataset.billing_dataset](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/bigquery_dataset) | resource |
 | [google_billing_account_iam_member.billing_admin_user](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/billing_account_iam_member) | resource |
-| [google_billing_account_iam_member.billing_admin_user_vishal](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/billing_account_iam_member) | resource |
+| [google_cloud_scheduler_job.cto_scheduler](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/cloud_scheduler_job) | resource |
+| [google_cloudfunctions_function.monitoring_ctos](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/cloudfunctions_function) | resource |
+| [google_cloudfunctions_function_iam_member.invoker](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/cloudfunctions_function_iam_member) | resource |
 | [google_folder.common](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/folder) | resource |
 | [google_folder_iam_audit_config.folder_config](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/folder_iam_audit_config) | resource |
 | [google_folder_iam_member.network_viewer](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/folder_iam_member) | resource |
@@ -114,7 +118,10 @@
 | [google_pubsub_subscription.scc_notification_subscription](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/pubsub_subscription) | resource |
 | [google_pubsub_topic.scc_notification_topic](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/pubsub_topic) | resource |
 | [google_scc_notification_config.scc_notification_config](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/scc_notification_config) | resource |
+| [google_storage_bucket.cf_default](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/storage_bucket) | resource |
+| [google_storage_bucket_object.cf_object](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/resources/storage_bucket_object) | resource |
 | [random_string.suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
+| [archive_file.default](https://registry.terraform.io/providers/hashicorp/archive/latest/docs/data-sources/file) | data source |
 | [google_service_account_access_token.default](https://registry.terraform.io/providers/hashicorp/google/4.47.0/docs/data-sources/service_account_access_token) | data source |
 | [terraform_remote_state.bootstrap](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
 
@@ -145,10 +152,13 @@
 | <a name="input_interconnect_project_alert_pubsub_topic"></a> [interconnect\_project\_alert\_pubsub\_topic](#input\_interconnect\_project\_alert\_pubsub\_topic) | The name of the Cloud Pub/Sub topic where budget related messages will be published, in the form of `projects/{project_id}/topics/{topic_id}` for the Dedicated Interconnect project. | `string` | `null` | no |
 | <a name="input_interconnect_project_alert_spent_percents"></a> [interconnect\_project\_alert\_spent\_percents](#input\_interconnect\_project\_alert\_spent\_percents) | A list of percentages of the budget to alert on when threshold is exceeded for the Dedicated Interconnect project. | `list(number)` | <pre>[<br>  0.5,<br>  0.75,<br>  0.9,<br>  0.95<br>]</pre> | no |
 | <a name="input_interconnect_project_budget_amount"></a> [interconnect\_project\_budget\_amount](#input\_interconnect\_project\_budget\_amount) | The amount to use as the budget for the Dedicated Interconnect project. | `number` | `1000` | no |
+| <a name="input_key_algorithm"></a> [key\_algorithm](#input\_key\_algorithm) | The algorithm to use when creating a version based on this template. See the https://cloud.google.com/kms/docs/reference/rest/v1/CryptoKeyVersionAlgorithm for possible inputs. | `string` | `"GOOGLE_SYMMETRIC_ENCRYPTION"` | no |
+| <a name="input_key_protection_level"></a> [key\_protection\_level](#input\_key\_protection\_level) | The protection level to use when creating a version based on this template. Default value: "SOFTWARE" Possible values: ["SOFTWARE", "HSM"] | `string` | `"SOFTWARE"` | no |
+| <a name="input_key_rotation_period"></a> [key\_rotation\_period](#input\_key\_rotation\_period) | n/a | `string` | `"7776000s"` | no |
 | <a name="input_log_export_storage_force_destroy"></a> [log\_export\_storage\_force\_destroy](#input\_log\_export\_storage\_force\_destroy) | (Optional) If set to true, delete all contents when destroying the resource; otherwise, destroying the resource will fail if contents are present. | `bool` | `true` | no |
 | <a name="input_log_export_storage_location"></a> [log\_export\_storage\_location](#input\_log\_export\_storage\_location) | The location of the storage bucket used to export logs. | `string` | `"US"` | no |
 | <a name="input_log_export_storage_retention_policy"></a> [log\_export\_storage\_retention\_policy](#input\_log\_export\_storage\_retention\_policy) | Configuration of the bucket's data retention policy for how long objects in the bucket should be retained. | <pre>object({<br>    is_locked             = bool<br>    retention_period_days = number<br>  })</pre> | `null` | no |
-| <a name="input_log_export_storage_versioning"></a> [log\_export\_storage\_versioning](#input\_log\_export\_storage\_versioning) | (Optional) Toggles bucket versioning, ability to retain a non-current object version when the live object version gets replaced or deleted. | `bool` | `false` | no |
+| <a name="input_log_export_storage_versioning"></a> [log\_export\_storage\_versioning](#input\_log\_export\_storage\_versioning) | (Optional) Toggles bucket versioning, ability to retain a non-current object version when the live object version gets replaced or deleted. | `bool` | `true` | no |
 | <a name="input_org_audit_logs_project_alert_pubsub_topic"></a> [org\_audit\_logs\_project\_alert\_pubsub\_topic](#input\_org\_audit\_logs\_project\_alert\_pubsub\_topic) | The name of the Cloud Pub/Sub topic where budget related messages will be published, in the form of `projects/{project_id}/topics/{topic_id}` for the org audit logs project. | `string` | `null` | no |
 | <a name="input_org_audit_logs_project_alert_spent_percents"></a> [org\_audit\_logs\_project\_alert\_spent\_percents](#input\_org\_audit\_logs\_project\_alert\_spent\_percents) | A list of percentages of the budget to alert on when threshold is exceeded for the org audit logs project. | `list(number)` | <pre>[<br>  0.5,<br>  0.75,<br>  0.9,<br>  0.95<br>]</pre> | no |
 | <a name="input_org_audit_logs_project_budget_amount"></a> [org\_audit\_logs\_project\_budget\_amount](#input\_org\_audit\_logs\_project\_budget\_amount) | The amount to use as the budget for the org audit logs project. | `number` | `1000` | no |

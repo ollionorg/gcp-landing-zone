@@ -15,6 +15,7 @@
  */
 
 module "floating_project" {
+
   source                      = "../../../modules/single_project"
   impersonate_service_account = local.terraform_service_account
   org_id                      = local.org_id

@@ -16,4 +16,7 @@ locals {
   restricted_perimeter_name = try(data.terraform_remote_state.networks.outputs.restricted_service_perimeter_name, null)
   vpc_prefix                = data.terraform_remote_state.bootstrap.outputs.vpc_prefix
   custom_labels             = data.terraform_remote_state.bootstrap.outputs.custom_labels
+  cto_security_build_group  = data.terraform_remote_state.bootstrap.outputs.cto_security_build_group
+  cto_build_group           = data.terraform_remote_state.bootstrap.outputs.cto_build_group
+  cto_operations_group      = data.terraform_remote_state.bootstrap.outputs.cto_operations_group
 }

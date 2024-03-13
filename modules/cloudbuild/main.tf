@@ -122,11 +122,12 @@ resource "google_kms_crypto_key" "tf_key" {
 
 resource "google_kms_crypto_key_iam_binding" "cloudbuild_crypto_key_decrypter" {
   crypto_key_id = google_kms_crypto_key.tf_key.id
-  role          = "roles/cloudkms.cryptoKeyDecrypter"
+  role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
 
   members = [
     "serviceAccount:${module.cloudbuild_project.project_number}@cloudbuild.gserviceaccount.com",
-    "serviceAccount:${var.terraform_sa_email}"
+    "serviceAccount:${var.terraform_sa_email}",
+    "serviceAccount:service-${module.cloudbuild_project.project_number}@gs-project-accounts.iam.gserviceaccount.com"
   ]
 }
 

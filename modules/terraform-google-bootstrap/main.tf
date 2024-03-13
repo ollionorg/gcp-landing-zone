@@ -119,17 +119,17 @@ resource "google_storage_bucket" "org_terraform_state" {
   versioning {
     enabled = true
   }
-   encryption {
-      default_kms_key_name = module.kms.keys["${var.project_prefix}-key"]
-    }
+  encryption {
+    default_kms_key_name = module.kms.keys["${var.project_prefix}-key"]
+  }
 }
 
 //Creating folder to store UI evidence
 
 resource "google_storage_bucket_object" "ui_evidence" {
-  name          = "ui-evidence/"
-  content       = "To store evidences collected form UI."
-  bucket        = google_storage_bucket.org_terraform_state.name
+  name    = "ui-evidence/"
+  content = "To store evidences collected form UI."
+  bucket  = google_storage_bucket.org_terraform_state.name
 }
 
 /***********************************************
@@ -137,6 +137,12 @@ resource "google_storage_bucket_object" "ui_evidence" {
   remove default org wide permissions
   granting billing account and project creation.
  ***********************************************/
+resource "google_project_iam_binding" "gs_encrypt_decrypt" {
+  members = [
+  "serviceAccount: service-${module.seed_project.project_number}@gs-project-accounts.iam.gserviceaccount.com"]
+  project = module.seed_project.project_id
+  role    = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+}
 
 resource "google_organization_iam_binding" "billing_creator" {
   org_id = var.org_id

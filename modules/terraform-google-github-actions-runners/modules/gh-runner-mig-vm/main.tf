@@ -147,6 +147,8 @@ module "mig_template" {
   source_image         = var.source_image
   shielded_instance_config = {
     enable_secure_boot = true
+    enable_vtpm        = true
+    enable_integrity_monitoring = true
   }
   metadata = merge({
     "secret-id" = google_secret_manager_secret_version.gh-secret-version.name

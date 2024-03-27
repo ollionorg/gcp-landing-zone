@@ -1,9 +1,9 @@
 # Contribute
 ​
-This article explains how to contribute to the GCIFI Landing Zone.
+This article explains how to contribute to the GCP Landing Zone.
 Please read through the following guidelines.
 ​
-> �� **Note**: before participating in our community, please read our
+> **Note**: before participating in our community, please read our
 > [code of conduct][coc].
 > By interacting with this repository, organization, or community you agree to
 > abide by its terms.
@@ -11,7 +11,7 @@ Please read through the following guidelines.
 ## Contributions
 ​
 There’s several ways to contribute, not just by writing code.
-If you have questions, see [support][].
+If you have questions, see [support](https://github.com/ollionorg/gcp-landing-zone/blob/main/SUPPORT.md).
 ​
 ### Improve docs
 ​
@@ -25,6 +25,8 @@ If you identified an inaccuracy please raise a documentation issue.
 Some issues lack information, aren’t reproducible, or are just incorrect.
 You can help by trying to make them easier to resolve.
 Existing issues might benefit from your unique experience or opinions.
+Before creating bug reports, please check [here](https://github.com/ollionorg/gcp-landing-zone/issues) as you might find out that you don't need to create one. When you are creating a bug report, please [include as many details as possible](#how-do-i-submit-a-good-bug-report).
+
 ​
 ### Write code
 ​
@@ -55,6 +57,49 @@ bug or suggest a new feature before creating a pull request.
 *   Test before submitting code by running `terraform plan` and `terraform validate`
 *   Write a convincing description of why we should land your pull request:
     it’s your job to convince us
+
+## Styleguides
+
+### Git Commit Messages
+
+* Use the present tense ("Add feature" not "Added feature")
+* Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
+* Limit the first line to 72 characters or less
+* Reference issues and pull requests liberally after the first line
+* Pull request title should be: <type>([optional scope]): <description>
+
+```
+          feat(ui): Add `Button` component
+                ^    ^    ^
+                |    |    |__ Subject
+                |    |_______ Scope
+                |____________ Type
+```
+**Type**  
+ ```
+build - Changes that affect the build system or external dependencies (dependencies update)
+ci - Changes to our CI configuration files and scripts (basically directory .github/workflows)
+docs - Documentation only changes
+feat - A new feature
+fix - A bug fix
+chore - Changes which does not touch the code (ex. manual update of release notes). It will not generate release notes changes
+refactor - A code change that contains refactor
+style - Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+test - Adding missing tests or correcting existing tests and also changes for our test app
+perf - A code change that improves performance (I do not think we will use it)
+```
+**Example**
+```
+feat: Add locales description command for ios and android 
+fix: rate limit exceeded 
+ci: Added leading V to version name 
+refactor: config entities and arguments 
+docs: Add secrets and vision doc 
+build: Disable Auto Doc Generation 
+test: added multi modules to test app 
+chore: Release v20.08.1 
+```
+
 ​
 ## Resources
 ​
@@ -62,20 +107,20 @@ bug or suggest a new feature before creating a pull request.
 *   [Making your first contribution](https://medium.com/@vadimdemedes/making-your-first-contribution-de6576ddb190)
 *   [Using pull requests](https://help.github.com/articles/about-pull-requests/)
 *   [GitHub help](https://help.github.com)
-*   [CloudCover](https://cldcvr.com/)
+*   [Ollion](https://ollion.com/)
 ​
 ## License
 ​
-[Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+[Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)  
 ​
-<!-- Definitions -->
+## Definitions
 ​
-[license]: https://creativecommons.org/licenses/by/4.0/
+[license]: https://creativecommons.org/licenses/by/4.0/  
 ​
-[author]: https://cldcvr.com/
+[author]: https://ollion.com/  
 ​
-[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md  
 ​
-[support]: support.md
+[support]: [support.md](https://github.com/ollionorg/gcp-landing-zone/blob/main/SUPPORT.md)  
 ​
-[collective]: https://opencollective.com/unified
+[collective]: https://opencollective.com/unified  

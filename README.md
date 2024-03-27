@@ -3,7 +3,7 @@
 
 # Google Cloud Foundation Landing Zone
 
-[![Documentation](https://img.shields.io/badge/Wiki-User_Guide-red?logo=read-the-docs)](https://github.com/ollionorg/aws-landing-zone/wiki/User-Guide)
+[![Documentation](https://img.shields.io/badge/Wiki-User_Guide-red?logo=read-the-docs)](https://github.com/ollionorg/gcp-landing-zone/wiki/User-Guide)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Discord](https://discordapp.com/api/guilds/1212635303412506694/widget.png?style=shield)](https://discord.gg/aY8EBx4t)
 [![Reports](https://img.shields.io/badge/Compliance_report-100%25-green.svg)](https://github.com/ollionorg/aws-landing-zone/wiki/User-Guide#how-compliant-your-landing-zone-to-well-known-best-practices)

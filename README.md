@@ -1,5 +1,5 @@
 
-![OLLION](img/OLLION_BANNER.png)
+![OLLION](https://github.com/ollionorg/gcifi-lz/assets/88661454/464b63a2-b85b-4a82-a376-f11b72b639bf)
 
 # AWS Landing Zone
 [![Documentation](https://img.shields.io/badge/Wiki-User_Guide-red?logo=read-the-docs)](https://github.com/ollionorg/aws-landing-zone/wiki/User-Guide)

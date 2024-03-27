@@ -79,4 +79,4 @@ Detailed steps including bot user creation, token configuration, and branch prot
 
 ## Troubleshooting
 
-Encounter issues? Refer to our [troubleshooting guide](https://drive.google.com/file/d/1KY_WSmBY3_T5dyMH05WuYZ8siKpDDCZW/view) for common problems and solutions.
+Describe the problem clearly and send an email to lzhelp@ollion.com.

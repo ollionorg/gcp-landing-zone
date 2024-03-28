@@ -62,7 +62,7 @@ bug or suggest a new feature before creating a pull request.
 *   [Making your first contribution](https://medium.com/@vadimdemedes/making-your-first-contribution-de6576ddb190)
 *   [Using pull requests](https://help.github.com/articles/about-pull-requests/)
 *   [GitHub help](https://help.github.com)
-*   [CloudCover](https://cldcvr.com/)
+*   [Ollion](https://ollion.com/)
 ​
 ## License
 ​
@@ -72,7 +72,7 @@ bug or suggest a new feature before creating a pull request.
 ​
 [license]: https://creativecommons.org/licenses/by/4.0/
 ​
-[author]: https://cldcvr.com/
+[author]: https://ollion.com/
 ​
 [coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
 ​

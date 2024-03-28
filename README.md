@@ -59,7 +59,7 @@ Before you begin deploying the Landing Zone, ensure you have the following prere
    - Note the billing ID.
    - Increase the quota for associating projects to 50.
 3. **Authentication:** Configure by creating Cloud Identity or Google Workspace groups for admins.
-4. **Permissions:** Create a `group_org_admins` group and assign necessary roles including `roles/resourcemanager.projectCreator`, `roles/billing.admin`, etc.
+4. **Permissions:** Create a `group_org_admins` group and assign necessary roles including `roles/resourcemanager.projectCreator`, `roles/resourcemanager.folderCreator `, `roles/resourcemanager.organizationAdmin` , `roles/billing.admin` etc.
 5. **Service Accounts:** Ensure GitHub Actions and Cloud Build service accounts are added to the `group_org_admins`.
 
 For a detailed setup, refer to the [organization bootstrap module documentation](https://github.com/terraform-google-modules/terraform-google-bootstrap).

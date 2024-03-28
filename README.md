@@ -80,9 +80,9 @@ For a detailed setup, refer to the [organization bootstrap module documentation]
 Follow the steps to fork or clone the landing zone GITHUB repo on your local machine:
 
 1. Create bot machine user and create a personal access token (PAT) on GitHub for user .
-   Grants access to PAT as following permission read:org and read:discussions.   
+   Grants access to PAT as following permission `read:org` and `read:discussions`.   
    Goto GitHub profile > Settings > Developer Settings > Personal Access Tokens > Generate New Token. Keep copy & paste .
-2. Create GitHub Token Secret in GitHub as GH_TOKEN.
+2. Create GitHub Token Secret in GitHub as  `GH_TOKEN`.
 3. Clone the repo:
       ```
       git clone https://github.com/ollionorg/gcp-landing-zone.git
@@ -94,7 +94,7 @@ Follow the steps to fork or clone the landing zone GITHUB repo on your local mac
 
 1. Ensure the tf variable file inside the file [0-bootstrap/terraform.tfvars](https://github.com/ollionorg/gcifi-lz/blob/main/0-bootstrap/terraform.tfvars) are properly set and commit the changes to the repository. For setting the parameters, please refer to the [input documentation](https://github.com/ollionorg/gcifi-lz/blob/main/0-bootstrap/README.md#inputs).
 2. Add correct billing ID in the 0-bootstrap/terraform.tfvars file for the initial deployment of the 0-bootstrap stage.
-3. Optional if required, Create Slack WebHook Secret in GitHub ***GCF_SLACK_WEBHOOK***.
+3. Optional if required, Create Slack WebHook Secret in GitHub `GCF_SLACK_WEBHOOK`.
 5. Setup GH_TOKEN as $GITHUB_PAT environment variable and execute the [wrapper script](https://github.com/ollionorg/gcifi-lz/blob/main/prerequisites/scripts/wrapper.sh) using below commands (Ensure .terraform directories created locally from previous runs are deleted):
    ```
       $ cd ./prerequisites/scripts
@@ -106,8 +106,8 @@ Follow the steps to fork or clone the landing zone GITHUB repo on your local mac
 
          $ chmod +x wrapper.sh ; ./wrapper.sh
    ```
-6. After execution of wrapper script, add cloudbuild service account from cicd project as a principal in the billing account with billing.administrator and billing.user 
-7. Wrapper script will create following branch protection rules for branch ${bu_name}-main.
+6. After execution of wrapper script, add cloudbuild service account from cicd project as a principal in the billing account with `billing.administrator` and `billing.user`
+7. Wrapper script will create following branch protection rules for branch `${bu_name}-main`.
    ```
    Require a pull request before merging.
    Required two number of approvals before merging
@@ -120,7 +120,7 @@ Follow the steps to fork or clone the landing zone GITHUB repo on your local mac
    Requires administrator
    Allow auto-merge and allow auto-deletion of branches
    ```
-8. Commit and push changes from .github/workflows, build, 0-bootstrap, README.md to **${bu_name}-init** and ensure everything gets successfully applied. 
+8. Commit and push changes from `.github/workflows`, `build`, `0-bootstrap`, `README.md` to `${bu_name}-init` and ensure everything gets successfully applied. 
 9. Start deployment by raising PRs for subsequent stages by pushing the backend.tf changes made by wrapper script for each stage in ${bu_name}-init.
 
       

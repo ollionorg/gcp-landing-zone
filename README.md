@@ -93,9 +93,9 @@ Follow the steps to fork or clone the landing zone GITHUB repo on your local mac
 > The following steps should be executed on your local system to initialize and run the bootstrap phase for the GCP landing zone.
 
 1. Ensure the tf variable file inside the file [0-bootstrap/terraform.tfvars](https://github.com/ollionorg/gcifi-lz/blob/main/0-bootstrap/terraform.tfvars) are properly set and commit the changes to the repository. For setting the parameters, please refer to the [input documentation](https://github.com/ollionorg/gcifi-lz/blob/main/0-bootstrap/README.md#inputs).
-2. Add correct billing ID in the 0-bootstrap/terraform.tfvars file for the initial deployment of the 0-bootstrap stage.
+2. Add correct billing ID in the `0-bootstrap/terraform.tfvars` file for the initial deployment of the 0-bootstrap stage.
 3. Optional if required, Create Slack WebHook Secret in GitHub `GCF_SLACK_WEBHOOK`.
-5. Setup GH_TOKEN as $GITHUB_PAT environment variable and execute the [wrapper script](https://github.com/ollionorg/gcifi-lz/blob/main/prerequisites/scripts/wrapper.sh) using below commands (Ensure .terraform directories created locally from previous runs are deleted):
+5. Setup `GH_TOKEN` as `$GITHUB_PAT` environment variable and execute the [wrapper script](https://github.com/ollionorg/gcifi-lz/blob/main/prerequisites/scripts/wrapper.sh) using below commands (Ensure .terraform directories created locally from previous runs are deleted):
    ```
       $ cd ./prerequisites/scripts
 

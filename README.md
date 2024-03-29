@@ -5,8 +5,8 @@
 
 [![Documentation](https://img.shields.io/badge/Wiki-User_Guide-red?logo=read-the-docs)](https://github.com/ollionorg/gcp-landing-zone/wiki/User-Guide)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Discord](https://discordapp.com/api/guilds/1212635303412506694/widget.png?style=shield)](https://discord.gg/aY8EBx4t)
-[![Reports](https://img.shields.io/badge/Compliance_report-100%25-green.svg)](https://github.com/ollionorg/aws-landing-zone/wiki/User-Guide#how-compliant-your-landing-zone-to-well-known-best-practices)
+[![Discord](https://discordapp.com/api/guilds/1212635303412506694/widget.png?style=shield)](https://discord.gg/PCyyu2Xq)
+[![Reports](https://img.shields.io/badge/Compliance_report-100%25-green.svg)](https://github.com/ollionorg/gcp-landing-zone/wiki/User-Guide#how-compliant-your-landing-zone-to-well-known-best-practices)
 
 
 This repository contains the Terraform code necessary to set up a Landing Zone using the Google Cloud Platform (GCP). It is designed to follow best practices outlined in the Google Cloud Architecture's Security Foundations. By leveraging this code, users can create a secure, scalable, and efficient cloud environment that aligns with Google's recommended practices.

@@ -11,10 +11,8 @@
 
 This repository contains the Terraform code necessary to set up a Landing Zone using the Google Cloud Platform (GCP). It is designed to follow best practices outlined in the Google Cloud Architecture's Security Foundations. By leveraging this code, users can create a secure, scalable, and efficient cloud environment that aligns with Google's recommended practices.
 
-## Resources
 
-- **Security Foundations Guide:** [Google Cloud Architecture's Security Foundations](https://cloud.google.com/architecture/security-foundations/using-example-terraform)
-- **Landing Zone User Guide:** [Download Here](https://drive.google.com/file/d/1KY_WSmBY3_T5dyMH05WuYZ8siKpDDCZW/view?usp=sharing)
+**[Landing Zone User Guide](https://github.com/ollionorg/gcifi-lz/wiki/User-Guide)**
 
 ## Repository Directory Structure
 

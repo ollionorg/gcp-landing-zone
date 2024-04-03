@@ -79,7 +79,7 @@ Follow the steps to fork or clone the landing zone GITHUB repo on your local mac
 
 1. Create bot machine user and create a personal access token (PAT) on GitHub for user .
    Grants access to PAT as following permission `read:org` and `read:discussions`.   
-   Goto GitHub profile > Settings > Developer Settings > Personal Access Tokens > Generate New Token. Keep copy & paste .
+   Goto GitHub profile > Settings > Developer Settings > Personal Access Tokens > Generate New Token. Keep copy of New token with you .
 2. Create GitHub Token Secret in GitHub as  `GH_TOKEN`.
 3. Clone the repo:
       ```

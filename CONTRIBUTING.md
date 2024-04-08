@@ -3,7 +3,7 @@
 This article explains how to contribute to the GCIFI Landing Zone.
 Please read through the following guidelines.
 ​
-> �� **Note**: before participating in our community, please read our
+> **Note**: before participating in our community, please read our
 > [code of conduct][coc].
 > By interacting with this repository, organization, or community you agree to
 > abide by its terms.
@@ -66,16 +66,16 @@ bug or suggest a new feature before creating a pull request.
 ​
 ## License
 ​
-[Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+[Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)  
 ​
-<!-- Definitions -->
+## Definitions
 ​
-[license]: https://creativecommons.org/licenses/by/4.0/
+[license]: https://creativecommons.org/licenses/by/4.0/  
 ​
-[author]: https://ollion.com/
+[author]: https://ollion.com/  
 ​
-[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md
+[coc]: https://github.com/remarkjs/.github/blob/main/code-of-conduct.md  
 ​
-[support]: support.md
+[support]: [support.md](https://github.com/ollionorg/gcp-landing-zone/blob/main/SUPPORT.md)  
 ​
-[collective]: https://opencollective.com/unified
+[collective]: https://opencollective.com/unified  

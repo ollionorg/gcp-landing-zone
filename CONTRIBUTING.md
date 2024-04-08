@@ -1,6 +1,6 @@
 # Contribute
 ​
-This article explains how to contribute to the GCIFI Landing Zone.
+This article explains how to contribute to the GCP Landing Zone.
 Please read through the following guidelines.
 ​
 > **Note**: before participating in our community, please read our
@@ -25,6 +25,8 @@ If you identified an inaccuracy please raise a documentation issue.
 Some issues lack information, aren’t reproducible, or are just incorrect.
 You can help by trying to make them easier to resolve.
 Existing issues might benefit from your unique experience or opinions.
+Before creating bug reports, please check [here](https://github.com/ollionorg/aws-landing-zone/issues) as you might find out that you don't need to create one. When you are creating a bug report, please [include as many details as possible](#how-do-i-submit-a-good-bug-report).
+
 ​
 ### Write code
 ​

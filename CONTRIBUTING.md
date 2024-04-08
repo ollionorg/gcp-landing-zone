@@ -57,6 +57,49 @@ bug or suggest a new feature before creating a pull request.
 *   Test before submitting code by running `terraform plan` and `terraform validate`
 *   Write a convincing description of why we should land your pull request:
     it’s your job to convince us
+
+## Styleguides
+
+### Git Commit Messages
+
+* Use the present tense ("Add feature" not "Added feature")
+* Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
+* Limit the first line to 72 characters or less
+* Reference issues and pull requests liberally after the first line
+* Pull request title should be: <type>([optional scope]): <description>
+
+```
+          feat(ui): Add `Button` component
+                ^    ^    ^
+                |    |    |__ Subject
+                |    |_______ Scope
+                |____________ Type
+```
+**Type**  
+ ```
+build - Changes that affect the build system or external dependencies (dependencies update)
+ci - Changes to our CI configuration files and scripts (basically directory .github/workflows)
+docs - Documentation only changes
+feat - A new feature
+fix - A bug fix
+chore - Changes which does not touch the code (ex. manual update of release notes). It will not generate release notes changes
+refactor - A code change that contains refactor
+style - Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+test - Adding missing tests or correcting existing tests and also changes for our test app
+perf - A code change that improves performance (I do not think we will use it)
+```
+**Example**
+```
+feat: Add locales description command for ios and android 
+fix: rate limit exceeded 
+ci: Added leading V to version name 
+refactor: config entities and arguments 
+docs: Add secrets and vision doc 
+build: Disable Auto Doc Generation 
+test: added multi modules to test app 
+chore: Release v20.08.1 
+```
+
 ​
 ## Resources
 ​

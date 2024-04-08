@@ -25,7 +25,7 @@ If you identified an inaccuracy please raise a documentation issue.
 Some issues lack information, aren’t reproducible, or are just incorrect.
 You can help by trying to make them easier to resolve.
 Existing issues might benefit from your unique experience or opinions.
-Before creating bug reports, please check [here](https://github.com/ollionorg/aws-landing-zone/issues) as you might find out that you don't need to create one. When you are creating a bug report, please [include as many details as possible](#how-do-i-submit-a-good-bug-report).
+Before creating bug reports, please check [here](https://github.com/ollionorg/gcp-landing-zone/issues) as you might find out that you don't need to create one. When you are creating a bug report, please [include as many details as possible](#how-do-i-submit-a-good-bug-report).
 
 ​
 ### Write code

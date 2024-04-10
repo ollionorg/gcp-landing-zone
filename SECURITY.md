@@ -1,10 +1,10 @@
 # Security Policy
 
 The current repository scanned and fully-complaint against the below best practices:
-1. [AWS Foundational Security Best Practices v1.0.0](https://docs.aws.amazon.com/audit-manager/latest/userguide/aws-foundational-security-best-practices.html)
-2. [CIS AWS Foundations Benchmark v1.4.0](https://docs.aws.amazon.com/securityhub/latest/userguide/cis-aws-foundations-benchmark.html)
-3. [NIST Special Publication 800-53 Revision 5](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final)
-4. [PCI DSS v3.2.1](https://listings.pcisecuritystandards.org/documents/PCI_DSS-QRG-v3_2_1.pdf)
+1. [Google Cloud Platform Foundation](https://docs.aws.amazon.com/audit-manager/latest/userguide/aws-foundational-security-best-practices.html)
+2. [PCI DSS v3.2.1 and 4.0](https://www.pcisecuritystandards.org/document_library/)
+3. [NIST CSF 1.0](https://www.nist.gov/cyberframework/framework-version-10)
+4. [CIS Controls 8.0](https://www.cisecurity.org/controls/v8)
 
 The security scanning performed on a regular basis to ensure security and safety of the landing zone.
 

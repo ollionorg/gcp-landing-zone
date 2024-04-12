@@ -11,7 +11,7 @@ Please read through the following guidelines.
 ## Contributions
 ​
 There’s several ways to contribute, not just by writing code.
-If you have questions, see [support][].
+If you have questions, see [support](https://github.com/ollionorg/gcp-landing-zone/blob/main/SUPPORT.md).
 ​
 ### Improve docs
 ​

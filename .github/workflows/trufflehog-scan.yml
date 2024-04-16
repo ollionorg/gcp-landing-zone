@@ -1,0 +1,20 @@
+name: Trufflehog Security Scan
+on: 
+  push: 
+    branches: 
+      - main 
+  pull_request:
+permissions: write-all
+jobs:
+  trufflehog-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  #ensures that no tags or branches are excluded from the scan.
+    - name: Installing trufflehog
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
+    - name: Run Trufflehog
+      run: |
+        trufflehog git file://. --since-commit HEAD --branch "${{ github.event.repository.default_branch }}" --only-verified --fail

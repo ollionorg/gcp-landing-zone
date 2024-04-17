@@ -1,0 +1,34 @@
+name: Trufflehog Security Scan
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_call:
+permissions: write-all
+jobs:
+  initialize:
+    name: Initialize 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Setup Nodejs
+        uses: actions/setup-node@v1
+
+
+  trufflehog-scan:
+    runs-on: ubuntu-latest
+    steps:    
+    - uses: actions/checkout@v2
+    - name: Installing trufflehog
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
+    - name: Run Trufflehog
+      run: |
+        git branch
+        git status
+        trufflehog git file://. --since-commit HEAD --only-verified --fail
+        
